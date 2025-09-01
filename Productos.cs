@@ -12,6 +12,9 @@ namespace Sistema_de_Gestión_Farmacéutica
         public string? Nombre { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
+        public string? Principio_Activo { get; set; }
+        public int Stock_Minimo { get; set; }
+        public DateTime Fecha_Vencimiento { get; set; }
 
     }
 }
