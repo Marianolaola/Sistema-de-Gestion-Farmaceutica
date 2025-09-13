@@ -1,72 +1,52 @@
 ﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica"
         Title="Sistema de Gestión Farmacéutica"
         WindowStartupLocation="CenterScreen"
-        WindowState="Normal">
-    <Grid Height="580">
+        Width="1200" Height="700">
+
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Background="DodgerBlue" Grid.Column="0">
-            <TextBlock Text="Inventario" Foreground="White" FontSize="18" FontWeight="Bold" Margin="10"/>
-            <Separator Margin="0,0,0,5"/>
-            <Button Content="Productos" Background="Transparent" Foreground="White" FontSize="16" FontWeight="Bold" Click="AbrirInventario_Click"/>
-            <Button Content="Configuracion" Background="Transparent" Foreground="White" FontSize="16" FontWeight="Bold" Click="AbrirConfiguracion_Click"/>
-            <Button Content="Reportes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="Bold" Click="AbrirReporte_Click"/>
-            <Button Content="Acerca de" Background="Transparent" Foreground="White" FontSize="16" FontWeight="Bold" Click="AcercaDe_Click"/>
-            <Separator Margin="0,15,0,10"/>
+        <!-- Sidebar -->
+        <StackPanel Background="#283342" Grid.Column="0">
 
-            <!-- Datos del usuario-->
-            <StackPanel Margin="10" Orientation="Vertical">
-                <TextBlock x:Name="txtUsuario" Text="Usuario: - " Foreground="LightGray" FontSize="12"/>
-                <Button Content="Cerrar Sesion" Background="Transparent" Foreground= "White" Click="CerrarSesion_Click"/>
-
+            <!-- Perfil -->
+            <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Ellipse Width="80" Height="80" Stroke="White" StrokeThickness="2" Margin="0,10,0,5">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="perfil.png"/>
+                        <!-- ruta de la imagen de perfil -->
+                    </Ellipse.Fill>
+                </Ellipse>
+                <TextBlock x:Name="txtUsuario" Text="Juan Pérez" Foreground="White" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="txtRol" Text="Farmacéutico" Foreground="LightGray" FontSize="12" HorizontalAlignment="Center"/>
             </StackPanel>
-            <TextBlock Text="V1.0" Foreground="Gray" FontSize="11" VerticalAlignment="Bottom" Margin="10,40,10,10"/>
+
+            <Separator Margin="10"/>
+
+            <!-- Botones de navegación -->
+            <StackPanel>
+                <Button x:Name="btnDashboard" Content="🏠 Dashboard" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirDashboard_Click"/>
+                <Button x:Name="btnUsuarios" Content="👤 Usuarios" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirUsuarios_Click"/>
+                <Button x:Name="btnMedicamentos" Content="💊 Medicamentos" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirMedicamentos_Click"/>
+                <Button x:Name="btnVentas" Content="🛒 Ventas" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirVentas_Click"/>
+                <Button x:Name="btnReportes" Content="📊 Reportes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirReportes_Click"/>
+            </StackPanel>
+
+            <!-- Cerrar sesión y versión -->
+            <StackPanel VerticalAlignment="Bottom" Margin="10">
+                <Button Content="Cerrar Sesión" Background="Transparent" Foreground="White" FontWeight="Bold" Click="CerrarSesion_Click"/>
+                <TextBlock Text="V1.0" Foreground="Gray" FontSize="11" HorizontalAlignment="Left" Margin="0,5,0,10"/>
+            </StackPanel>
         </StackPanel>
 
-        <!-- Contenido Central -->
-
-        <Grid Grid.Column="1" Background="White" x:Name="ContenidoPrincipal">
-            <StackPanel>
-                <TextBlock Text="Gestion de Productos" FontSize="22" FontWeight="Bold" Margin="0,0,0,20"/>
-                <Button Content="Agregar Producto"
-                        Width="200" Height="35"
-                        Background="Aquamarine"
-                        FontWeight="SemiBold"
-                        Click="AgregarProducto_Click"
-                />
-
-
-                <DataGrid x:Name="dgProductos" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single" Margin="0,150,0,130">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header=" " Width="40">
-                        </DataGridTemplateColumn>
-
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
-                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="150"/>
-                        <DataGridTextColumn Header="Principio Activo" Binding="{Binding Principio_Activo}" Width="150"/>
-                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="100"/>
-                        <DataGridTextColumn Header="Stock Minimo" Binding="{Binding Stock_Minimo}" Width="150"/>
-                        <DataGridTextColumn Header="Precio" Binding="{Binding Precio}" Width="100"/>
-                        <DataGridTextColumn Header="Fecha de Vencimiento" Binding="{Binding Fecha_Vencimiento}" Width="150"/>
-
-                        <DataGridTemplateColumn Header="Eliminar" Width="70">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="Eliminar" Background="Red" Foreground="White" Click="EliminarProducto_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+        <!-- Panel central -->
+        <Grid Grid.Column="1" Background="#F5F5F5">
+            <ContentControl x:Name="ContenidoPrincipal"/>
         </Grid>
-
     </Grid>
 </Window>

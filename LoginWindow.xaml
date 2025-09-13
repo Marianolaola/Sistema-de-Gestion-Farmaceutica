@@ -18,7 +18,8 @@
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Width="350" Grid.Column="1" Margin="53,0,0,0">
             <TextBlock Text="Bienvenido" Foreground="White" FontSize="50" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"/>
-            <TextBox x:Name="txtUsuario" Foreground="Black" Height="37" FontSize="14" Margin="0,0,0,15" TextAlignment="Center" Background="White" BorderThickness="0" Padding="10"/>
+            <TextBox x:Name="txtUsuario" Foreground="Black" Height="30" FontSize="14" Margin="0,0,0,15" BorderThickness="0" Padding="5"/>
+            <PasswordBox x:Name="txtContraseña" Foreground="Black" Height="30" FontSize="14" Margin="0,0,0,15" PasswordChar="*"  Padding="5" />
             <Button Content="Acceder" 
             Height="40" 
             Background="Beige" 
