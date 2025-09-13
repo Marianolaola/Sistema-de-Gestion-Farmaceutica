@@ -25,6 +25,7 @@ namespace Sistema_de_Gestión_Farmacéutica
             InitializeComponent();
         }
 
+
         private void Entrar_Click(object sender, RoutedEventArgs e)
         {
             string nombreUsuario = txtUsuario.Text.Trim();
@@ -35,7 +36,6 @@ namespace Sistema_de_Gestión_Farmacéutica
                 MessageBox.Show("Por favor, ingrese usuario y contraseña.", "Error de autenticación", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
             try
             {
                 Usuario servUsuario = new Usuario();
@@ -70,6 +70,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                 // Esto muestra el error si algo falla (por ejemplo, la conexión)
                 MessageBox.Show("Error al conectarse a la base de datos: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
     }

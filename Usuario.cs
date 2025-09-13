@@ -5,9 +5,9 @@ namespace Sistema_de_Gestión_Farmacéutica
 {
     public class Usuario
     {
-        private string connectionString = @"Server=DESKTOP-SQ7CFSI\SQLEXPRESS;Database=[Sistema Farmaceútico];Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=localhost\\SQLEXPRESS; Database=SistemaFarmaceutico; Trusted_Connection=True; TrustServerCertificate=True;";
 
-
+        
         // Traer todos los usuarios
         public DataTable ObtenerUsuarios()
         {

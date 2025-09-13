@@ -17,10 +17,12 @@
             <!-- Perfil -->
             <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Ellipse Width="80" Height="80" Stroke="White" StrokeThickness="2" Margin="0,10,0,5">
+                  <!--  
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="perfil.png"/>
-                        <!-- ruta de la imagen de perfil -->
+                         ruta de la imagen de perfil            
                     </Ellipse.Fill>
+                  -->
                 </Ellipse>
                 <TextBlock x:Name="txtUsuario" Text="Juan Pérez" Foreground="White" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
                 <TextBlock x:Name="txtRol" Text="Farmacéutico" Foreground="LightGray" FontSize="12" HorizontalAlignment="Center"/>
