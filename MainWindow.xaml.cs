@@ -38,7 +38,7 @@ namespace Sistema_de_Gestión_Farmacéutica
             // Abrir dashboard por defecto
             ContenidoPrincipal.Content = new TextBlock
             {
-                Text = "Dashboard",
+                Text = "Dashboard (Vista Prototipo)",
                 FontSize = 24,
                 Margin = new Thickness(20)
             };
@@ -73,11 +73,9 @@ namespace Sistema_de_Gestión_Farmacéutica
 
         private void AbrirUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            ContenidoPrincipal.Content = new TextBlock
+            ContenidoPrincipal.Content = new UsuariosView();
             {
-                Text = "Usuarios (vista de prueba)",
-                FontSize = 20,
-                Margin = new Thickness(20)
+                
             };
         }
 
@@ -88,7 +86,12 @@ namespace Sistema_de_Gestión_Farmacéutica
 
         private void CerrarSesion_Click(object sender, RoutedEventArgs e)
         {
+            
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+
             this.Close();
+
         }
     }
 }
