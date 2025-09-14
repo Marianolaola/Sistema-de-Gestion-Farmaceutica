@@ -59,6 +59,16 @@ namespace Sistema_de_Gestión_Farmacéutica
                     return;
                 }
 
+                // setteando los valores de la sesión iniciada
+                servUsuario.Sesion
+                        (
+                            (int)usuarioEncontrado["id_usuario"],
+                            usuarioEncontrado["nombre"].ToString(),
+                            usuarioEncontrado["apellido"].ToString(),
+                            usuarioEncontrado["contraseña"].ToString(),
+                            usuarioEncontrado["rol"].ToString()
+                        );
+
                 string rol = usuarioEncontrado["rol"]?.ToString() ?? "";
 
                 MainWindow mainWindow = new MainWindow(nombreUsuario, rol);

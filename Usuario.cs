@@ -6,8 +6,12 @@ namespace Sistema_de_Gestión_Farmacéutica
     public class Usuario
     {
         private string connectionString = "Server=localhost\\SQLEXPRESS; Database=SistemaFarmaceutico; Trusted_Connection=True; TrustServerCertificate=True;";
+        public static int id_usuario { get; set; }
+        public static string nombre { get; set; }
+        public static string apellido { get; set; }
+        public static string contraseña { get; set; }
+        public static string rol { get; set; }
 
-        
         // Traer todos los usuarios
         public DataTable ObtenerUsuarios()
         {
@@ -22,6 +26,15 @@ namespace Sistema_de_Gestión_Farmacéutica
             }
 
             return dt;
+        }
+
+        public void Sesion(int p_id_usuario, string p_nombre, string p_apellido, string p_contraseña, string p_rol)
+        {
+            id_usuario = p_id_usuario;
+            nombre = p_nombre;
+            apellido = p_apellido;
+            contraseña = p_contraseña;
+            rol = p_rol;
         }
 
         // Dar de alta un usuario

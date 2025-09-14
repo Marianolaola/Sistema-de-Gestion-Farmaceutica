@@ -60,16 +60,29 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             DataRowView filaSeleccionada = (DataRowView)dgUsuarios.SelectedItem;
             int idUsuario = Convert.ToInt32(filaSeleccionada["id_usuario"]);
+            string rolUsuario = filaSeleccionada["rol"].ToString();
 
-            // Confirmación antes de eliminar
-            var resultado = MessageBox.Show($"¿Está seguro que desea eliminar al usuario {filaSeleccionada["nombre"]} {filaSeleccionada["apellido"]}?",
-                                            "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (resultado == MessageBoxResult.Yes)
+            if(idUsuario == Usuario.id_usuario)
             {
-                servUsuario.BajaUsuario(idUsuario);
-                cargarUsuario();
-                MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+                MessageBox.Show("La sesión de este usuario está activa, no es posible eliminarlo","Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning );
+            } else {
+
+                if (Usuario.rol == "Administrador" && rolUsuario == "Gerente")
+                {
+                    MessageBox.Show("Este usuario no cuenta con los permisos para eliminar esta cuenta", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning);
+                } else {
+                    // Confirmación antes de eliminar
+                    var resultado = MessageBox.Show($"¿Está seguro que desea eliminar al usuario {filaSeleccionada["nombre"]} {filaSeleccionada["apellido"]}?",
+                                                    "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (resultado == MessageBoxResult.Yes)
+                    {
+                        servUsuario.BajaUsuario(idUsuario);
+                        cargarUsuario();
+                        MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            } 
+               
         }
     }
 }
