@@ -46,11 +46,9 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             private void AbrirMedicamentos_Click(object sender, RoutedEventArgs e)
             {
-                ContenidoPrincipal.Content = new TextBlock
+                ContenidoPrincipal.Content = new MedicamentosView()
                 {
-                    Text = "Medicamentos (vista prototipo)",
-                    FontSize = 20,
-                    Margin = new Thickness(20)
+                    
                 };
             }
 
