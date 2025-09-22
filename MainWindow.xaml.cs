@@ -1,4 +1,5 @@
 ﻿using Sistema_de_Gestión_Farmacéutica.Clientes;
+using Sistema_de_Gestión_Farmacéutica.Ventas;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -58,12 +59,8 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             private void AbrirVentas_Click(object sender, RoutedEventArgs e)
             {
-                ContenidoPrincipal.Content = new TextBlock
-                {
-                    Text = "Ventas (vista prototipo)",
-                    FontSize = 20,
-                    Margin = new Thickness(20)
-                };
+            ContenidoPrincipal.Content = new VentasDetalleView();
+
             }
 
         
