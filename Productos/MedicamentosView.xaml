@@ -10,15 +10,21 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <Button x:Name="btnAgregar" Content="➕ Agregar Medicamento" Width="150" Margin="5" Click="btnAgregar_Click"/>
-            <Button x:Name="btnEliminar" Content="🗑 Eliminar Medicamento" Width="150" Margin="5" Click="btnEliminar_Click"/>
+        <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock Text="Medicamentos (Vista Prototipo)" FontSize="20" Margin="10"/>
         </StackPanel>
 
-        <DataGrid x:Name="dgMedicamentos" Grid.Row="1" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
+            <Button x:Name="btnAgregar" Content="➕ Agregar Medicamento" Width="150" Margin="5" Click="btnAgregar_Click"/>
+            <Button x:Name="btnEliminar" Content="🗑 Eliminar Medicamento" Width="150" Margin="5" Click="btnEliminar_Click"/>
+            <Button x:Name="btnEditar" Content="⚙️ Editar Medicamento" Width="150" Margin="5" />
+        </StackPanel>
+
+        <DataGrid x:Name="dgMedicamentos" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
 
     </Grid>
 </UserControl>

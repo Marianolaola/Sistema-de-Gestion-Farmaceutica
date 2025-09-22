@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace Sistema_de_Gestión_Farmacéutica
+namespace Sistema_de_Gestión_Farmacéutica.Usuarios
 {
     public class Usuario
     {
@@ -10,6 +10,7 @@ namespace Sistema_de_Gestión_Farmacéutica
         public static string nombre { get; set; }
         public static string apellido { get; set; }
         public static string contraseña { get; set; }
+
         public static string rol { get; set; }
 
         // Traer todos los usuarios
@@ -60,6 +61,22 @@ namespace Sistema_de_Gestión_Farmacéutica
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("DELETE FROM Usuario WHERE id_usuario=@id", con);
+                cmd.Parameters.AddWithValue("@id", id_usuario);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void EditarUsuario(int id_usuario, string nombre, string apellido, string contraseña, string rol)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE Usuario SET nombre=@nombre, apellido=@apellido, contraseña=@contraseña, rol=@rol WHERE id_usuario=@id", con);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@apellido", apellido);
+                cmd.Parameters.AddWithValue("@contraseña", contraseña);
+                cmd.Parameters.AddWithValue("@rol", rol);
                 cmd.Parameters.AddWithValue("@id", id_usuario);
                 cmd.ExecuteNonQuery();
             }

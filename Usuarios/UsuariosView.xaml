@@ -16,6 +16,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <Button x:Name="btnAgregar" Content="➕ Agregar Usuario" Width="150" Margin="5" Click="btnAgregar_Click"/>
             <Button x:Name="btnEliminar" Content="🗑 Eliminar Usuario" Width="150" Margin="5" Click="btnEliminar_Click"/>
+            <Button x:Name="btnEditar" Content="⚙️ Editar Usuario" Width="150" Margin="5" Click="btnEditar_Click"/>
         </StackPanel>
 
         <DataGrid x:Name="dgUsuarios" Grid.Row="1" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
