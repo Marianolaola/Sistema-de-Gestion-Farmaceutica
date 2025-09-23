@@ -21,14 +21,14 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnUsuarios.Visibility = Visibility.Visible;
                     btnReportes.Visibility = Visibility.Visible;
                     btnMedicamentos.Visibility = Visibility.Visible;
-                    btnVentas.Visibility = Visibility.Visible;
+                    btnVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
                     break;
                 case "Administrador":
                     btnUsuarios.Visibility = Visibility.Visible;
                     btnReportes.Visibility = Visibility.Collapsed;
                     btnMedicamentos.Visibility = Visibility.Visible;
-                    btnVentas.Visibility = Visibility.Visible;
+                    btnVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
                     break;
                 case "Farmaceutico":
