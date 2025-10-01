@@ -14,14 +14,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2"> 
-            <TextBlock Text="Clientes (Vista Prototipo)" FontSize="20" Margin="10"/> 
+        <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock Text="Clientes (Vista Prototipo)" FontSize="20" Margin="10"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
             <Button x:Name="btnAgregar" Content="➕ Agregar Cliente" Width="150" Margin="5" />
             <Button x:Name="btnEliminar" Content="🗑 Eliminar Cliente" Width="150" Margin="5" />
             <Button x:Name="btnEditar" Content="⚙️ Editar Cliente" Width="150" Margin="5" />
+            <ComboBox x:Name="cmbObraSocial" Width="150" Margin="5" SelectionChanged="cmbObraSocial_SelectionChanged"/>
         </StackPanel>
 
         <DataGrid x:Name="dgClientes" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
