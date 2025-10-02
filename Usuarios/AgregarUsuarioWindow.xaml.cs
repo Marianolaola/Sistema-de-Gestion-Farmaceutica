@@ -1,15 +1,12 @@
-﻿using System.Windows;
+﻿using Sistema_de_Gestión_Farmacéutica.Usuarios;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Sistema_de_Gestión_Farmacéutica
 {
     public partial class AgregarUsuarioWindow : Window
     {
-        public string Nombre { get; private set; }
-        public string Apellido { get; private set; }
-        public string Contraseña { get; private set; }
-        public string Rol { get; private set; }
-
+        public Usuario usuarioCreado { get; private set; }
         public AgregarUsuarioWindow()
         {
             InitializeComponent();
@@ -26,11 +23,15 @@ namespace Sistema_de_Gestión_Farmacéutica
                 return;
             }
 
-            Nombre = txtNombre.Text;
-            Apellido = txtApellido.Text;
-            Contraseña = txtContraseña.Password;
-            Rol = (cmbRol.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? string.Empty;
-
+            usuarioCreado = new Usuario
+            {
+                nombre = txtNombre.Text,
+                apellido = txtApellido.Text,
+                contraseña = txtContraseña.Password,
+                email = txtEmail.Text,
+                rol = (cmbRol.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? string.Empty
+            };
+            
             this.DialogResult = true;
             this.Close();
         }
@@ -59,5 +60,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                 e.Handled = true;
             }
         }
+
+        
     }
 }

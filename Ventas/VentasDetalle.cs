@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
+using Sistema_de_Gestión_Farmacéutica.Sesion;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +16,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
 
         public DataTable ObtenerVentasConDetalle()  
         {
-            int id_usuarioLogueado = Usuarios.Usuario.id_usuario;
+            int id_usuarioLogueado = SesionActual.Usuario.id_usuario;
             DataTable dt = new DataTable();
             
             using (SqlConnection con = new SqlConnection(connectionString))

@@ -1,4 +1,5 @@
-﻿using Sistema_de_Gestión_Farmacéutica.Usuarios;
+﻿using Sistema_de_Gestión_Farmacéutica.Sesion;
+using Sistema_de_Gestión_Farmacéutica.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +23,7 @@ namespace Sistema_de_Gestión_Farmacéutica
     /// </summary>
     public partial class UsuariosView : UserControl
     {
-        private Usuario servUsuario = new Usuario();
+        private UsuarioRepositorio servUsuario = new UsuarioRepositorio();
         public UsuariosView()
         {
             InitializeComponent();
@@ -42,10 +43,7 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             if (resultado == true)
             {
-                servUsuario.AltaUsuario(agregarUsuario.Nombre,
-                                        agregarUsuario.Apellido,
-                                        agregarUsuario.Contraseña,
-                                        agregarUsuario.Rol);
+                servUsuario.AltaUsuario(agregarUsuario.usuarioCreado);
                 cargarUsuario();
             }
             
@@ -63,21 +61,28 @@ namespace Sistema_de_Gestión_Farmacéutica
             int idUsuario = Convert.ToInt32(filaSeleccionada["id_usuario"]);
             string rolUsuario = filaSeleccionada["rol"].ToString();
 
-            if(idUsuario == Usuario.id_usuario)
+            if(SesionActual.Usuario.id_usuario == idUsuario)
             {
                 MessageBox.Show("La sesión de este usuario está activa, no es posible eliminarlo","Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning );
             } else {
 
-                if (Usuario.rol == "Administrador" && rolUsuario == "Gerente")
+                if (SesionActual.Usuario.rol == "Administrador" && rolUsuario == "Gerente")
                 {
                     MessageBox.Show("Este usuario no cuenta con los permisos para eliminar esta cuenta", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning);
                 } else {
+
+                    // Se crea una variable de tipo Usuario para pasar el id al método de BajaUsuario
+                    var usuarioAEliminar = new Usuario
+                    {
+                        id_usuario = idUsuario
+                    };
+
                     // Confirmación antes de eliminar
                     var resultado = MessageBox.Show($"¿Está seguro que desea eliminar al usuario {filaSeleccionada["nombre"]} {filaSeleccionada["apellido"]}?",
                                                     "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (resultado == MessageBoxResult.Yes)
                     {
-                        servUsuario.BajaUsuario(idUsuario);
+                        servUsuario.BajaUsuario(usuarioAEliminar);
                         cargarUsuario();
                         MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
@@ -99,7 +104,7 @@ namespace Sistema_de_Gestión_Farmacéutica
             string rolUsuarioSeleccionado = filaSeleccionada["rol"].ToString();
 
             // Bloquear si un Administrador quiere editar un Gerente
-            if (Usuario.rol == "Administrador" && rolUsuarioSeleccionado == "Gerente")
+            if (SesionActual.Usuario.rol == "Administrador" && rolUsuarioSeleccionado == "Gerente")
             {
                 MessageBox.Show("No tiene permisos para modificar usuarios con rol Gerente.", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -109,6 +114,7 @@ namespace Sistema_de_Gestión_Farmacéutica
             editarUsuario.txtNombre.Text = filaSeleccionada["nombre"].ToString();
             editarUsuario.txtApellido.Text = filaSeleccionada["apellido"].ToString();
             editarUsuario.txtContraseña.Password = filaSeleccionada["contraseña"].ToString();
+            editarUsuario.txtEmail.Text = filaSeleccionada["email"].ToString();
 
             string rolActual = filaSeleccionada["rol"].ToString();
 
@@ -118,11 +124,17 @@ namespace Sistema_de_Gestión_Farmacéutica
             {
                 string rolAct = filaSeleccionada["rol"].ToString();
 
-                servUsuario.EditarUsuario(idUsuario,
-                                          editarUsuario.Nombre,
-                                          editarUsuario.Apellido,
-                                          editarUsuario.Contraseña,
-                                          rolAct);
+                Usuario usuarioEditado = new Usuario
+                {
+                    id_usuario = idUsuario,
+                    nombre = editarUsuario.usuarioEditado.nombre,
+                    contraseña = editarUsuario.usuarioEditado.contraseña,
+                    apellido = editarUsuario.usuarioEditado.apellido,
+                    email = editarUsuario.usuarioEditado.email,
+                    rol = rolAct
+                };
+
+                servUsuario.EditarUsuario(usuarioEditado);
                 cargarUsuario();
                 MessageBox.Show("Usuario actualizado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }

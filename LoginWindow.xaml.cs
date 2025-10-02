@@ -1,4 +1,5 @@
 ﻿using Sistema_de_Gestión_Farmacéutica.Usuarios;
+using Sistema_de_Gestión_Farmacéutica.Sesion;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,34 +26,27 @@ namespace Sistema_de_Gestión_Farmacéutica
         {
             InitializeComponent();
         }
-
-
         private void Entrar_Click(object sender, RoutedEventArgs e)
         {
-            string nombreUsuario = txtUsuario.Text.Trim();
+            string email = txtEmail.Text.Trim();
             string contraseña = txtContraseña.Password.Trim();
 
-            if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contraseña))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(contraseña))
             {
                 MessageBox.Show("Por favor, ingrese usuario y contraseña.", "Error de autenticación", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             try
             {
-                Usuario servUsuario = new Usuario();
+                UsuarioRepositorio repositorio = new UsuarioRepositorio();
 
                 // Intentar traer los usuarios desde la base de datos
-                DataTable dt = servUsuario.ObtenerUsuarios();
+                DataTable dt = repositorio.ObtenerUsuarios();
 
-                DataRow usuarioEncontrado = null;
-                foreach (DataRow row in dt.Rows)
-                {
-                    if (row["nombre"].ToString() == nombreUsuario && row["contraseña"].ToString() == contraseña)
-                    {
-                        usuarioEncontrado = row;
-                        break;
-                    }
-                }
+                // Busca al usuario por email y contraseña
+                DataRow usuarioEncontrado = dt.AsEnumerable().FirstOrDefault(row =>
+                    row.Field<string>("email").Equals(email, StringComparison.OrdinalIgnoreCase) 
+                    && row.Field<string>("contraseña") == contraseña);
 
                 if (usuarioEncontrado == null)
                 {
@@ -61,18 +55,17 @@ namespace Sistema_de_Gestión_Farmacéutica
                 }
 
                 // setteando los valores de la sesión iniciada
-                servUsuario.Sesion
-                        (
-                            (int)usuarioEncontrado["id_usuario"],
-                            usuarioEncontrado["nombre"].ToString(),
-                            usuarioEncontrado["apellido"].ToString(),
-                            usuarioEncontrado["contraseña"].ToString(),
-                            usuarioEncontrado["rol"].ToString()
-                        );
+                SesionActual.Usuario = new Usuario
+                        {
+                            id_usuario = (int)usuarioEncontrado["id_usuario"],
+                            nombre = usuarioEncontrado["nombre"].ToString(),
+                            apellido = usuarioEncontrado["apellido"].ToString(),
+                            contraseña = usuarioEncontrado["contraseña"].ToString(),
+                            rol = usuarioEncontrado["rol"].ToString(),
+                            email = usuarioEncontrado["email"].ToString()
+                        };
 
-                string rol = usuarioEncontrado["rol"]?.ToString() ?? "";
-
-                MainWindow mainWindow = new MainWindow(nombreUsuario, rol);
+                MainWindow mainWindow = new MainWindow(SesionActual.Usuario.nombre + " " + SesionActual.Usuario.apellido, SesionActual.Usuario.rol);
                 mainWindow.Show();
                 this.Close();
             }

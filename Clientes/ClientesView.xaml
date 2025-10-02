@@ -25,7 +25,16 @@
             <ComboBox x:Name="cmbObraSocial" Width="150" Margin="5" SelectionChanged="cmbObraSocial_SelectionChanged"/>
         </StackPanel>
 
-        <DataGrid x:Name="dgClientes" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
+        <DataGrid x:Name="dgClientes" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding id_cliente}" Width="Auto"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
+                <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
+                <DataGridTextColumn Header="DNI" Binding="{Binding dni}" Width="Auto"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*"/>
+                <DataGridTextColumn Header="Obra Social" Binding="{Binding nombre_obra_social}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </UserControl>

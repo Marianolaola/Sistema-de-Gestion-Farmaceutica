@@ -15,15 +15,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sistema_de_Gestión_Farmacéutica.Usuarios
 {
-    /// <summary>
+    
     /// Lógica de interacción para EditarUsuarioWindow.xaml
-    /// </summary>
+
     public partial class EditarUsuarioWindow : Window
     {
-        public string Nombre { get; private set; }
-        public string Apellido { get; private set; }
-        public string Contraseña { get; private set; }
-        public string Rol { get; private set; }
+        public Usuario usuarioEditado { get; private set; }
         public EditarUsuarioWindow()
         {
             InitializeComponent();
@@ -33,15 +30,21 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                string.IsNullOrWhiteSpace(txtContraseña.Password))
+                string.IsNullOrWhiteSpace(txtContraseña.Password) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 MessageBox.Show("Todos los campos son obligatorios.");
                 return;
             }
 
-            Nombre = txtNombre.Text;
-            Apellido = txtApellido.Text;
-            Contraseña = txtContraseña.Password;
+            usuarioEditado = new Usuario
+            {
+                nombre = txtNombre.Text,
+                apellido = txtApellido.Text,
+                contraseña = txtContraseña.Password,
+                email = txtEmail.Text
+            };
+            
 
             this.DialogResult = true;
             this.Close();
