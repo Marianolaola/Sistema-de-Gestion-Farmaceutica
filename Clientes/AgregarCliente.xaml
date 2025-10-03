@@ -1,0 +1,65 @@
+﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.Clientes.AgregarCliente"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Clientes"
+        mc:Ignorable="d"
+        Title="AgregarCliente" Height="450" Width="400"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Background="#283342">
+    
+    <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>    
+            
+            <!--T+itulo-->
+        <TextBlock Text="Agregar Cliente" 
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"
+                   Grid.Row="0"/>
+
+
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/> <!--Labels-->
+                <ColumnDefinition Width="*"/> <!--Inmput-->
+            </Grid.ColumnDefinitions>
+
+            <!--Filas Dinámicas-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--Nombre-->
+            <TextBlock Text="Nombre:" Foreground="White" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            
+            <!--Apellido-->
+            <TextBlock Text="Apellido:" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtApellido" Grid.Row="1" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+
+            <TextBlock Text="Email:" Foreground="White" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            
+            
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+            <Button Content="Aceptar" Width="100" Height="35" Margin="0,0,10,0"
+                    Background="Beige" FontWeight="SemiBold" Click="Aceptar_Click" Cursor="Hand"/>
+            <Button Content="Cancelar" Width="100" Height="35" Margin="0,0,10,0"
+                    Background="Gray" FontWeight="SemiBold" Click="Cancelar_Click" Cursor="Hand"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>

@@ -53,6 +53,17 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             int idObraSocial = Convert.ToInt32(cmbObraSocial.SelectedValue);
             dgClientes.ItemsSource = clienteRepo.ObtenerClientesPorObraSocial(idObraSocial).DefaultView;
         }
+
+        private void btnAgregar_Click(object sender, RoutedEventArgs e)
+        {
+            AgregarCliente ventana = new AgregarCliente();
+            bool? resultado = ventana.ShowDialog();
+
+            if (resultado == true)
+            {
+                Cliente 
+            }
+        }
     }
 }
 
