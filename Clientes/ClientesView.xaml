@@ -20,8 +20,8 @@
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
             <Button x:Name="btnAgregar" Content="➕ Agregar Cliente" Width="150" Margin="5" Click="btnAgregar_Click" />
-            <Button x:Name="btnEliminar" Content="🗑 Eliminar Cliente" Width="150" Margin="5" />
-            <Button x:Name="btnEditar" Content="⚙️ Editar Cliente" Width="150" Margin="5" />
+            <Button x:Name="btnEliminar" Content="🗑 Eliminar Cliente" Width="150" Margin="5" Click="btnEliminar_Click" />
+            <Button x:Name="btnEditar" Content="⚙️ Editar Cliente" Width="150" Margin="5" Click="btnEditar_Click" />
             <ComboBox x:Name="cmbObraSocial" Width="150" Margin="5" SelectionChanged="cmbObraSocial_SelectionChanged"/>
         </StackPanel>
 

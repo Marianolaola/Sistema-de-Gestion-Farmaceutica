@@ -61,8 +61,43 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
             if (resultado == true)
             {
-                Cliente 
+                clienteRepo.AltaCliente(ventana.clienteCreado);
+                CargarClientes();
             }
+        }
+
+        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            if(dgClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente para eliminar.", "Atención", MessageBoxButton.OK,MessageBoxImage.Warning);
+                return;
+            }
+            DataRowView filaseleccionada = (DataRowView)dgClientes.SelectedItem;
+            int idCliente = Convert.ToInt32(filaseleccionada["id_cliente"]);
+
+            var confirmar = MessageBox.Show("¿Está seguro que desea eliminar el cliente seleccionado?", "Confirmar eliminacion", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmar == MessageBoxResult.Yes)
+            {
+                Cliente clienteAEliminar = new Cliente { id_cliente = idCliente };
+                bool eliminado =  clienteRepo.BajaCliente(clienteAEliminar);
+
+                if (eliminado)
+                {
+                    MessageBox.Show("Cliente eliminado correctamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    CargarClientes();
+                }
+                else
+                {
+                    MessageBox.Show("No se puede eliminar el cliente porque tiene ventas asociadas.", "Error al eliminar", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void btnEditar_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

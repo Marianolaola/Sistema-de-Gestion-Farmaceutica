@@ -19,12 +19,74 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente WHERE activo = 1", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
             }
 
             return dt;
+        }
+
+        public void AltaCliente(Cliente cliente) 
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO Cliente(nombre,apellido,dni,fecha_nacimiento,telefono,direccion,email) " +
+                    "VALUES (@nombre,@apellido,@dni,@fecha_nacimiento,@telefono,@direccion,@email)", con);
+                cmd.Parameters.AddWithValue("@nombre", cliente.nombre);
+                cmd.Parameters.AddWithValue("@apellido", cliente.apellido);
+                cmd.Parameters.AddWithValue("@dni", cliente.dni);
+                cmd.Parameters.AddWithValue("@fecha_nacimiento", cliente.fecha_nacimiento);
+                cmd.Parameters.AddWithValue("@telefono", cliente.telefono);
+                cmd.Parameters.AddWithValue("@direccion", cliente.direccion);
+                cmd.Parameters.AddWithValue("@email", cliente.email);
+                cmd.ExecuteNonQuery();
+            }
+            
+        }
+
+        public void EditarCliente(Cliente cliente)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE Cliente SET nombre=@nombre, apellido=@apellido, fecha_nacimiento=@fecha_nacimiento, email=@email, telefono=@telefono, direccion=@direccion WHERE id_cliente=@id", con);
+                cmd.Parameters.AddWithValue("@id", cliente.id_cliente);
+                cmd.Parameters.AddWithValue("@nombre", cliente.nombre);
+                cmd.Parameters.AddWithValue("@apellido", cliente.apellido);
+                cmd.Parameters.AddWithValue("@fecha_nacimiento", cliente.fecha_nacimiento);
+                cmd.Parameters.AddWithValue("@email", cliente.email);
+                cmd.Parameters.AddWithValue("@telefono", cliente.telefono);
+                cmd.Parameters.AddWithValue("@direccion", cliente.direccion);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool BajaCliente(Cliente cliente)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM Venta WHERE id_cliente=@id", con);
+                checkCmd.Parameters.AddWithValue("@id", cliente.id_cliente);
+                int ventas = (int)checkCmd.ExecuteScalar();
+
+                if(ventas > 0)
+                {
+                    //tiene ventas, no se puede eliminar
+                    return false;
+                }
+
+                //eliminacion lógica a cliente
+                SqlCommand Bajacmd = new SqlCommand("UPDATE Cliente SET activo = 0 WHERE id_cliente = @id", con);
+                Bajacmd.Parameters.AddWithValue("@id", cliente.id_cliente);
+
+                Bajacmd.ExecuteNonQuery();
+                return true;
+            }
         }
 
         public DataTable CargarObrasSociales()
