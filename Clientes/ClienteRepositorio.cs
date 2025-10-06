@@ -89,28 +89,66 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             }
         }
 
-        public DataTable CargarObrasSociales()
+        //Obra Sociales---------------------------------------------------------------
+
+        public List<ObraSocial> CargarObrasSociales()
         {
-            DataTable dt = new DataTable();
+            var lista = new List<ObraSocial>();
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("SELECT id_obra_social, nombre FROM Obra_Social", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                
-                da.Fill(dt);
+                SqlDataReader read = cmd.ExecuteReader();
 
-                // Agregar opción "Sin Filtro"
-                DataRow filaTodos = dt.NewRow();
-                filaTodos["id_obra_social"] = 0;
-                filaTodos["nombre"] = "Sin Filtro";
-                dt.Rows.InsertAt(filaTodos, 0);
+                while (read.Read())
+                {
+                    lista.Add(new ObraSocial
+                    {
+                        id_obra_social = read.GetInt32(0),
+                        nombre = read.GetString(1)
+                    });
+                }
+                
 
             }
-                return dt;
+
+            lista.Insert(0, new ObraSocial
+            {
+                id_obra_social = 0,
+                nombre = "Sin Obra Social"
+            });
+
+                return lista;
 
         }
 
+
+        public List<ClienteObraSocial> ObtenerObrasSocialesPorCliente(int idCliente)
+        {
+            var lista = new List<ClienteObraSocial>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT id_cliente, id_obra_social, nro_afiliado " +
+                    "FROM Cliente_Obra_Social WHERE id_cliente = @idCliente",con);
+                cmd.Parameters.AddWithValue("@idCliente", idCliente);
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    lista.Add(new ClienteObraSocial
+                    {
+                        id_cliente = read.GetInt32(0),
+                        id_obra_social = read.GetInt32(1),
+                        nro_afiliado = read.GetInt32(2)
+                    });
+                }
+            }
+
+            return lista;
+
+        }
 
         public DataTable ObtenerClientesPorObraSocial(int idObraSocial)
         {
@@ -125,7 +163,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                     query = @"
                 SELECT DISTINCT c.id_cliente, c.nombre, c.apellido, c.dni, 
                                 c.fecha_nacimiento, c.telefono, c.direccion, c.email,
-                                o.nombre AS nombre_obra_social
+                                ISNULL(o.nombre, 'Sin Obra Social') AS nombre_obra_social
                 FROM Cliente c
                 LEFT JOIN Cliente_Obra_Social co ON c.id_cliente = co.id_cliente
                 LEFT JOIN Obra_Social o ON co.id_obra_social = o.id_obra_social";
@@ -153,5 +191,32 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             return dt;
         }
 
+        public void AgregarObraSocialACliente(int id_cliente, int id_obraSocial)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO Cliente_Obra_Social(id_cliente, id_obra_social)" +
+                    "VALUES (@id_cliente, @id_obra_social)", con);
+                cmd.Parameters.AddWithValue("@id_cliente", id_cliente);
+                cmd.Parameters.AddWithValue("@id_obra_social", id_obraSocial);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void EliminarObraSocialACliente(int id_cliente, int id_obraSocial)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "DELETE FROM Cliente_Obra_Social " +
+                    "WHERE id_cliente=@id_cliente AND id_obra_social = @id_obra_social)", con);
+                cmd.Parameters.AddWithValue("@id_cliente", id_cliente);
+                cmd.Parameters.AddWithValue("@id_obra_social", id_obraSocial);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

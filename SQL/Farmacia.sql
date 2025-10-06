@@ -80,6 +80,9 @@ INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES
 
 SELECT * FROM Cliente_Obra_Social;
 
+ALTER TABLE Cliente_Obra_Social DROP COLUMN nro_afiliado;
+
+
 
 -----USUARIO--------------------------------------------------------------------------------------------------
 CREATE TABLE Usuario

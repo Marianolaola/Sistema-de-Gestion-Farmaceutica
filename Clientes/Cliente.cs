@@ -15,10 +15,13 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         public string nombre { get; set; }
         public string apellido { get; set; }
         public string dni { get; set; }
-        public DateTime fecha_nacimiento { get; set; }
+        public DateTime? fecha_nacimiento { get; set; }
         public string telefono { get; set; }
         public string direccion { get; set; }
         public string email { get; set; }
+
+        //Un cliente puede tener varias obras sociales
+        public List<ClienteObraSocial> obrasSociales { get; set; } = new List<ClienteObraSocial>();
 
         public Cliente() { }
         public Cliente(int id_cliente, string nombre, string apellido, string dni, DateTime fecha_nacimiento, string telefono, string direccion, string email)
@@ -35,9 +38,10 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         public int Edad()
         {
+            if(!fecha_nacimiento.HasValue) { return 0; }
             var today = DateTime.Today;
-            var edad = DateTime.Today.Year - fecha_nacimiento.Year;
-            if (fecha_nacimiento.Date > today.AddYears(-edad)) edad--;
+            var edad = DateTime.Today.Year - fecha_nacimiento.Value.Year;
+            if (fecha_nacimiento.Value.Date > today.AddYears(-edad)) edad--;
             return edad;
         }
         

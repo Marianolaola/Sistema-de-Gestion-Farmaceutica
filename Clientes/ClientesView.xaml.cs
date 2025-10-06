@@ -38,9 +38,9 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         private void CargarObrasSociales()
         {
-            DataTable obrasSociales = clienteRepo.CargarObrasSociales();
+            var obrasSociales = clienteRepo.CargarObrasSociales();
 
-            cmbObraSocial.ItemsSource = obrasSociales.DefaultView;
+            cmbObraSocial.ItemsSource = obrasSociales;
             cmbObraSocial.DisplayMemberPath = "nombre";
             cmbObraSocial.SelectedValuePath = "id_obra_social";
             cmbObraSocial.SelectedValue = 0;
@@ -56,14 +56,10 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
         {
-            AgregarCliente ventana = new AgregarCliente();
+            ClienteWindow ventana = new ClienteWindow();
             bool? resultado = ventana.ShowDialog();
 
-            if (resultado == true)
-            {
-                clienteRepo.AltaCliente(ventana.clienteCreado);
                 CargarClientes();
-            }
         }
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
@@ -97,8 +93,38 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         private void btnEditar_Click(object sender, RoutedEventArgs e)
         {
+            if (dgClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente para editar.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            DataRowView filaSeleccionada = (DataRowView)dgClientes.SelectedItem;
+            int idCliente = Convert.ToInt32(filaSeleccionada["id_cliente"]);
+
+            // Obtener cliente completo desde el repositorio
+            Cliente clienteAEditar = clienteRepo.ObtenerClientes()
+                                                .AsEnumerable()
+                                                .Select(r => new Cliente
+                                                {
+                                                    id_cliente = Convert.ToInt32(r["id_cliente"]),
+                                                    nombre = r["nombre"].ToString(),
+                                                    apellido = r["apellido"].ToString(),
+                                                    dni = r["dni"].ToString(),
+                                                    fecha_nacimiento = r["fecha_nacimiento"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["fecha_nacimiento"]),
+                                                    telefono = r["telefono"].ToString(),
+                                                    direccion = r["direccion"].ToString(),
+                                                    email = r["email"].ToString()
+                                                })
+                                                .First(c => c.id_cliente == idCliente);
+
+            ClienteWindow ventana = new ClienteWindow(clienteAEditar); // Pasamos el cliente existente
+            ventana.ShowDialog();
+
+            // Recargar clientes después de editar
+            CargarClientes();
         }
+
     }
 }
 
