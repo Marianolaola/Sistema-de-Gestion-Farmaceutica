@@ -11,16 +11,46 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Ventas (Vista Prototipo)"
-                   FontSize="20" Margin="0,0,0,10" Grid.Row="0"
-        />
+        <TextBlock Text="Ventas (Vista Prototipo)" FontSize="20" Margin="0,0,0,10" Grid.Row="0"/>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="➕ Agregar Venta" Width="150" Margin="5" />
+        <!-- Cliente -->
+        <StackPanel Orientation="Horizontal" Margin="0,40,0,10" Grid.Row="1">
+            <!--Button x:Name="btnAgregar" Content="➕ Agregar Venta" Width="150" Margin="5" /-->
+            <TextBlock Text="Cliente: " VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="cmbClientes" Width="200" DisplayMemberPath="nombre" SelectedValuePath="id_cliente"/>
+        </StackPanel>
+        
+        <!-- Seleccion de medicamento -->
+        <StackPanel Orientation="Horizontal" Margin="0,80,0,10">
+            <TextBlock Text="Medicamento:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="cmbMedicamentos" Width="200" DisplayMemberPath="nombre_comercial" SelectedValuePath="id_medicamento"/>
+            <TextBlock Text="Cantidad:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox x:Name="txtCantidad" Width="50"/>
+            <Button x:Name="btnAgregar" Content="➕ Sumar Producto " Margin="10,0,0,0" Click="btnAgregar_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="dgVentasDetalle" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="0,10,0,0"/>
+        <!-- Datagrid -->
+        <DataGrid x:Name="dgDetalle" Grid.Row="2" AutoGenerateColumns="False" Margin="0,10,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Medicamento" Binding="{Binding Nombre}" Width="Auto"/>
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
+                <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Precio}" Width="Auto"/>
+                <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Total y Botones -->
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
+            <TextBlock Text="Total: $" VerticalAlignment="Center" FontSize="16"/>
+            <TextBlock x:Name="txtTotal" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="5,0,20,0"/>
+            <Button x:Name="btnConfirmar" Content="Confirmar Venta" Click="btnConfirmar_Click"  Width="150" />
+        </StackPanel>
+
+
+
+        <!--DataGrid x:Name="dgVentasDetalle" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="0,10,0,0"/-->
     </Grid>
 </UserControl>
