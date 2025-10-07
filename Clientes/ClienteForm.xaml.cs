@@ -29,18 +29,17 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             InitializeComponent();
         }
 
-        public ClienteForm(Cliente cliente = null)
-        {
-            InitializeComponent();
-            viewModel = new ClienteViewModel(cliente);
-            DataContext = viewModel;
-            
-        }
 
         private void btnAgregarObraSocial_Click(object sender, RoutedEventArgs e)
         {
             var vm = this.DataContext as ClienteViewModel;
-            vm?.AgregarObraSocial();
+            if(vm.cliente.id_cliente == 0)
+            {
+                vm.GuardarCliente();
+                // si sigue siendo 0, significa que no se guardó
+                if (vm.cliente.id_cliente == 0) return;
+            }
+            vm.AgregarObraSocial();
             
         }
 
@@ -52,5 +51,6 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 vm?.EliminarObraSocial(obraSeleccionada);
             }
         }
+
     }
 }

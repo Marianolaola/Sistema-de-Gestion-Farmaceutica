@@ -32,7 +32,7 @@
                 <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
                 <DataGridTextColumn Header="DNI" Binding="{Binding dni}" Width="Auto"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*"/>
-                <DataGridTextColumn Header="Obra Social" Binding="{Binding nombre_obra_social}" Width="*"/>
+                <DataGridTextColumn Header="Obra Social" Binding="{Binding obras_sociales}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

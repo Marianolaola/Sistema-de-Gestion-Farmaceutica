@@ -12,9 +12,10 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         public int id_cliente { get; set; }
         public int id_obra_social { get; set; }
         public int nro_afiliado { get; set; }
+
         public string nombre_obra_social { get; set; }
 
-        
+
     }
 
        

@@ -33,13 +33,34 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         private void CargarClientes()
         {
-            dgClientes.ItemsSource = clienteRepo.ObtenerClientes().DefaultView;
+            int? idObraSocial = null;
+
+            if (cmbObraSocial.SelectedValue != null)
+            {
+                int seleccionado = Convert.ToInt32(cmbObraSocial.SelectedValue);
+                if(seleccionado > 0)
+                {
+                    idObraSocial = seleccionado;
+                }
+                else if(seleccionado == -1)
+                {
+                    idObraSocial = -1; // Indica "Sin Obra Social"
+                }
+                else
+                {
+                    idObraSocial = null; // Indica "Todos"
+                }
+                    dgClientes.ItemsSource = clienteRepo.ObtenerClientesConObras(idObraSocial).DefaultView;
+            }
+           
         }
 
         private void CargarObrasSociales()
         {
             var obrasSociales = clienteRepo.CargarObrasSociales();
 
+            obrasSociales.Insert(0, new ObraSocial { id_obra_social = 0, nombre = "Todos" });
+            obrasSociales.Insert(1, new ObraSocial { id_obra_social = -1, nombre = "Sin Obra Social" });
             cmbObraSocial.ItemsSource = obrasSociales;
             cmbObraSocial.DisplayMemberPath = "nombre";
             cmbObraSocial.SelectedValuePath = "id_obra_social";
@@ -51,6 +72,11 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             if (cmbObraSocial.SelectedValue == null) return;
 
             int idObraSocial = Convert.ToInt32(cmbObraSocial.SelectedValue);
+
+            if (idObraSocial == 0)
+            {
+                CargarClientes();
+            }
             dgClientes.ItemsSource = clienteRepo.ObtenerClientesPorObraSocial(idObraSocial).DefaultView;
         }
 
@@ -103,7 +129,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             int idCliente = Convert.ToInt32(filaSeleccionada["id_cliente"]);
 
             // Obtener cliente completo desde el repositorio
-            Cliente clienteAEditar = clienteRepo.ObtenerClientes()
+            Cliente clienteAEditar = clienteRepo.ObtenerClientesConObras()
                                                 .AsEnumerable()
                                                 .Select(r => new Cliente
                                                 {

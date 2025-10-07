@@ -22,16 +22,20 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         public ClienteWindow(Cliente cliente = null)
         {
             InitializeComponent();
-            this.DataContext = new ClienteViewModel(cliente);
+
+            if (cliente != null)
+            {
+                clienteForm.DataContext = new ClienteViewModel(cliente);
+            }
+            else
+            {
+                clienteForm.DataContext = new ClienteViewModel();
+            }
         }
 
         private void BtnAceptar_Click(object sender, RoutedEventArgs e)
         {
-            var vm = this.DataContext as ClienteViewModel;
-            vm?.GuardarCliente();
             this.Close();
-
-            
 
         }
 
@@ -40,6 +44,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             var vm = this.DataContext as ClienteViewModel;
             vm?.CancelarCliente(this);
         }
+
 
     }
 }

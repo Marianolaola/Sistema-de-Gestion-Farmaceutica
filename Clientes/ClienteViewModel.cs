@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Text;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace Sistema_de_Gestión_Farmacéutica.Clientes
 {
@@ -21,7 +23,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         public List<ObraSocial> obrasSociales { get; set; }
 
         //Las obras sociales que el cliente tiene asignadas
-        public List<ClienteObraSocial> obrasSocialesAsignadas { get; set; }
+        public ObservableCollection<ClienteObraSocial> obrasSocialesAsignadas { get; set; }
 
         //Obra social seleccionada en el ComboBox para agregar
         public ObraSocial obraSocialSeleccionada { get; set; }
@@ -37,7 +39,8 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 Titulo = "Editar Cliente";
                 cliente = clienteExistente;
                 //inicializamos las obras sociales
-                obrasSocialesAsignadas = repo.ObtenerObrasSocialesPorCliente(clienteExistente.id_cliente);
+                obrasSocialesAsignadas = new ObservableCollection<ClienteObraSocial>(
+                    repo.ObtenerObrasSocialesPorCliente(clienteExistente.id_cliente));
                     
             }
             else
@@ -46,7 +49,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 esEdicion = false;
                 Titulo = "Agregar Cliente";
                 cliente = new Cliente();
-                obrasSocialesAsignadas = new List<ClienteObraSocial>();
+                obrasSocialesAsignadas = new ObservableCollection<ClienteObraSocial>();
 
             }
             obrasSociales = repo.CargarObrasSociales();
@@ -66,21 +69,28 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             }
             //Si no está asignada, la agregamos
             repo.AgregarObraSocialACliente(cliente.id_cliente, obraSocialSeleccionada.id_obra_social);
-            //Refrescamos la lista
-            obrasSocialesAsignadas = repo.ObtenerObrasSocialesPorCliente(cliente.id_cliente);
+
+            var nuevaObra = new ClienteObraSocial
+            {
+                id_cliente = cliente.id_cliente,
+                id_obra_social = obraSocialSeleccionada.id_obra_social,
+                nombre_obra_social = obraSocialSeleccionada.nombre
+            };
+            obrasSocialesAsignadas.Add(nuevaObra);
         }
 
         public void EliminarObraSocial(ClienteObraSocial obra)
         {
             if (obra == null) { return; }
             repo.EliminarObraSocialACliente(cliente.id_cliente, obra.id_obra_social);
-            obrasSocialesAsignadas = repo.ObtenerObrasSocialesPorCliente(cliente.id_cliente);
+            obrasSocialesAsignadas.Remove(obra);
         }
 
 
         public void GuardarCliente()
         {
             // Validaciones
+
             if (string.IsNullOrWhiteSpace(cliente.nombre) ||
                 string.IsNullOrWhiteSpace(cliente.apellido) ||
                 string.IsNullOrWhiteSpace(cliente.dni) ||
@@ -92,17 +102,51 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 return;
             }
 
-            if (cliente.fecha_nacimiento == null)
+            if (cliente.fecha_nacimiento == null || cliente.fecha_nacimiento > DateTime.Today)
             {
-                MessageBox.Show("Debes ingresar la fecha de nacimiento.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Debes ingresar una fecha de nacimiento válida.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
+            }
+
+            if (!Regex.IsMatch(cliente.email, @"^[a-zA-Z0-9._%+-]+@gmail\.com$"))
+            {
+                MessageBox.Show("El formato debe ser una direccion válida (ejemplo: usuario@gmail.com).", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!esEdicion)
+            {
+                if (repo.BuscarDNIExistente(cliente.dni))
+                {
+                    MessageBox.Show("El DNI ingresado ya existe en el sistema.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (repo.BuscarEmailExistente(cliente.email))
+                {
+                    MessageBox.Show("El email ingresado ya existe en el sistema.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (repo.BuscarTelefonoExistente(cliente.telefono))
+                {
+                    MessageBox.Show("El teléfono ingresado ya existe en el sistema.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
             }
 
             // Guardar según sea nuevo o edición
             if (esEdicion)
+            {
                 repo.EditarCliente(cliente);
+                MessageBox.Show("Cliente editado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             else
-                repo.AltaCliente(cliente);
+            {
+                cliente.id_cliente = repo.AltaCliente(cliente);
+                MessageBox.Show("Cliente guardado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+                
         }
 
         public void CancelarCliente(Window ventana)

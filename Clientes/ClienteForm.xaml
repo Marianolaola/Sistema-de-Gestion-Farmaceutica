@@ -26,23 +26,23 @@
 
             <!--Nombre-->
             <TextBlock Text="Nombre:" Foreground="White" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
-            <TextBox Text="{Binding cliente.nombre}" Grid.Row="0" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox Text="{Binding cliente.nombre}" Grid.Row="0" Grid.Column="1" Height="27" Margin="0,5" Padding="5"  />
 
             <!--Apellido-->
             <TextBlock Text="Apellido:" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
-            <TextBox Text="{Binding cliente.apellido}" Grid.Row="1" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox Text="{Binding cliente.apellido}" Grid.Row="1" Grid.Column="1" Height="27" Margin="0,5" Padding="5"  />
 
             <!--DNI-->
             <TextBlock Text="DNI:" Foreground="White" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
-            <TextBox Text="{Binding cliente.dni}" Grid.Row="2" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox Text="{Binding cliente.dni}" IsReadOnly="{Binding esEdicion}" Grid.Row="2" Grid.Column="1" Height="27" Margin="0,5" Padding="5"  />
 
             <!--Email-->
             <TextBlock Text="Email:" Foreground="White" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Margin="0,5"/>
-            <TextBox Text="{Binding cliente.email}" Grid.Row="3" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox Text="{Binding cliente.email}" Grid.Row="3" Grid.Column="1" Height="27" Margin="0,5" Padding="5"  />
 
             <!--Teléfono-->
             <TextBlock Text="Teléfono:" Foreground="White" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
-            <TextBox Text="{Binding cliente.telefono}" Grid.Row="4" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox Text="{Binding cliente.telefono}" Grid.Row="4" Grid.Column="1" Height="27" Margin="0,5" Padding="5"  />
 
             <!--Fecha de Nacimiento-->
             <TextBlock Text="Fecha nacimiento:" Foreground="White" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
@@ -50,7 +50,7 @@
 
             <!--Direccion-->
             <TextBlock Text="Direccion:" Foreground="White" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
-            <TextBox Text="{Binding cliente.direccion}" Grid.Row="6" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox Text="{Binding cliente.direccion}" Grid.Row="6" Grid.Column="1" Height="27" Margin="0,5" Padding="5"  />
 
             <!--Obra Social-->
             <TextBlock Text="Obra Social:" Foreground="White" VerticalAlignment="Center" Grid.Row="7" Grid.Column="0" Margin="0,5"/>
@@ -61,7 +61,9 @@
                 <ComboBox ItemsSource="{Binding obrasSociales}" 
                           SelectedItem="{Binding obraSocialSeleccionada}"
                           DisplayMemberPath="nombre"
-                          Height="25" Margin="0,0,0,5"/>
+                          Height="27" Margin="0,0,0,5"
+                          IsEditable="True"
+                          Text="Seleccione una obra Social"/>
 
                 <!-- Botones Agregar y Eliminar -->
               <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
