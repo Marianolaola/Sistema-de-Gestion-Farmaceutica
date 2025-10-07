@@ -16,7 +16,7 @@ CREATE TABLE Cliente
   CONSTRAINT pk_id_cliente PRIMARY KEY (id_cliente),
   CONSTRAINT uq_dni UNIQUE (dni),
   CONSTRAINT uq_telefono UNIQUE (telefono),
-  CONSTRAINT uq_email UNIQUE (email),
+  CONSTRAINT uq_email UNIQUE (email)
 );
 
 ALTER TABLE Cliente
@@ -58,27 +58,28 @@ CREATE TABLE Cliente_Obra_Social
 (
 	id_cliente INT NOT NULL,
 	id_obra_social INT NOT NULL,
-	nro_afiliado INT NOT NULL,
+	nro_afiliado INT IDENTITY (50,50),
 	CONSTRAINT fk_cliente_obra_social_cliente FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
 	CONSTRAINT fk_cliente_obra_social_obra_social FOREIGN KEY (id_obra_social) REFERENCES Obra_Social(id_obra_social),
 	CONSTRAINT pk_cliente_obra_social PRIMARY KEY (id_cliente, id_obra_social),
 	CONSTRAINT uq_cliente_obra_afiliado UNIQUE (id_obra_social,nro_afiliado)
 );
 
-INSERT INTO Cliente_Obra_Social (id_cliente,id_obra_social,nro_afiliado) VALUES (1, 1, 89536888);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (1, 2, 11246854);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (1, 3, 22568472);
+INSERT INTO Cliente_Obra_Social (id_cliente,id_obra_social) VALUES (1, 1);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (1, 2);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (1, 3);
 
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (2, 1, 11111111);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (2, 2, 11111112);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (3, 1, 11111113);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (3, 3, 11111114);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (2, 1);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (2, 2);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (3, 1);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (3, 3);
 
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (4, 1, 11111115);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (5, 2, 11111116);
-INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social,nro_afiliado) VALUES (6, 3, 11111116);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (4, 1);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (5, 2);
+INSERT INTO Cliente_Obra_Social (id_cliente, id_obra_social) VALUES (6, 3);
 
 SELECT * FROM Cliente_Obra_Social;
+
 
 
 -----USUARIO--------------------------------------------------------------------------------------------------
