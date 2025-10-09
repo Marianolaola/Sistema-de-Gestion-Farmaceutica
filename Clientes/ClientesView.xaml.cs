@@ -97,7 +97,34 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         private void btnEditar_Click(object sender, RoutedEventArgs e)
         {
+            if(dgClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente para editar.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
+            DataRowView fila = (DataRowView)dgClientes.SelectedItem;
+
+            Cliente clienteAEditar = new Cliente
+            {
+                id_cliente = Convert.ToInt32(fila["id_cliente"]),
+                nombre = fila["nombre"].ToString(),
+                apellido = fila["apellido"].ToString(),
+                email = fila["email"].ToString(),
+                dni = fila["dni"].ToString(),
+                telefono = fila["telefono"].ToString(),
+                direccion = fila["direccion"].ToString(),
+                fecha_nacimiento = Convert.ToDateTime(fila["fecha_nacimiento"])
+
+            };
+
+            EditarCliente ventana = new EditarCliente(clienteAEditar);
+            bool? resultado = ventana.ShowDialog();
+
+            if (resultado == true)
+            {
+                clienteRepo.EditarCliente(clienteAEditar);
+                CargarClientes();
+            }
         }
     }
 }

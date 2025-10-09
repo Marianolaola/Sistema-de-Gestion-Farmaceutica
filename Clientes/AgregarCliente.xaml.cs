@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,18 +34,34 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                string.IsNullOrEmpty(txtTelefono.Text) ||
                string.IsNullOrEmpty(txtDireccion.Text))
             {
-                MessageBox.Show("Todos los cambos son obligatoios", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Todos los campos son obligatoios", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
+            
+            //Validar Fecha de Nacimiento
             if (!txtFecha.SelectedDate.HasValue)
             {
                 MessageBox.Show("La fecha de nacimiento es obligatoria", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            if (!txtEmail.Text.Contains("@gmail.com"))
+            //validar Emial
+            if (!Regex.IsMatch(txtEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 MessageBox.Show("El email debe ser un correo válido -> (usuario@gmail.com)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if(!Regex.IsMatch(txtDNI.Text, @"^\d+$"))
+            {
+                MessageBox.Show("El DNI debe contener solo números.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!Regex.IsMatch(txtTelefono.Text, @"^\d+$"))
+            {
+                MessageBox.Show("El Telefono debe contener solo números.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             clienteCreado = new Cliente

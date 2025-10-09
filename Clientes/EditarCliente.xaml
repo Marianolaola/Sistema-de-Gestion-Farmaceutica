@@ -1,0 +1,96 @@
+﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.Clientes.EditarCliente"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Clientes"
+        mc:Ignorable="d"
+        Title="EditarCliente" Height="470" Width="420"
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        Background="#283342">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <TextBlock Text="Agregar Cliente" 
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"
+                   Grid.Row="0"/>
+
+        <!-- Formulario -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Filas -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Nombre -->
+            <TextBlock Text="Nombre:" Foreground="White" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Height="27" Margin="0,5" Padding="5"/>
+
+            <!-- Apellido -->
+            <TextBlock Text="Apellido:" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtApellido" Grid.Row="1" Grid.Column="1" Height="27" Margin="0,5" Padding="5"/>
+
+            <!-- DNI -->
+            <TextBlock Text="DNI:" Foreground="White" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtDNI" IsReadOnly="True" Grid.Row="2" Grid.Column="1" Height="27" Margin="0,5" Padding="5"/>
+
+            <!-- Email -->
+            <TextBlock Text="Email:" Foreground="White" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Height="27" Margin="0,5" Padding="5"/>
+
+            <!-- Teléfono -->
+            <TextBlock Text="Teléfono:" Foreground="White" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtTelefono" Grid.Row="4" Grid.Column="1" Height="27" Margin="0,5" Padding="5"/>
+
+            <!-- Fecha Nacimiento -->
+            <TextBlock Text="F. Nacimiento:" Foreground="White" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
+            <DatePicker x:Name="txtFecha" IsEnabled="False" Grid.Row="5" Grid.Column="1" Height="30" Margin="0,5" Padding="5"/>
+
+            <!-- Dirección -->
+            <TextBlock Text="Dirección:" Foreground="White" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
+            <TextBox x:Name="txtDireccion" Grid.Row="6" Grid.Column="1" Height="27" Margin="0,5" Padding="5"/>
+        </Grid>
+
+        <!-- Botones -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Margin="0,10,0,0">
+            <Button Content="Aceptar"
+                    Width="110" Height="35"
+                    Margin="0,0,10,0"
+                    Background="#C7C7A6"
+                    FontWeight="SemiBold"
+                    Click="btnAceptar_Click"
+                    Cursor="Hand"/>
+
+            <Button Content="Cancelar"
+                    Width="110" Height="35"
+                    Background="#5A5A5A"
+                    FontWeight="SemiBold"
+                    Click="btnCancelar_Click"
+                    Cursor="Hand"/>
+        </StackPanel>
+
+    </Grid>
+
+</Window>

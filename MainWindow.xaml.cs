@@ -1,5 +1,6 @@
 ﻿using Sistema_de_Gestión_Farmacéutica.Clientes;
 using Sistema_de_Gestión_Farmacéutica.Ventas;
+using Sistema_de_Gestión_Farmacéutica.Obra_Sociales;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,6 +24,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnMedicamentos.Visibility = Visibility.Visible;
                     btnVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
+                    btnObrasSociales.Visibility = Visibility.Collapsed;
                     break;
                 case "Administrador":
                     btnUsuarios.Visibility = Visibility.Visible;
@@ -30,6 +32,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnMedicamentos.Visibility = Visibility.Visible;
                     btnVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
+                    btnObrasSociales.Visibility = Visibility.Visible;
                     break;
                 case "Farmaceutico":
                     btnUsuarios.Visibility = Visibility.Collapsed;
@@ -37,6 +40,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnMedicamentos.Visibility = Visibility.Visible;
                     btnVentas.Visibility = Visibility.Visible;
                     btnClientes.Visibility = Visibility.Collapsed;
+                    btnObrasSociales.Visibility = Visibility.Collapsed;
                     break;
             }
 
@@ -99,6 +103,14 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             this.Close();
 
+        }
+
+        private void AbrirObrasSociales_Click(object sender, RoutedEventArgs e)
+        {
+            ContenidoPrincipal.Content = new ObraSocialView()
+            {
+
+            };
         }
     }
 }

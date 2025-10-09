@@ -1,0 +1,28 @@
+﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.Obra_Sociales.ObraSocialView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Obra_Sociales"
+        mc:Ignorable="d"
+        Title="Obras Sociales" Height="450" Width="800">
+    <Grid Margin ="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!--Botones-->
+            <RowDefinition Height="*"/>  <!--DataGrid-->
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <Button x:Name="btnAgregarOS" Content="Agregar Obra Social" Width="100" Margin="0,0,10,0" Click="btnAgregarOS_Click"/>
+            <Button x:Name="btnEditarOS" Content="Editar Obra Social" Width="100" Margin="0,0,10,0" Click="btnEditarOS_Click"/>
+            <Button x:Name="btnEliminarOS" Content="Eliminar Obra Social" Width="100" Margin="0,0,10,0" Click="btnEliminarOS_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="dgObrasSociales" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding id_obra_social}" Width="100"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

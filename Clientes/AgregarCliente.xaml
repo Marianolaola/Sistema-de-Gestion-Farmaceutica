@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Clientes"
         mc:Ignorable="d"
-        Title="Agregar Cliente" Height="450" Width="400"
+        Title="Agregar Cliente" Height="470" Width="420"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Background="#283342">
     
