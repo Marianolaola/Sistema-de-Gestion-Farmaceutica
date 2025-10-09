@@ -31,7 +31,8 @@
                 <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
                 <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
                 <DataGridTextColumn Header="DNI" Binding="{Binding dni}" Width="Auto"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*"/>
+                <DataGridTextColumn Header="Edad" Binding="{Binding edad}" Width="Auto"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*"/>
                 <DataGridTextColumn Header="Obra Social" Binding="{Binding nombre_obra_social}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

@@ -27,31 +27,33 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         public ClientesView()
         {
             InitializeComponent();
-            CargarClientes();
-            CargarObrasSociales();
+            CargarFiltros();
+            AplicarFiltros(); // carga inicial de Datos
         }
 
-        private void CargarClientes()
-        {
-            dgClientes.ItemsSource = clienteRepo.ObtenerClientes().DefaultView;
-        }
 
-        private void CargarObrasSociales()
+        private void CargarFiltros()
         {
             DataTable obrasSociales = clienteRepo.CargarObrasSociales();
-
             cmbObraSocial.ItemsSource = obrasSociales.DefaultView;
             cmbObraSocial.DisplayMemberPath = "nombre";
             cmbObraSocial.SelectedValuePath = "id_obra_social";
-            cmbObraSocial.SelectedValue = 0;
+            cmbObraSocial.SelectedValue = 0; // Se selecciona "todos por defecto"
+        }
+
+        private void AplicarFiltros()
+        {
+            if(cmbObraSocial.SelectedValue == null) return;
+
+            int idObraSocialSeleccionada = Convert.ToInt32(cmbObraSocial.SelectedValue);
+
+            dgClientes.ItemsSource = clienteRepo.ObtenerClientesFiltrados(idObraSocialSeleccionada).DefaultView;
         }
 
         private void cmbObraSocial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbObraSocial.SelectedValue == null) return;
-
-            int idObraSocial = Convert.ToInt32(cmbObraSocial.SelectedValue);
-            dgClientes.ItemsSource = clienteRepo.ObtenerClientesPorObraSocial(idObraSocial).DefaultView;
+            // cada vez que el usuario cambiar el filtor,, aplciamos el método
+            AplicarFiltros();
         }
 
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
@@ -62,7 +64,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             if (resultado == true)
             {
                 clienteRepo.AltaCliente(ventana.clienteCreado);
-                CargarClientes();
+                AplicarFiltros();
             }
         }
 
@@ -86,7 +88,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 if (eliminado)
                 {
                     MessageBox.Show("Cliente eliminado correctamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    CargarClientes();
+                    AplicarFiltros();
                 }
                 else
                 {
@@ -123,7 +125,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             if (resultado == true)
             {
                 clienteRepo.EditarCliente(clienteAEditar);
-                CargarClientes();
+                AplicarFiltros();
             }
         }
     }
