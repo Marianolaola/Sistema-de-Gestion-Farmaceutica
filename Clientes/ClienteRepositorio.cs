@@ -15,51 +15,57 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         private string connectionString = "Server=localhost\\SQLEXPRESS; Database=SistemaFarmaceutico; Trusted_Connection=True; TrustServerCertificate=True;";
 
 
-        public DataTable ObtenerClientesFiltrados(int idObraSocial, string rangoEdad = "Todos")
+        public DataTable ObtenerClientesFiltrados(int idObraSocial, string rangoEdad = "todos")
         {
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                var queryBuilder = new StringBuilder(@"SELECT
-                                    c.id_cliente
-                                    c.nombre,
-                                    c.apellido,
-                                    c.dni,
-                                    c.fecha_nacimiento,
-                                    DATEDIFF(year, c.fecha_nacimiento, GETDATE())  AS edad,
-                                    c.email,
-                                    c.telefono,
-                                    c.direccion,
-                                    ISNULL(STRING_AGG(o.nombre, ', '), '') AS nombre_obra_social,
-                                FROM Cliente c
-                                LEFT JOIN Cliente_Obra_Social AS cos ON c.id_cliente = cos.id_cliente
-                                LEFT JOIN Obra_Social AS os ON cos.id_obra_social = os.id_obra_social
-                                WHERE activo = 1");
-
+                var queryBuilder = new StringBuilder();
                 SqlCommand cmd = new SqlCommand();
 
-                //--Lógica para Filtros de Obra Social--
-                if(idObraSocial == -1) // sin Obra Social
+                if (idObraSocial > 0) // --- CASO 1: Se filtra por una Obra Social específica ---
                 {
-                    queryBuilder.Append("AND NOT EXISTS(SELECT 1 FROM Cliente_Obra_Social AS cos WHERE cos.id_cliente = c.id_cliente)");
-                }
-                else if (idObraSocial > 0) // Obras Sociales Específicas
-                {
-                    queryBuilder.Append("AND EXISTS FROM Cliente_Obra_Social AS cos WHERE cos.id_cliente = c.id_cliente AND cos.id_obra_social = @idObraSocial)");
+                    queryBuilder.Append(@"
+                    SELECT 
+                        c.*,
+                        DATEDIFF(year, c.fecha_nacimiento, GETDATE()) as edad,
+                        os.nombre AS nombre_obra_social
+                    FROM Cliente c
+                    INNER JOIN Cliente_Obra_Social cos ON c.id_cliente = cos.id_cliente
+                    INNER JOIN Obra_Social os ON cos.id_obra_social = os.id_obra_social
+                    WHERE c.activo = 1 AND os.id_obra_social = @idObraSocial ");
                     cmd.Parameters.AddWithValue("@idObraSocial", idObraSocial);
                 }
+                else // --- CASO 2: Se selecciona "Todos" o "Sin Obra Social" ---
+                {
+                    queryBuilder.Append(@"
+                    SELECT 
+                        c.*,
+                        DATEDIFF(year, c.fecha_nacimiento, GETDATE()) as edad,
+                        (
+                            SELECT ISNULL(STRING_AGG(os.nombre, ', '), 'Sin Obra Social')
+                            FROM Cliente_Obra_Social cos
+                            JOIN Obra_Social os ON cos.id_obra_social = os.id_obra_social
+                            WHERE cos.id_cliente = c.id_cliente
+                        ) AS nombre_obra_social
+                    FROM Cliente c
+                    WHERE c.activo = 1 ");
 
-                //SI es idObraSocial == 0, no se aplica ninguna condición
-                queryBuilder.Append(@"GROUP BY c.id_cliente, c.nombre, c.apellido, c.dni, c.fecha_nacimiento, 
-                                               c.telefono, c.direccion, c.email
-                                      ORDER BY c.apellido, c.nombre");
+                    if (idObraSocial == -1) // Condición extra para "Sin Obra Social"
+                    {
+                        queryBuilder.Append(" AND NOT EXISTS (SELECT 1 FROM Cliente_Obra_Social cos WHERE cos.id_cliente = c.id_cliente) ");
+                    }
+                }
+
+                queryBuilder.Append(" ORDER BY c.apellido, c.nombre");
 
                 cmd.Connection = con;
                 cmd.CommandText = queryBuilder.ToString();
+
+                con.Open();
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
             }
-
             return dt;
         }
 
@@ -68,26 +74,24 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection(connectionString))
             {
+                // Esta consulta construye la lista completa en el servidor SQL
+                string query = @"
+                                SELECT id_obra_social, nombre FROM (
+                                SELECT 0 AS id_obra_social, 'Todos' AS nombre, 1 AS SortOrder
+                                UNION ALL
+                                SELECT -1 AS id_obra_social, 'Sin Obra Social' AS nombre, 2 AS SortOrder
+                                UNION ALL
+                                SELECT id_obra_social, nombre, 3 AS SortOrder
+                                FROM Obra_Social
+                                ) AS OpcionesFiltro
+                                ORDER BY SortOrder, nombre";
+
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT id_obra_social, nombre FROM Obra_Social ORDER BY nombre", con);
+                SqlCommand cmd = new SqlCommand(query, con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
-
                 da.Fill(dt);
-
-                // Agregar opción "Todos"
-                DataRow filaTodos = dt.NewRow();
-                filaTodos["id_obra_social"] = 0; // ID para Todos
-                filaTodos["nombre"] = "Todos";
-                dt.Rows.InsertAt(filaTodos, 0);
-
-                // Agregar opción "Sin Obra Social"
-                DataRow filaSinOs = dt.NewRow();
-                filaSinOs["id_obra_social"] = -1; // ID para Sin Obras Sociales
-                filaSinOs["nombre"] = "Sin Obra Social";
-                dt.Rows.InsertAt(filaSinOs, -1);
             }
             return dt;
-
         }
 
 

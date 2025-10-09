@@ -102,6 +102,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             if(dgClientes.SelectedItem == null)
             {
                 MessageBox.Show("Debe seleccionar un cliente para editar.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
 
             DataRowView fila = (DataRowView)dgClientes.SelectedItem;
