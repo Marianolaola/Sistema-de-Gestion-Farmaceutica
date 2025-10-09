@@ -18,7 +18,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
     /// <summary>
     /// Lógica de interacción para ObraSocialView.xaml
     /// </summary>
-    public partial class ObraSocialView : Window
+    public partial class ObraSocialView : UserControl
     {
         private ObrasRepositorio obrasrepo = new ObrasRepositorio();
         public ObraSocialView()
@@ -36,13 +36,48 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
         //Boton de Agregar una Obra Social
         private void btnAgregarOS_Click(object sender, RoutedEventArgs e)
         {
+            AgregarObraSocial ventanaAgregar = new AgregarObraSocial();
+            bool? resultado = ventanaAgregar.ShowDialog();
 
+            if(resultado == true)
+            {
+                obrasrepo.AgregarObraSocial(ventanaAgregar.obraSocial);
+                //Refrescamos el DataGrid
+                CargarObraSociales();
+            }
 
         }
 
         //Boton de Editar una Obra Social
         private void btnEditarOS_Click(object sender, RoutedEventArgs e)
         {
+            if(dgObrasSociales.SelectedItem == null)
+            {
+                MessageBox.Show("Por favor, seleccione una obra social para editar.", "Selección requerida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            //Obtenemos la fila del DataGrid
+            DataRowView fila = (DataRowView)dgObrasSociales.SelectedItem;
+
+            //Creamos un Objeto ObraSocial con los datos de la fila seleccionada
+            ObraSocial obraSocialAEditar = new ObraSocial
+            {
+                id_obra_social =(int)fila["id_obra_social"],
+                nombre = fila["nombre"].ToString()
+            };
+
+            //Abrimos la ventana de edición pasando el objeto
+            EditarObraSocial ventana = new EditarObraSocial(obraSocialAEditar);
+            bool? resultado = ventana.ShowDialog();
+
+            if(resultado == true)
+            {
+                obrasrepo.EditarObraSocial(ventana.obraSocialEditada);
+                //Refrescamos el DataGrid
+                CargarObraSociales();
+                MessageBox.Show("Obra social actualizada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
 
