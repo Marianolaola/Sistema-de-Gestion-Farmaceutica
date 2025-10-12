@@ -127,7 +127,13 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             {
                 clienteRepo.EditarCliente(clienteAEditar);
                 AplicarFiltros();
+                MessageBox.Show("Cliente editado correctamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        private void btnGestionarOS_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

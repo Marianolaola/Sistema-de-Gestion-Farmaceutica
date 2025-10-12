@@ -1,0 +1,54 @@
+﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.Clientes.GestionarObrasSociales"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gestionar Obras Sociales" Height="450" Width="700"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#F5F5F5">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+            <TextBlock Text="Gestionar Obras Sociales" FontSize="22" FontWeight="Bold" Foreground="#283342"/>
+            <TextBlock x:Name="lblNombreCliente" Text="Cliente: Cargando..." FontSize="16" Foreground="Gray"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Disponibles" FontWeight="SemiBold" Margin="5"/>
+                <ListView x:Name="lvDisponibles" BorderThickness="1" BorderBrush="LightGray"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                <Button x:Name="btnAgregar" Content=" >" FontWeight="Bold" Width="40" Height="30" Margin="0,5" Click="btnAgregar_Click"/>
+                <Button x:Name="btnQuitar" Content="&lt;" FontWeight="Bold" Width="40" Height="30" Margin="0,5" Click="btnQuitar_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Asociadas al Cliente" FontWeight="SemiBold" Margin="5"/>
+                <ListView x:Name="lvAsociadas" BorderThickness="1" BorderBrush="LightGray">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Obra Social" DisplayMemberBinding="{Binding nombre}"/>
+                            <GridViewColumn Header="N° de Afiliado" DisplayMemberBinding="{Binding nro_afiliado}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="btnGuardar" Content="Guardar Cambios" Width="130" Height="35" Background="ForestGreen" Foreground="White" Click="btnGuardar_Click"/>
+            <Button x:Name="btnCancelar" Content="Cancelar" Width="100" Height="35" Margin="10,0,0,0" Click="btnCancelar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

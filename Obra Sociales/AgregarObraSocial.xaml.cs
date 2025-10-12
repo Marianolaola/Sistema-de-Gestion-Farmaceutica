@@ -19,7 +19,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
     /// </summary>
     public partial class AgregarObraSocial : Window
     {
-        public ObraSocial obraSocial { get; private set; }
+        public ObraSocial obraSocialCreada { get; private set; }
         public AgregarObraSocial()
         {
             InitializeComponent();
@@ -29,16 +29,16 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                MessageBox.Show("El nombre de la obra social no puede estar vacío.");
+                MessageBox.Show("El nombre de la obra social no puede estar vacío.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
 
-                obraSocial = new ObraSocial
+                obraSocialCreada = new ObraSocial
                 {
-                    nombre = txtNombre.Text.Trim()
+                    nombre = txtNombre.Text
                 };
                 this.DialogResult = true;
                 this.Close();
-            }
         }
 
         private void Cancelar_Click(object sender, RoutedEventArgs e)

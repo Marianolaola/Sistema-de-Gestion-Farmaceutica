@@ -13,16 +13,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
             <TextBlock Text="Clientes (Vista Prototipo)" FontSize="20" Margin="10"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="➕ Agregar Cliente" Width="150" Margin="5" Click="btnAgregar_Click" />
-            <Button x:Name="btnEliminar" Content="🗑 Eliminar Cliente" Width="150" Margin="5" Click="btnEliminar_Click" />
-            <Button x:Name="btnEditar" Content="⚙️ Editar Cliente" Width="150" Margin="5" Click="btnEditar_Click" />
-            <ComboBox x:Name="cmbObraSocial" Width="150" Margin="5" SelectionChanged="cmbObraSocial_SelectionChanged"/>
         </StackPanel>
 
         <DataGrid x:Name="dgClientes" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
@@ -36,6 +29,17 @@
                 <DataGridTextColumn Header="Obra Social" Binding="{Binding nombre_obra_social}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
+            <Button x:Name="btnAgregar" Content="➕ Agregar Cliente" Width="120" Margin="5" Click="btnAgregar_Click"/>
+            <Button x:Name="btnEliminar" Content="🗑 Eliminar Cliente" Width="120" Margin="5" Click="btnEliminar_Click"/>
+            <Button x:Name="btnEditar" Content="⚙️ Editar Cliente" Width="120" Margin="5" Click="btnEditar_Click"/>
+
+            <Button x:Name="btnGestionarOS" Content="🤝 Gestionar O.S." Width="120" Margin="5,5,15,5" Click="btnGestionarOS_Click"/>
+
+            <TextBlock Text="Filtrar por" VerticalAlignment="Center" Margin="10,0,5,0" FontWeight="SemiBold"/>
+            <ComboBox x:Name="cmbObraSocial" Width="150" Margin="5" SelectionChanged="cmbObraSocial_SelectionChanged"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>

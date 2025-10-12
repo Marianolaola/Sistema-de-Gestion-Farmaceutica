@@ -13,9 +13,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-            <Button x:Name="btnAgregarOS" Content="Agregar Obra Social" Width="100" Margin="0,0,10,0" Click="btnAgregarOS_Click"/>
-            <Button x:Name="btnEditarOS" Content="Editar Obra Social" Width="100" Margin="0,0,10,0" Click="btnEditarOS_Click"/>
-            <Button x:Name="btnEliminarOS" Content="Eliminar Obra Social" Width="100" Margin="0,0,10,0" Click="btnEliminarOS_Click"/>
+            <Button x:Name="btnAgregarOS" Content="Agregar Obra Social" Width="Auto" Margin="0,0,10,0" Click="btnAgregarOS_Click"/>
+            <Button x:Name="btnEditarOS" Content="Editar Obra Social" Width="Auto" Margin="0,0,10,0" Click="btnEditarOS_Click"/>
+            <Button x:Name="btnEliminarOS" Content="Eliminar Obra Social" Width="Auto" Margin="0,0,10,0" Click="btnEliminarOS_Click"/>
         </StackPanel>
 
         <DataGrid x:Name="dgObrasSociales" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True">

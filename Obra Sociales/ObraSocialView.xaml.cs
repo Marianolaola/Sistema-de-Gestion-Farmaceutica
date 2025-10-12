@@ -37,13 +37,17 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
         private void btnAgregarOS_Click(object sender, RoutedEventArgs e)
         {
             AgregarObraSocial ventanaAgregar = new AgregarObraSocial();
+            //muestra la ventana al usuario y espera hasta que el usuario la cierre
             bool? resultado = ventanaAgregar.ShowDialog();
 
+            //Si apreta el boton "Agregar" (resultado == true)
             if(resultado == true)
             {
-                obrasrepo.AgregarObraSocial(ventanaAgregar.obraSocial);
+                // llama al repositorio para guardar la nueva obra social
+                obrasrepo.AgregarObraSocial(ventanaAgregar.obraSocialCreada);
                 //Refrescamos el DataGrid
                 CargarObraSociales();
+                MessageBox.Show("Obra Social agregada correctamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
@@ -53,7 +57,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
         {
             if(dgObrasSociales.SelectedItem == null)
             {
-                MessageBox.Show("Por favor, seleccione una obra social para editar.", "Selección requerida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Por favor, seleccione una obra social para editar.", "Selección requerida", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
@@ -85,7 +89,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
         {
             if (dgObrasSociales.SelectedItem == null)
             {
-                MessageBox.Show("Seleccione una obra social para eliminar.");
+                MessageBox.Show("Seleccione una obra social para eliminar.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
@@ -98,9 +102,11 @@ namespace Sistema_de_Gestión_Farmacéutica.Obra_Sociales
             {
                 bool eliminado = obrasrepo.EliminarObraSocial(idObraSocial);
                 if (eliminado)
+
                 {
-                    MessageBox.Show("Obra social eliminada correctamente.");
                     CargarObraSociales();
+                    MessageBox.Show("Obra social eliminada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
                 }
                 else
                 {
