@@ -10,50 +10,27 @@ namespace Sistema_de_Gestión_Farmacéutica
 {
     public class Medicamento
     {
-        private string connectionString = "Server=localhost\\SQLEXPRESS; Database=SistemaFarmaceutico; Trusted_Connection=True; TrustServerCertificate=True;";
-        public DataTable ObtenerMedicamentos()
+        public int id_medicamento {  get; set; }
+        public required string nombre_comercial { get; set; }
+        public float precio_unitario { get; set; }
+        public required string presentacion { get; set; }
+        public required string laboratorio { get; set; }
+        public int stock { get; set; }
+        public int stock_minimo { get; set; }
+        public int activado { get; set; }
+
+        public Medicamento() { }
+
+        public Medicamento(int id_medicamento, string nombre_comercial, float precio_unitario, string presentacion, string laboratorio, int stock, int stock_minimo, int activado)
         {
-            DataTable dt = new DataTable();
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Medicamento", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-            }
-
-            return dt;
-        }
-
-        public void AltaMedicamento(string nombre, float precio_unitario, string presentacion, 
-                                    string laboratorio, int stock, int stock_minimo)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand(
-                    "INSERT INTO Medicamento (nombre, precio_unitario, presentacion, laboratorio, stock, stock_minimo) " +
-                    "VALUES (@nombre, @precio_unitario, @presentacion, @laboratorio, @stock, @stock_minimo)", con);
-                cmd.Parameters.AddWithValue("@nombre", nombre);
-                cmd.Parameters.AddWithValue("@precio_unitario", precio_unitario);
-                cmd.Parameters.AddWithValue("@presentacion", presentacion);
-                cmd.Parameters.AddWithValue("@laboratorio", laboratorio);
-                cmd.Parameters.AddWithValue("@stock", stock);
-                cmd.Parameters.AddWithValue("@stock_minimo", stock_minimo);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public void BajaMedicamento(int id_medicamento)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM Medicamento WHERE id_medicamento=@id", con);
-                cmd.Parameters.AddWithValue("@id", id_medicamento);
-                cmd.ExecuteNonQuery();
-            }
+            this.id_medicamento = id_medicamento;
+            this.nombre_comercial = nombre_comercial;
+            this.precio_unitario = precio_unitario;
+            this.presentacion = presentacion;
+            this.laboratorio = laboratorio;
+            this.stock = stock;
+            this.stock_minimo = stock_minimo;
+            this.activado = activado;
         }
     }
 }

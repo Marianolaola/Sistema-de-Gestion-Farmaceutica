@@ -1,4 +1,5 @@
-﻿using Sistema_de_Gestión_Farmacéutica.Sesion;
+﻿using Sistema_de_Gestión_Farmacéutica.Productos;
+using Sistema_de_Gestión_Farmacéutica.Sesion;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
     {
         private string connectionString = "Server=localhost\\SQLEXPRESS; Database=SistemaFarmaceutico; Trusted_Connection=True; TrustServerCertificate=True;";
         private List<DetalleItem> detalles = new List<DetalleItem>();
-        private Medicamento medicamento = new Medicamento();
+        private MedicamentoRepositorio medicamento = new MedicamentoRepositorio();
 
         public VentasDetalleView()
         {
@@ -50,7 +51,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         {
             try
             {
-                DataTable dt = medicamento.ObtenerMedicamentos();
+                DataTable dt = medicamento.ObtenerMedicamentosActivos();
                 cmbMedicamentos.ItemsSource = dt.DefaultView;
                 cmbMedicamentos.DisplayMemberPath = "nombre_comercial";
                 cmbMedicamentos.SelectedValuePath = "id_medicamento";

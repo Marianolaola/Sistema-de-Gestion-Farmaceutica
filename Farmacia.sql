@@ -118,6 +118,21 @@ INSERT INTO Medicamento (nombre_comercial,precio_unitario,presentacion,laborator
 						('Paracetamol', 1500.00,'Caja x8 comprimidos 500m','Barbadan', 150, 50);
 INSERT INTO Medicamento (nombre_comercial,precio_unitario,presentacion,laboratorio,stock,stock_minimo) VALUES 
 						('Clonazepam', 1300.00,'Caja x8 comprimidos 0.5m','Barbadan', 150, 50);
+
+ALTER TABLE Medicamento
+	ADD activado bit;
+
+ALTER TABLE Medicamento
+	ADD CONSTRAINT df_medicamento_activado DEFAULT 1 FOR activado;
+
+UPDATE Medicamento
+	SET activado=1 WHERE activado IS NULL;
+
+INSERT INTO Medicamento (nombre_comercial,precio_unitario,presentacion,laboratorio,stock,stock_minimo) VALUES 
+						('Aspirina', 2500.00,'Caja x20 tabletas 500mg','Bayer', 100, 50);
+INSERT INTO Medicamento (nombre_comercial,precio_unitario,presentacion,laboratorio,stock,stock_minimo,activado) VALUES 
+						('Belmazol', 3000.00,'Caja x28 capsulas 20mg','Teva Pharma', 200, 100, 0);
+
 SELECT * FROM Medicamento;
 
 
@@ -140,7 +155,6 @@ ALTER TABLE Venta
 INSERT INTO Venta (fecha_venta,id_cliente,id_usuario) VALUES ('2025-07-23',1,3);
 INSERT INTO Venta (fecha_venta,id_cliente,id_usuario) VALUES ('2025-09-09',2,3);
 INSERT INTO Venta (fecha_venta,id_cliente,id_usuario) VALUES ('2025-09-10',2,3);
-INSERT INTO Venta (fecha_venta,id_cliente,id_usuario) VALUES ('2026-09-09',2,3); ----- check activado, da error
 SELECT * FROM Venta;
 
 

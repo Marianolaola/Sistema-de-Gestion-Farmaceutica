@@ -20,12 +20,7 @@ namespace Sistema_de_Gestión_Farmacéutica
     /// </summary>
     public partial class AgregarMedicamentoWindow : Window
     {
-        public string Nombre { get; private set; }
-        public float PrecioUnitario { get; private set; }
-        public string Presentacion { get; private set; }
-        public string Laboratorio { get; private set; }
-        public int Stock { get; private set; }
-        public int StockMinimo { get; private set; }
+        public Medicamento medicamentoCreado { get; private set; }
 
         public AgregarMedicamentoWindow()
         {
@@ -45,13 +40,15 @@ namespace Sistema_de_Gestión_Farmacéutica
                 return;
             }
 
-            Nombre = txtNombre.Text;
-            PrecioUnitario = float.Parse(txtPrecioUnitario.Text);
-            Presentacion = txtPresentacion.Text;
-            Laboratorio = txtLaboratorio.Text;
-            Stock = int.Parse(txtStock.Text);
-            StockMinimo = int.Parse(txtStockMinimo.Text);
-            //Rol = (cmbRol.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? string.Empty;
+            medicamentoCreado = new Medicamento
+            {
+                nombre_comercial = txtNombre.Text,
+                precio_unitario = float.Parse(txtPrecioUnitario.Text),
+                presentacion = txtPresentacion.Text,
+                laboratorio = txtLaboratorio.Text,
+                stock = int.Parse(txtStock.Text),
+                stock_minimo = int.Parse(txtStockMinimo.Text)
+            };
 
             this.DialogResult = true;
             this.Close();
@@ -62,7 +59,7 @@ namespace Sistema_de_Gestión_Farmacéutica
             this.DialogResult = false;
             this.Close();
         }
-        private void SoloLetras_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void SoloLetras_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!e.Text.All(c => char.IsLetter(c) || c == ' '))
             {

@@ -14,23 +14,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Sistema_de_Gestión_Farmacéutica
+namespace Sistema_de_Gestión_Farmacéutica.Productos
 {
     /// <summary>
     /// Lógica de interacción para MedicamentosView.xaml
     /// </summary>
     public partial class MedicamentosView : UserControl
     {
-        private Medicamento servMedicamento = new Medicamento();
+        private MedicamentoRepositorio medicamentoRepo = new MedicamentoRepositorio();
+        private int opcion = 0;
         public MedicamentosView()
         {
             InitializeComponent();
-            cargarMedicamento();
+            CargarMedicamentos();
         }
 
-        private void cargarMedicamento()
+        private void CargarMedicamentos()
         {
-            dgMedicamentos.ItemsSource = servMedicamento.ObtenerMedicamentos().DefaultView;
+            if (opcion == 0)
+            {
+                dgMedicamentos.ItemsSource = medicamentoRepo.ObtenerMedicamentosActivos().DefaultView;
+            } else
+            {
+                dgMedicamentos.ItemsSource = medicamentoRepo.ObtenerMedicamentosInactivos().DefaultView;
+            }
+     
         }
 
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
@@ -40,38 +48,64 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             if (resultado == true)
             {
-                servMedicamento.AltaMedicamento(agregarMedicamento.Nombre,
-                                            agregarMedicamento.PrecioUnitario,
-                                            agregarMedicamento.Presentacion,
-                                            agregarMedicamento.Laboratorio,
-                                            agregarMedicamento.Stock,
-                                            agregarMedicamento.StockMinimo);
-                cargarMedicamento();
+                medicamentoRepo.AltaMedicamento(agregarMedicamento.medicamentoCreado);
+                CargarMedicamentos();
             }
 
         }
 
-        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        private void btnCambiarGrid_Click(object sender, RoutedEventArgs e)
         {
-            if (dgMedicamentos.SelectedItem == null)
+            // por cada click cambia el título y el texto de los botones, y vuelve a cargar el grid con el valor activado correspondiente
+            if (opcion == 0)
             {
-                MessageBox.Show("Debe seleccionar un medicamento para eliminar.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            DataRowView filaSeleccionada = (DataRowView)dgMedicamentos.SelectedItem;
-            int idMedicamento = Convert.ToInt32(filaSeleccionada["id_medicamento"]);
-
-            // Confirmación antes de eliminar
-            var resultado = MessageBox.Show($"¿Está seguro que desea eliminar este medicamento?",
-                                                    "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (resultado == MessageBoxResult.Yes)
+                opcion = 1;
+                Titulo.Text = "Medicamentos Inactivos";
+                btnCambiarGrid.Content = "Mostrar Activos";
+                btnActivarOEliminar.Content = "🗑 Activar Medicamento";
+                dgMedicamentos.RowBackground = Brushes.LightGray;
+                CargarMedicamentos();
+            } else
             {
-               servMedicamento.BajaMedicamento(idMedicamento);
-               cargarMedicamento();
-               MessageBox.Show("Medicamento eliminado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                opcion = 0;
+                Titulo.Text = "Medicamentos Activos";
+                btnCambiarGrid.Content = "Mostrar Eliminados";
+                btnActivarOEliminar.Content = "🗑 Eliminar Medicamento";
+                dgMedicamentos.RowBackground = Brushes.White;
+                CargarMedicamentos();
             }
+        }
+        
+       private void btnActivarOEliminar_Click(object sender, RoutedEventArgs e)
+       {
+           if (dgMedicamentos.SelectedItem == null)
+           {
+               MessageBox.Show("Debe seleccionar un medicamento.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+               return;
+           }
+
+           DataRowView filaSeleccionada = (DataRowView)dgMedicamentos.SelectedItem;
+           int idMedicamento = Convert.ToInt32(filaSeleccionada["id_medicamento"]);
+
+            if (opcion == 0)
+            {
+                var resultado = MessageBox.Show($"¿Está seguro que desea eliminar este medicamento?", "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (resultado == MessageBoxResult.Yes)
+                {
+                    medicamentoRepo.BajaMedicamento(idMedicamento);
+                    CargarMedicamentos();
+                    MessageBox.Show("Medicamento eliminado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            } else
+            {
+                var resultado = MessageBox.Show($"¿Está seguro que desea activar este medicamento?", "Confirmar activación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (resultado == MessageBoxResult.Yes)
+                {
+                    medicamentoRepo.ActivarMedicamento(idMedicamento);
+                    CargarMedicamentos();
+                    MessageBox.Show("Medicamento activado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-
         }
+    } 
+}

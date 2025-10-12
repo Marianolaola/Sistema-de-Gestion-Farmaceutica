@@ -1,6 +1,7 @@
 ﻿using Sistema_de_Gestión_Farmacéutica.Clientes;
 using Sistema_de_Gestión_Farmacéutica.Ventas;
 using Sistema_de_Gestión_Farmacéutica.Obra_Sociales;
+using Sistema_de_Gestión_Farmacéutica.Productos;
 using System.Windows;
 using System.Windows.Controls;
 
