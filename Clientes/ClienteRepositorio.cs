@@ -57,7 +57,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                     }
                 }
 
-                queryBuilder.Append(" ORDER BY c.apellido, c.nombre");
+                queryBuilder.Append(" ORDER BY c.id_cliente ASC");
 
                 cmd.Connection = con;
                 cmd.CommandText = queryBuilder.ToString();

@@ -22,42 +22,53 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
     {
         private ClienteRepositorio clienteRepo = new ClienteRepositorio();
         private int _idCliente;
-        private DataTable dtAsociados;
+        private DataTable dtAsociados, dtTodas;
 
         public GestionarObrasSociales(int idCliente, string nombreCliente)
         {
             InitializeComponent();
             _idCliente = idCliente;
             lblNombreCliente.Text = $"Cliente: {nombreCliente}";
-            CargarListas();
+            CargarDatosIniciales();
         }
 
-        private void CargarListas()
+        private void CargarDatosIniciales()
         {
-            //Cargar lista de obras sociales del cliente
+            //pedimos los datos a la DB
             dtAsociados = clienteRepo.ObtenerObrasSocialesDelCliente(_idCliente);
+            dtTodas = clienteRepo.ObtenerObrasSociales();
+
             lvAsociadas.ItemsSource = dtAsociados.DefaultView;
+            ActualizarListaDisponible();
+        }
 
-            //Cargar Todas lass Obras Sociales
-            DataTable dtTodas = clienteRepo.ObtenerObrasSociales();
-
-            //Filtar aquellas obras que no estan asociadas
+        private void ActualizarListaDisponible()
+        {
+            //Filta aquellas obras que estan asociadas
             var idAsociadas = dtAsociados.AsEnumerable().Select(r => r.Field<int>("id_obra_social"));
+            //Filta aquellas obras que no estan asociadas
             var disponibles = dtTodas.AsEnumerable().Where(r => !idAsociadas.Contains(r.Field<int>("id_obra_social")));
 
-            //Convierte (disponibles) en un DataTable y lo pasa a la Lista View de disponibles
-            lvDisponibles.ItemsSource = disponibles.CopyToDataTable().DefaultView;
+            if (disponibles.Any())
+            {
+                lvDisponibles.ItemsSource = disponibles.CopyToDataTable().DefaultView;
+            }
+            else
+            {
+                lvDisponibles.ItemsSource = null;
+            }
+
             lvDisponibles.DisplayMemberPath = "nombre";
             lvDisponibles.SelectedValuePath = "id_obra_social";
-
         }
+
 
 
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
         {
             if(lvDisponibles.SelectedItem == null)
             {
-                MessageBox.Show("Debe seleccionar una obra social para agregar", "Selección Requerida", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Debe seleccionar una obra social para agregarla", "Selección Requerida", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
@@ -79,14 +90,14 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 nuevaFila["nro_afiliado"] = nroAfiliado;
                 dtAsociados.Rows.Add(nuevaFila);
                 //Recargamos la lista de obras sociales
-                CargarListas();
+                ActualizarListaDisponible();
             }
 
         }
 
         private void btnQuitar_Click(object sender, RoutedEventArgs e)
         {
-            if (lvDisponibles.SelectedItem == null)
+            if (lvAsociadas.SelectedItem == null)
             {
                 MessageBox.Show("Debe seleccionar una obra social para eliminarla", "Selección Requerida", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
@@ -94,17 +105,11 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
            
             //Se convierte la lista a Data para manipularla
             DataRowView filaRemovida = (DataRowView)lvAsociadas.SelectedItem;
-
-            if(filaRemovida == null)
-            {
-                MessageBox.Show("Esta Obra Social no se encuentra asignada al cliente", "Érror", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
             //Se elimina la fila seleccionada
             dtAsociados.Rows.Remove(filaRemovida.Row);
 
             //Refrescamos las obras sociales asociadas
-            CargarListas();
+            ActualizarListaDisponible();
 
         }
 
