@@ -26,6 +26,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         public GestionarObrasSociales(int idCliente, string nombreCliente)
         {
+            //Inicializacion
             InitializeComponent();
             _idCliente = idCliente;
             lblNombreCliente.Text = $"Cliente: {nombreCliente}";
