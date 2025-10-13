@@ -133,6 +133,26 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
         private void btnGestionarOS_Click(object sender, RoutedEventArgs e)
         {
+            if(dgClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente para gestionar la obra social.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            DataRowView fila = (DataRowView)dgClientes.SelectedItem;
+
+            int idCliente = (int)fila["id_cliente"];
+            string nombreCliente = $"{fila["nombre"]} {fila["apellido"]}";
+
+            //Abrimos ventana de Gestión
+            GestionarObrasSociales gestionOS = new GestionarObrasSociales(idCliente, nombreCliente);
+            bool? resultado = gestionOS.ShowDialog();
+
+            //Si se guardan los cambios, recargamos la lista de clientes
+            if(resultado == true)
+            {
+                AplicarFiltros();
+            }
 
         }
     }
