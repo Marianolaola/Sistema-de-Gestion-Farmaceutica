@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36408.4
+VisualStudioVersion = 17.14.36408.4 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sistema de Gestión Farmacéutica", "Sistema de Gestión Farmacéutica.csproj", "{A1C4E09B-16CF-4207-961F-66F7F2D058E2}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Farmacia.Database", "..\Farmacia.Database\Farmacia.Database.sqlproj", "{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +15,6 @@ Global
 		{A1C4E09B-16CF-4207-961F-66F7F2D058E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1C4E09B-16CF-4207-961F-66F7F2D058E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1C4E09B-16CF-4207-961F-66F7F2D058E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2A9958A-79B3-4AC4-83CE-5A0F4A0B5596}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
