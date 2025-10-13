@@ -28,7 +28,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Productos
             InitializeComponent();
             CargarMedicamentos();
         }
-
+        
         private void CargarMedicamentos()
         {
             if (opcion == 0)
@@ -106,6 +106,38 @@ namespace Sistema_de_Gestión_Farmacéutica.Productos
                     MessageBox.Show("Medicamento activado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
+        }
+        private void btnEditar_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgMedicamentos.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccione un medicamento para editar.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            DataRowView filaSeleccionada = (DataRowView)dgMedicamentos.SelectedItem;
+
+            Medicamento medicamentoAEditar = new Medicamento
+            {
+                id_medicamento = Convert.ToInt32(filaSeleccionada["id_medicamento"]),
+                nombre_comercial = filaSeleccionada["nombre_comercial"].ToString(),
+                precio_unitario = Convert.ToSingle(filaSeleccionada["precio_unitario"]),
+                presentacion = filaSeleccionada["presentacion"].ToString(),
+                laboratorio = filaSeleccionada["laboratorio"].ToString(),
+                stock = Convert.ToInt32(filaSeleccionada["stock"]),
+                stock_minimo = Convert.ToInt32(filaSeleccionada["stock_minimo"])
+            };
+
+            EditarMedicamento ventana = new EditarMedicamento(medicamentoAEditar);
+            bool? resultado = ventana.ShowDialog();
+
+            if (resultado == true)
+            {
+                medicamentoRepo.EditarMedicamento(medicamentoAEditar);
+                CargarMedicamentos();
+                MessageBox.Show("Medicamento editado correctamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
         }
     } 
 }

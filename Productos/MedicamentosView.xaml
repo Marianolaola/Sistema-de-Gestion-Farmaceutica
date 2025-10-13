@@ -21,7 +21,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
             <Button x:Name="btnAgregar" Content="➕ Agregar Medicamento" Width="150" Margin="5" Click="btnAgregar_Click" />
             <Button x:Name="btnActivarOEliminar" Content="🗑 Eliminar Medicamento" Width="150" Margin="5" Click="btnActivarOEliminar_Click"/>
-            <Button x:Name="btnEditar" Content="⚙️ Editar Medicamento" Width="150" Margin="5" />
+            <Button x:Name="btnEditar" Content="⚙️ Editar Medicamento" Width="150" Margin="5" Click="btnEditar_Click"/>
             <Button x:Name="btnCambiarGrid" Content="Mostrar Eliminados" Width="150" Margin="5" Click="btnCambiarGrid_Click" />
         </StackPanel>
 
