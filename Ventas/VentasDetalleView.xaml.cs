@@ -40,10 +40,12 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             using (SqlConnection con = new SqlConnection(connectionString)) 
             { 
                 con.Open(); 
-                SqlDataAdapter da = new SqlDataAdapter("SELECT id_cliente, nombre FROM Cliente", con); 
+                SqlDataAdapter da = new SqlDataAdapter("SELECT id_cliente, nombre, dni FROM Cliente", con); 
                 DataTable dt = new DataTable(); 
                 da.Fill(dt); 
-                cmbClientes.ItemsSource = dt.DefaultView; 
+                cmbClientes.ItemsSource = dt.DefaultView;
+                cmbClientes.DisplayMemberPath = "nombre";
+                cmbClientes.SelectedValuePath = "id_cliente";
             }
         }
 
@@ -62,6 +64,20 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             }
         }
 
+        private void cmbClientes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbClientes.SelectedItem is DataRowView fila)
+            {
+                txtNombreCliente.Text = fila["nombre"].ToString();
+                txtDniCliente.Text = fila["dni"].ToString();
+            }
+            else
+            {
+                txtNombreCliente.Clear();
+                txtDniCliente.Clear();
+            }
+        }
+
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
         {
             if (cmbMedicamentos.SelectedValue == null || string.IsNullOrWhiteSpace(txtCantidad.Text))
@@ -76,12 +92,37 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             int cantidad = Convert.ToInt32(txtCantidad.Text);
             double subtotal = cantidad * precio;
 
-            detalles.Add(new DetalleItem { IdMedicamento = idMed, Nombre = nombre, Cantidad = cantidad, Precio = precio, Subtotal = subtotal });
+            int cantidadNueva = Convert.ToInt32(txtCantidad.Text);
+
+            // buscamos si el medicamento ya está en la lista
+            var existente = detalles.FirstOrDefault(x => x.IdMedicamento == idMed);
+
+            if (existente != null)
+            {
+                // si ya existe se suma la cantidad seleccionada a la ya existente y se calcula el subtotal
+                existente.Cantidad += cantidadNueva;
+                existente.Subtotal = existente.Cantidad * existente.Precio;
+            }
+            else
+            {
+                // si no existe agrega un nuevo detalle
+                detalles.Add(new DetalleItem
+                {
+                    IdMedicamento = idMed,
+                    Nombre = nombre,
+                    Cantidad = cantidadNueva,
+                    Precio = precio,
+                    Subtotal = cantidadNueva * precio
+                });
+            }
 
             dgDetalle.ItemsSource = null;
             dgDetalle.ItemsSource = detalles;
 
             txtTotal.Text = detalles.Sum(x => x.Subtotal).ToString("F2");
+            txtCantidad.Clear();
+
+            cmbMedicamentos.SelectedIndex = -1;
         }
 
         private void btnConfirmar_Click(object sender, RoutedEventArgs e)

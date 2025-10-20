@@ -3,70 +3,116 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Ventas"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="850">
+
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Nueva Venta" FontSize="20" Margin="0,0,0,10" />
+        <!-- Título -->
+        <TextBlock Grid.Row="0" 
+                   Text="Nueva Venta" 
+                   FontSize="22" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,15"/>
 
-        <Grid Grid.Row="1" Margin="0,0,0,20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        
+        <Border Grid.Row="1" 
+                Padding="10" 
+                Background="#F6F6F6" 
+                CornerRadius="10" 
+                Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="20*"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Cliente -->
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.ColumnSpan="1">
-                <TextBlock Text="Cliente"  Margin="0,0,5,0"/>
-                <ComboBox x:Name="cmbClientes" HorizontalAlignment="Left" Width="200" DisplayMemberPath="nombre" SelectedValuePath="id_cliente"/>
-                <!--Button x:Name="btnAgregar" Content="➕ Agregar Venta" Width="150" Margin="5" /-->
-            </StackPanel>
-
-            <!-- Seleccion de medicamento -->
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="1" Grid.ColumnSpan="4">
-                <TextBlock Text="Medicamento" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox x:Name="cmbMedicamentos" Width="200" DisplayMemberPath="nombre_comercial" SelectedValuePath="id_medicamento"/>
-                    <TextBlock Text="Cantidad:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-                    <TextBox x:Name="txtCantidad" Width="50"/>
-                    <Button x:Name="btnAgregar" Content="➕ Sumar Producto " Margin="10,0,0,0" Click="btnAgregar_Click"/>
+                <!-- Cliente -->
+                <StackPanel Orientation="Vertical" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Cliente:" FontWeight="Bold" Margin="0,0,0,3"/>
+                    <ComboBox x:Name="cmbClientes" 
+                              Width="200" 
+                              DisplayMemberPath="nombre" 
+                              SelectedValuePath="id_cliente"
+                              SelectionChanged="cmbClientes_SelectionChanged"
+                              />
                 </StackPanel>
+
+                
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Nombre completo:" FontWeight="Bold" Margin="0,0,0,3"/>
+                    <TextBox x:Name="txtNombreCliente" Width="200" IsReadOnly="True"/>
+                </StackPanel>
+
+                
+                <StackPanel Orientation="Vertical" Grid.Column="2" Margin="5">
+                    <TextBlock Text="DNI:" FontWeight="Bold" Margin="0,0,0,3"/>
+                    <TextBox x:Name="txtDniCliente" Width="150" IsReadOnly="True"/>
+                </StackPanel>
+
+                
+                <StackPanel Orientation="Vertical" Grid.Column="3" Margin="5">
+                    <TextBlock Text=" " FontWeight="Bold" Margin="0,0,0,3"/>
+                    <Button x:Name="btnAgregarCliente" 
+                            Content="➕ Nuevo Cliente" 
+                            Width="150"
+                            />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        
+        <StackPanel Grid.Row="2">
+            <!-- Medicamentos -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Medicamento:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <ComboBox x:Name="cmbMedicamentos" 
+                          Width="200" 
+                          DisplayMemberPath="nombre_comercial" 
+                          SelectedValuePath="id_medicamento"/>
+                <TextBlock Text="Cantidad:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+                <TextBox x:Name="txtCantidad" Width="50"/>
+                <Button x:Name="btnAgregar" 
+                        Content="➕ Agregar" 
+                        Margin="10,0,0,0"
+                        Click="btnAgregar_Click"/>
             </StackPanel>
-        </Grid>
 
-        <!-- Datagrid -->
-        <DataGrid x:Name="dgDetalle" Grid.Row="2" AutoGenerateColumns="False" Margin="0,10,0,10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Medicamento" Binding="{Binding Nombre}" Width="Auto"/>
-                <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
-                <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Precio}" Width="Auto"/>
-                <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <!-- Total y Botones -->
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
-            <TextBlock Text="Total: $" VerticalAlignment="Center" FontSize="16"/>
-            <TextBlock x:Name="txtTotal" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="5,0,20,0"/>
-            <Button x:Name="btnConfirmar" Content="Confirmar Venta" Click="btnConfirmar_Click"  Width="150" />
+            
+            <DataGrid x:Name="dgDetalle" 
+                      AutoGenerateColumns="False" 
+                      Margin="0,10,0,10" 
+                      IsReadOnly="True" 
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Medicamento" Binding="{Binding Nombre}" Width="*"/>
+                    <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
+                    <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Precio}" Width="Auto"/>
+                    <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
 
-
-
-        <!--DataGrid x:Name="dgVentasDetalle" Grid.Row="2" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="0,10,0,0"/-->
+        <!-- Total y botones -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="Total: $" VerticalAlignment="Center" FontSize="16"/>
+            <TextBlock x:Name="txtTotal" 
+                       VerticalAlignment="Center" 
+                       FontSize="16" 
+                       FontWeight="Bold" 
+                       Margin="5,0,20,0"/>
+            <Button x:Name="btnConfirmar" 
+                    Content="Confirmar Venta" 
+                    Width="150"
+                    Click="btnConfirmar_Click"/>
+        </StackPanel>
     </Grid>
 </UserControl>
