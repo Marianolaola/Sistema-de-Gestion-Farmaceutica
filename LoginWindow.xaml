@@ -48,7 +48,7 @@
                     Click="Entrar_Click" 
                     BorderThickness="0" 
                     Cursor="Hand"/>
-
+            
             <!-- Pie de página -->
             <TextBlock Text="© Todos los derechos reservados" 
                        FontSize="12" 
@@ -57,5 +57,6 @@
                        Margin="0,40,0,0" />
 
         </StackPanel>
+        
     </Grid>
 </Window>

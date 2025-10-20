@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BCrypt;
 
 namespace Sistema_de_Gestión_Farmacéutica
 {
@@ -40,34 +41,24 @@ namespace Sistema_de_Gestión_Farmacéutica
             {
                 UsuarioRepositorio repositorio = new UsuarioRepositorio();
 
-                // Intentar traer los usuarios desde la base de datos
-                DataTable dt = repositorio.ObtenerUsuarios();
+                //traemos al usuario con su email
+                Usuario usuarioEncontrado = repositorio.obtenerUsuarioPorEmail(email);
 
-                // Busca al usuario por email y contraseña
-                DataRow usuarioEncontrado = dt.AsEnumerable().FirstOrDefault(row =>
-                    row.Field<string>("email").Equals(email, StringComparison.OrdinalIgnoreCase) 
-                    && row.Field<string>("contraseña") == contraseña);
+                if(usuarioEncontrado != null && BCrypt.Net.BCrypt.Verify(contraseña, usuarioEncontrado.contraseña)){
 
-                if (usuarioEncontrado == null)
+                    // setteando los valores de la sesión iniciada
+                    SesionActual.Usuario = usuarioEncontrado;
+                    MainWindow mainWindow = new MainWindow(SesionActual.Usuario.nombre + " " + SesionActual.Usuario.apellido, SesionActual.Usuario.rol);
+                    mainWindow.Show();
+                    this.Close();
+                }
+                else
                 {
+                    // Usuario no encontrado o contraseña incorrecta
                     MessageBox.Show("Usuario o contraseña incorrectos.", "Error de autenticación", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
-                // setteando los valores de la sesión iniciada
-                SesionActual.Usuario = new Usuario
-                        {
-                            id_usuario = (int)usuarioEncontrado["id_usuario"],
-                            nombre = usuarioEncontrado["nombre"].ToString(),
-                            apellido = usuarioEncontrado["apellido"].ToString(),
-                            contraseña = usuarioEncontrado["contraseña"].ToString(),
-                            rol = usuarioEncontrado["rol"].ToString(),
-                            email = usuarioEncontrado["email"].ToString()
-                        };
-
-                MainWindow mainWindow = new MainWindow(SesionActual.Usuario.nombre + " " + SesionActual.Usuario.apellido, SesionActual.Usuario.rol);
-                mainWindow.Show();
-                this.Close();
+                
             }
             catch (Exception ex)
             {
@@ -78,4 +69,6 @@ namespace Sistema_de_Gestión_Farmacéutica
         }
 
     }
+
+
 }
