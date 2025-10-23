@@ -37,9 +37,9 @@
                 <Button x:Name="btnMedicamentos" Content="💊 Medicamentos" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirMedicamentos_Click"/>
                 <Button x:Name="btnVentas" Content="🛒 Ventas" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirVentas_Click"/>
                 <Button x:Name="btnReportes" Content="📊 Reportes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirReportes_Click"/>
-                <Button x:Name="btnClientes" Content="👤 Clientes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirClientes_Click"/>
+                <Button x:Name="btnClientes" Content="👥 Clientes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirClientes_Click"/>
                 <Button x:Name="btnObrasSociales" Content="🏥 Obras Sociales" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirObrasSociales_Click"/>
-
+                <Button x:Name="btnBackup" Content="💾 Backups" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirBackup_Click"/>
             </StackPanel>
 
             <!-- Cerrar sesión y versión -->

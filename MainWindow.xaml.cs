@@ -2,6 +2,7 @@
 using Sistema_de_Gestión_Farmacéutica.Ventas;
 using Sistema_de_Gestión_Farmacéutica.Obra_Sociales;
 using Sistema_de_Gestión_Farmacéutica.Productos;
+using Sistema_de_Gestión_Farmacéutica.Respaldos;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,6 +27,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
                     btnObrasSociales.Visibility = Visibility.Collapsed;
+                    btnBackup.Visibility = Visibility.Collapsed;
                     break;
                 case "Administrador":
                     btnUsuarios.Visibility = Visibility.Visible;
@@ -34,6 +36,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
                     btnObrasSociales.Visibility = Visibility.Visible;
+                    btnBackup.Visibility = Visibility.Visible;
                     break;
                 case "Farmaceutico":
                     btnUsuarios.Visibility = Visibility.Collapsed;
@@ -42,6 +45,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnVentas.Visibility = Visibility.Visible;
                     btnClientes.Visibility = Visibility.Collapsed;
                     btnObrasSociales.Visibility = Visibility.Collapsed;
+                    btnBackup.Visibility = Visibility.Collapsed;
                     break;
             }
 
@@ -109,6 +113,14 @@ namespace Sistema_de_Gestión_Farmacéutica
         private void AbrirObrasSociales_Click(object sender, RoutedEventArgs e)
         {
             ContenidoPrincipal.Content = new ObraSocialView()
+            {
+
+            };
+        }
+
+        private void AbrirBackup_Click(object sender, RoutedEventArgs e)
+        {
+            ContenidoPrincipal.Content = new BackupView()
             {
 
             };

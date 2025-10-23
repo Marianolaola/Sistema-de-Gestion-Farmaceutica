@@ -48,7 +48,7 @@
 
                 
                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
-                    <TextBlock Text="Nombre completo:" FontWeight="Bold" Margin="0,0,0,3"/>
+                    <TextBlock Text="Nombre:" FontWeight="Bold" Margin="0,0,0,3"/>
                     <TextBox x:Name="txtNombreCliente" Width="200" IsReadOnly="True"/>
                 </StackPanel>
 
@@ -77,9 +77,12 @@
                 <ComboBox x:Name="cmbMedicamentos" 
                           Width="200" 
                           DisplayMemberPath="nombre_comercial" 
-                          SelectedValuePath="id_medicamento"/>
+                          SelectedValuePath="id_medicamento"
+                          SelectionChanged="cmbMedicamentos_SelectionChanged"/>
                 <TextBlock Text="Cantidad:" VerticalAlignment="Center" Margin="10,0,5,0"/>
                 <TextBox x:Name="txtCantidad" Width="50"/>
+                <TextBlock Text="Stock disponible: " VerticalAlignment="Center" Margin="10,0,5,0"/>
+                <TextBox x:Name="txtStock" Width="50" IsReadOnly="True" />
                 <Button x:Name="btnAgregar" 
                         Content="➕ Agregar" 
                         Margin="10,0,0,0"
@@ -97,6 +100,14 @@
                     <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
                     <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Precio}" Width="Auto"/>
                     <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="Auto"/>
+                    <DataGridTemplateColumn Header="Quitar" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="❌ Quitar" Click="btnQuitar_Click" Background="LightCoral" 
+                                        Foreground="White" Padding="4,2" BorderThickness="0" Cursor="Hand" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

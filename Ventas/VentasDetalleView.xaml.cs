@@ -40,7 +40,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             using (SqlConnection con = new SqlConnection(connectionString)) 
             { 
                 con.Open(); 
-                SqlDataAdapter da = new SqlDataAdapter("SELECT id_cliente, nombre, dni FROM Cliente", con); 
+                SqlDataAdapter da = new SqlDataAdapter("SELECT id_cliente, nombre, apellido, dni FROM Cliente", con); 
                 DataTable dt = new DataTable(); 
                 da.Fill(dt); 
                 cmbClientes.ItemsSource = dt.DefaultView;
@@ -68,13 +68,26 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         {
             if (cmbClientes.SelectedItem is DataRowView fila)
             {
-                txtNombreCliente.Text = fila["nombre"].ToString();
+                txtNombreCliente.Text = fila["nombre"].ToString() + " " + fila["apellido"].ToString();
                 txtDniCliente.Text = fila["dni"].ToString();
             }
             else
             {
                 txtNombreCliente.Clear();
                 txtDniCliente.Clear();
+            }
+        }
+
+        private void cmbMedicamentos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbMedicamentos.SelectedItem != null)
+            {
+                var fila = (DataRowView)cmbMedicamentos.SelectedItem;
+                txtStock.Text = fila["stock"].ToString();
+            }
+            else
+            {
+                txtStock.Clear();
             }
         }
 
@@ -123,6 +136,25 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             txtCantidad.Clear();
 
             cmbMedicamentos.SelectedIndex = -1;
+        }
+
+        private void btnQuitar_Click(object sender, RoutedEventArgs e)
+        {
+            var boton = sender as Button;
+            var detalle = boton?.DataContext as DetalleItem;
+
+            if (detalle != null)
+            {
+                if (MessageBox.Show($"¿Desea quitar {detalle.Nombre} del detalle?", "Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    detalles.Remove(detalle);
+                    dgDetalle.ItemsSource = null;
+                    dgDetalle.ItemsSource = detalles;
+
+                    // recalcular total
+                    txtTotal.Text = detalles.Sum(x => x.Subtotal).ToString("F2");
+                }
+            }
         }
 
         private void btnConfirmar_Click(object sender, RoutedEventArgs e)
