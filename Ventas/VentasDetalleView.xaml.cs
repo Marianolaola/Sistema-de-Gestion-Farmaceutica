@@ -83,6 +83,9 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             if (cmbMedicamentos.SelectedItem != null)
             {
                 var fila = (DataRowView)cmbMedicamentos.SelectedItem;
+                txtNombreMedicamento.Text = fila["nombre_comercial"].ToString();
+                txtDescripcionMedicamento.Text = fila["presentacion"].ToString();
+                txtPrecio.Text = fila["precio_unitario"].ToString();
                 txtStock.Text = fila["stock"].ToString();
             }
             else
@@ -101,6 +104,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
 
             int idMed = Convert.ToInt32(cmbMedicamentos.SelectedValue);
             string nombre = ((DataRowView)cmbMedicamentos.SelectedItem)["nombre_comercial"].ToString();
+            string presentacion = ((DataRowView)cmbMedicamentos.SelectedItem)["presentacion"].ToString();
             double precio = Convert.ToDouble(((DataRowView)cmbMedicamentos.SelectedItem)["precio_unitario"]);
             int cantidad = Convert.ToInt32(txtCantidad.Text);
             double subtotal = cantidad * precio;
@@ -123,6 +127,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                 {
                     IdMedicamento = idMed,
                     Nombre = nombre,
+                    Presentacion = presentacion,
                     Cantidad = cantidadNueva,
                     Precio = precio,
                     Subtotal = cantidadNueva * precio
@@ -133,6 +138,10 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             dgDetalle.ItemsSource = detalles;
 
             txtTotal.Text = detalles.Sum(x => x.Subtotal).ToString("F2");
+
+            txtNombreMedicamento.Clear();
+            txtDescripcionMedicamento.Clear();
+            txtPrecio.Clear();
             txtCantidad.Clear();
 
             cmbMedicamentos.SelectedIndex = -1;
@@ -175,12 +184,19 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
 
             MessageBox.Show(mensaje);
 
+            foreach(var item in detalles)
+            {
+                medicamento.DescontarStock(item.IdMedicamento, item.Cantidad);
+                CargarMedicamentos();
+            }
+
             if (exito)
             {
                 detalles.Clear();
                 dgDetalle.ItemsSource = null;
                 txtTotal.Text = "";
             }
+
         }
     }
 
@@ -188,6 +204,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
     {
         public int IdMedicamento { get; set; }
         public string Nombre { get; set; }
+        public string Presentacion { get; set; }
         public int Cantidad { get; set; }
         public double Precio { get; set; }
         public double Subtotal { get; set; }

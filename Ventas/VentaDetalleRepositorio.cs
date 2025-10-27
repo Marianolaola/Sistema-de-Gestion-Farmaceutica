@@ -52,8 +52,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                 {
                     // Insertar venta
                     SqlCommand cmdVenta = new SqlCommand(
-                        "INSERT INTO Venta (fecha_venta, id_cliente, id_usuario) OUTPUT INSERTED.id_venta VALUES (@fecha, @id_cliente, @id_usuario)", con, tx);
-                    cmdVenta.Parameters.AddWithValue("@fecha", DateTime.Now);
+                        "INSERT INTO Venta (fecha_venta, id_cliente, id_usuario) OUTPUT INSERTED.id_venta VALUES (GETDATE(), @id_cliente, @id_usuario)", con, tx);
                     cmdVenta.Parameters.AddWithValue("@id_cliente", idCliente);
                     cmdVenta.Parameters.AddWithValue("@id_usuario", idUsuario);
 

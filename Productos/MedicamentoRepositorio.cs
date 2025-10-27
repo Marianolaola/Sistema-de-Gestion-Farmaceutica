@@ -99,5 +99,24 @@ namespace Sistema_de_Gestión_Farmacéutica.Productos
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public void DescontarStock(int p_idMedicamento, int p_cantidad)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                string query = "UPDATE Medicamento SET stock = stock - @p_cantidad WHERE id_medicamento = @p_idMedicamento";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@p_cantidad", p_cantidad);
+                    cmd.Parameters.AddWithValue("@p_idMedicamento", p_idMedicamento);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+
+        }
     }
 }

@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Crear Backup"
+        <TextBlock Grid.Row="0" Text="Backup de Base de Datos"
                    FontSize="22" FontWeight="Bold"
                    HorizontalAlignment="Left" Margin="0,0,0,25"
         />
