@@ -23,7 +23,6 @@ namespace Sistema_de_Gestión_Farmacéutica
     public partial class AgregarMedicamentoWindow : Window
     {
         public Medicamento medicamentoCreado { get; private set; }
-        private MedicamentoRepositorio medicamentoRepo;
 
         public AgregarMedicamentoWindow()
         {

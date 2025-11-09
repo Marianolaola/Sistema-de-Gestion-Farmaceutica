@@ -42,6 +42,24 @@ namespace Sistema_de_Gestión_Farmacéutica.Productos
             return dt;
         }
 
+        public int ObtenerStock(int p_idMedicamento)
+        {
+            int stock = 0;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT stock FROM Medicamento WHERE id_medicamento = @id", con);
+                cmd.Parameters.AddWithValue("@id", p_idMedicamento);
+
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    stock = Convert.ToInt32(result);
+                }
+            }
+            return stock;
+        }
+
         public void AltaMedicamento(Medicamento p_medicamento)
         {
             using (SqlConnection con = new SqlConnection(connectionString))

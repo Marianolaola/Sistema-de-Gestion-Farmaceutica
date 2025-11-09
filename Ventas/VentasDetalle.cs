@@ -17,14 +17,17 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         public int id_cliente { get; set; }
         public int id_usuario { get; set; }
 
+        public decimal total { get; set; }
+
         public VentasDetalle() { }
 
-        public VentasDetalle(int id_venta, DateTime fecha_venta, int id_cliente, int id_usuario)
+        public VentasDetalle(int id_venta, DateTime fecha_venta, int id_cliente, int id_usuario, decimal total)
         {
             this.id_venta = id_venta;
             this.fecha_venta = fecha_venta;
             this.id_cliente = id_cliente;
             this.id_usuario = id_usuario;
+            this.total = total;
         }
 
     }

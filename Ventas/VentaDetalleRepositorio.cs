@@ -22,10 +22,9 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             {
                 con.Open();
                 string query = @"
-                    SELECT v.id_venta, v.fecha_venta, v.id_cliente, v.id_usuario,
-                           dv.id_medicamento, dv.cantidad, dv.subtotal
+                    SELECT v.id_venta, v.fecha_venta, v.id_cliente, v.id_usuario, concat(c.nombre, ' ', c.apellido) as nombre_completo, v.total
                     FROM Venta v
-                    INNER JOIN Detalle_Venta dv ON v.id_venta = dv.id_venta
+                    INNER JOIN Cliente c ON v.id_cliente = c.id_cliente
                     WHERE v.id_usuario = @id_usuarioLogueado";
 
                 SqlCommand cmd = new SqlCommand(query, con);
@@ -34,6 +33,27 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                 da.Fill(dt);
             }
 
+            return dt;
+        }
+
+        public DataTable ObtenerDetallePorIdVenta(int p_idVenta)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"SELECT m.nombre_comercial AS medicamento, dv.cantidad, 
+                                (dv.subtotal / dv.cantidad) AS Precio_Unitario,
+                                dv.subtotal
+                                FROM detalle_venta dv
+                                INNER JOIN Medicamento m ON dv.id_medicamento = m.id_medicamento
+                                WHERE dv.id_venta = @p_idVenta";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@p_idVenta", p_idVenta);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
             return dt;
         }
 
@@ -58,6 +78,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
 
                     int idVenta = (int)cmdVenta.ExecuteScalar();
 
+                    decimal totalVenta = 0;
                     // Insertar detalle
                     foreach (var d in detalles)
                     {
@@ -68,7 +89,15 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                         cmdDet.Parameters.AddWithValue("@cant", d.Cantidad);
                         cmdDet.Parameters.AddWithValue("@sub", d.Subtotal);
                         cmdDet.ExecuteNonQuery();
+
+                        totalVenta += d.Subtotal;
                     }
+
+                    // Actualizar total de la venta
+                    SqlCommand cmdTotal = new SqlCommand("UPDATE Venta SET total = @total WHERE id_venta = @idv", con, tx);
+                    cmdTotal.Parameters.AddWithValue("@total", totalVenta);
+                    cmdTotal.Parameters.AddWithValue("@idv", idVenta);
+                    cmdTotal.ExecuteNonQuery();
 
                     tx.Commit();
                     mensaje = "Venta registrada correctamente.";
