@@ -3,6 +3,7 @@
     [fecha_venta] DATETIME NOT NULL,
     [id_cliente]  INT      NOT NULL,
     [id_usuario]  INT      NOT NULL,
+    [total] DECIMAL(10, 2) NOT NULL, 
     CONSTRAINT [pk_id_venta] PRIMARY KEY CLUSTERED ([id_venta] ASC),
     CONSTRAINT [chk_fecha_venta] CHECK ([fecha_venta]<=getdate()),
     CONSTRAINT [fk_venta_cliente] FOREIGN KEY ([id_cliente]) REFERENCES [dbo].[Cliente] ([id_cliente]),

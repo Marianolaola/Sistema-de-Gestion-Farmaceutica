@@ -25,8 +25,10 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
     public partial class VentasDetalleView : UserControl
     {
         private string connectionString = "Server=localhost\\SQLEXPRESS; Database=SistemaFarmaceutico; Trusted_Connection=True; TrustServerCertificate=True;";
-        private List<DetalleItem> detalles = new List<DetalleItem>();
         private MedicamentoRepositorio medicamento = new MedicamentoRepositorio();
+        private Dictionary<int, int> stockTemporal = new Dictionary<int, int>();
+        private List<DetalleItem> detalles = new List<DetalleItem>();
+        Factura factura = new Factura();
 
         public VentasDetalleView()
         {
@@ -34,6 +36,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             CargarClientes();
             CargarMedicamentos();
         }
+
 
         private void CargarClientes()
         {
@@ -48,6 +51,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                 cmbClientes.SelectedValuePath = "id_cliente";
             }
         }
+
 
         private void CargarMedicamentos()
         {
@@ -64,6 +68,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             }
         }
 
+
         private void cmbClientes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cmbClientes.SelectedItem is DataRowView fila)
@@ -78,21 +83,31 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             }
         }
 
+
         private void cmbMedicamentos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbMedicamentos.SelectedItem != null)
+            if (cmbMedicamentos.SelectedValue != null)
             {
                 var fila = (DataRowView)cmbMedicamentos.SelectedItem;
                 txtNombreMedicamento.Text = fila["nombre_comercial"].ToString();
                 txtDescripcionMedicamento.Text = fila["presentacion"].ToString();
                 txtPrecio.Text = fila["precio_unitario"].ToString();
-                txtStock.Text = fila["stock"].ToString();
-            }
-            else
-            {
-                txtStock.Clear();
+
+                int idMedicamento = Convert.ToInt32(cmbMedicamentos.SelectedValue);
+                int stock = medicamento.ObtenerStock(idMedicamento);
+
+                if (stockTemporal.ContainsKey(idMedicamento))
+                {
+                    stock = stockTemporal[idMedicamento];
+                }
+                else
+                {
+                    stockTemporal[idMedicamento] = stock;
+                }
+                txtStock.Text = stock.ToString();
             }
         }
+
 
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
         {
@@ -105,15 +120,24 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             int idMed = Convert.ToInt32(cmbMedicamentos.SelectedValue);
             string nombre = ((DataRowView)cmbMedicamentos.SelectedItem)["nombre_comercial"].ToString();
             string presentacion = ((DataRowView)cmbMedicamentos.SelectedItem)["presentacion"].ToString();
-            double precio = Convert.ToDouble(((DataRowView)cmbMedicamentos.SelectedItem)["precio_unitario"]);
+            decimal precio = Convert.ToDecimal(((DataRowView)cmbMedicamentos.SelectedItem)["precio_unitario"]);
             int cantidad = Convert.ToInt32(txtCantidad.Text);
-            double subtotal = cantidad * precio;
+            decimal subtotal = cantidad * precio;
+
+            int stockActual = medicamento.ObtenerStock(idMed);
+
+            if (cantidad > stockActual)
+            {
+                MessageBox.Show($"No hay stock suficiente para el medicamento.\n" +
+                                $"Disponible: {stockActual}, solicitado: {cantidad}",
+                                $"Stock insuficiente", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             int cantidadNueva = Convert.ToInt32(txtCantidad.Text);
 
             // buscamos si el medicamento ya está en la lista
             var existente = detalles.FirstOrDefault(x => x.IdMedicamento == idMed);
-
             if (existente != null)
             {
                 // si ya existe se suma la cantidad seleccionada a la ya existente y se calcula el subtotal
@@ -132,6 +156,10 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                     Precio = precio,
                     Subtotal = cantidadNueva * precio
                 });
+
+                //Actualizar stock temporal
+                stockTemporal[idMed] -= cantidad;
+                txtStock.Text = stockTemporal[idMed].ToString();
             }
 
             dgDetalle.ItemsSource = null;
@@ -143,9 +171,11 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             txtDescripcionMedicamento.Clear();
             txtPrecio.Clear();
             txtCantidad.Clear();
+            txtStock.Clear();
 
             cmbMedicamentos.SelectedIndex = -1;
         }
+
 
         private void btnQuitar_Click(object sender, RoutedEventArgs e)
         {
@@ -154,8 +184,16 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
 
             if (detalle != null)
             {
+                // consultar si se desea quitar el producto del detalle
                 if (MessageBox.Show($"¿Desea quitar {detalle.Nombre} del detalle?", "Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
+                    // devolver la cantidad del detalle al stock
+                    if (stockTemporal.ContainsKey(detalle.IdMedicamento))
+                    {
+                        stockTemporal[detalle.IdMedicamento] += detalle.Cantidad;
+                    }
+
+                    // refrescar datagrid
                     detalles.Remove(detalle);
                     dgDetalle.ItemsSource = null;
                     dgDetalle.ItemsSource = detalles;
@@ -165,6 +203,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                 }
             }
         }
+
 
         private void btnConfirmar_Click(object sender, RoutedEventArgs e)
         {
@@ -178,20 +217,31 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             int idUsuario = SesionActual.Usuario.id_usuario; // id de la sesión actual
 
             VentaDetalleRepositorio repo = new VentaDetalleRepositorio();
-
             string mensaje;
             bool exito = repo.RegistrarVenta(idCliente, idUsuario, detalles, out mensaje);
 
             MessageBox.Show(mensaje);
 
-            foreach(var item in detalles)
-            {
-                medicamento.DescontarStock(item.IdMedicamento, item.Cantidad);
-                CargarMedicamentos();
-            }
-
             if (exito)
             {
+                // descuenta el stock
+                foreach (var item in detalles)
+                {
+                    medicamento.DescontarStock(item.IdMedicamento, item.Cantidad);
+                }
+
+                // pregunta si desea generar una factura
+                var resultado = MessageBox.Show("Desea generar una factura de la venta?", "Generar Factura", MessageBoxButton.YesNo);
+                if (resultado == MessageBoxResult.Yes)
+                {
+                    string nombreCliente = ((DataRowView)cmbClientes.SelectedItem)["nombre"].ToString();
+                    DateTime fechaVenta = DateTime.Now;
+
+                    factura.GenerarFacturaPDF(nombreCliente, fechaVenta, detalles);
+                }
+
+                // refresca el datagrid
+                CargarMedicamentos();
                 detalles.Clear();
                 dgDetalle.ItemsSource = null;
                 txtTotal.Text = "";
@@ -206,8 +256,8 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         public string Nombre { get; set; }
         public string Presentacion { get; set; }
         public int Cantidad { get; set; }
-        public double Precio { get; set; }
-        public double Subtotal { get; set; }
+        public decimal Precio { get; set; }
+        public decimal Subtotal { get; set; }
     }
 }
 

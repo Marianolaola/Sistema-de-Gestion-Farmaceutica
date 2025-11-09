@@ -25,6 +25,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnReportes.Visibility = Visibility.Visible;
                     btnMedicamentos.Visibility = Visibility.Visible;
                     btnVentas.Visibility = Visibility.Collapsed;
+                    btnMisVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
                     btnObrasSociales.Visibility = Visibility.Collapsed;
                     btnBackup.Visibility = Visibility.Collapsed;
@@ -34,6 +35,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnReportes.Visibility = Visibility.Collapsed;
                     btnMedicamentos.Visibility = Visibility.Visible;
                     btnVentas.Visibility = Visibility.Collapsed;
+                    btnMisVentas.Visibility = Visibility.Collapsed;
                     btnClientes.Visibility = Visibility.Visible;
                     btnObrasSociales.Visibility = Visibility.Visible;
                     btnBackup.Visibility = Visibility.Visible;
@@ -43,6 +45,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnReportes.Visibility = Visibility.Collapsed;
                     btnMedicamentos.Visibility = Visibility.Visible;
                     btnVentas.Visibility = Visibility.Visible;
+                    btnMisVentas.Visibility = Visibility.Visible;
                     btnClientes.Visibility = Visibility.Collapsed;
                     btnObrasSociales.Visibility = Visibility.Collapsed;
                     btnBackup.Visibility = Visibility.Collapsed;
@@ -72,7 +75,13 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             }
 
-        
+        private void AbrirMisVentas_Click(object sender, RoutedEventArgs e)
+        {
+            ContenidoPrincipal.Content = new MisVentas();
+
+        }
+
+
 
         private void AbrirDashboard_Click(object sender, RoutedEventArgs e)
         {
