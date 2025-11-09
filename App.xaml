@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica">
 
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Styles/Estilos.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
+
 </Application>
