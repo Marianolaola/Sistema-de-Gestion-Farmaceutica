@@ -1,58 +1,82 @@
 ﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Sistema de Gestión Farmacéutica"
+        Title="MedicApp - Sistema de Gestión Farmacéutica"
         WindowStartupLocation="CenterScreen"
-        Width="1200" Height="700">
+        Width="1200" Height="700"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        MinWidth="800" MinHeight="600">
 
-    <Grid>
+    <Grid x:Name="RootGrid" Background="{StaticResource ColorBlancoRotoFondo}">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar -->
-        <StackPanel Background="#283342" Grid.Column="0">
+        <Grid Grid.Column="0" Background="{StaticResource ColorVerdeOscuroAcento}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <!-- Perfil -->
-            <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Ellipse Width="80" Height="80" Stroke="White" StrokeThickness="2" Margin="0,10,0,5">
-                  <!--  
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="perfil.png"/>
-                         ruta de la imagen de perfil            
-                    </Ellipse.Fill>
-                  -->
-                </Ellipse>
-                <TextBlock x:Name="txtUsuario" Text="Juan Pérez" Foreground="White" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="txtRol" Text="Farmacéutico" Foreground="LightGray" FontSize="12" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,15,0,15">
+                <Image Source="/Assets/Images/logo.png" Height="45" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="MedicApp" 
+                           Grid.Column="1"
+                           FontFamily="{StaticResource FontMontserratBold}"
+                           FontSize="22" VerticalAlignment="Center"
+                           Foreground="{StaticResource ColorBlancoRotoFondo}"
+                           Margin="5,0,0,0"/>
             </StackPanel>
 
-            <Separator Margin="10"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
+                <StackPanel>
+                    <Separator Background="#4A6E30" Margin="10,0,10,10"/>
 
-            <!-- Botones de navegación -->
-            <StackPanel>
-                <Button x:Name="btnDashboard" Content="🏠 Dashboard" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirDashboard_Click"/>
-                <Button x:Name="btnUsuarios" Content="👤 Usuarios" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirUsuarios_Click"/>
-                <Button x:Name="btnMedicamentos" Content="💊 Medicamentos" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirMedicamentos_Click"/>
-                <Button x:Name="btnVentas" Content="🛒 Ventas" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirVentas_Click"/>
-                <Button x:Name="btnMisVentas" Content="🛒 Mis Ventas" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirMisVentas_Click"/>
-                <Button x:Name="btnReportes" Content="📊 Reportes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirReportes_Click"/>
-                <Button x:Name="btnClientes" Content="👥 Clientes" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirClientes_Click"/>
-                <Button x:Name="btnObrasSociales" Content="🏥 Obras Sociales" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirObrasSociales_Click"/>
-                <Button x:Name="btnBackup" Content="💾 Backups" Background="Transparent" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="10,5" Click="AbrirBackup_Click"/>
+                    <Button x:Name="btnDashboard" Content="🏠 Dashboard" Style="{StaticResource NavigationButtonStyle}" Click="AbrirDashboard_Click"/>
+
+                    <TextBlock x:Name="SeparatorGestion" Text="GESTIÓN" Style="{StaticResource NavigationSeparatorStyle}"/>
+                    <Button x:Name="btnMedicamentos" Content="💊 Medicamentos" Style="{StaticResource NavigationButtonStyle}" Click="AbrirMedicamentos_Click"/>
+                    <Button x:Name="btnClientes" Content="👥 Clientes" Style="{StaticResource NavigationButtonStyle}" Click="AbrirClientes_Click"/>
+                    <Button x:Name="btnObrasSociales" Content="🏥 Obras Sociales" Style="{StaticResource NavigationButtonStyle}" Click="AbrirObrasSociales_Click"/>
+
+                    <TextBlock x:Name="SeparatorTransacciones" Text="TRANSACCIONES" Style="{StaticResource NavigationSeparatorStyle}"/>
+                    <Button x:Name="btnVentas" Content="🛒 Ventas" Style="{StaticResource NavigationButtonStyle}" Click="AbrirVentas_Click" Cursor="Hand"/>
+                    <Button x:Name="btnMisVentas" Content="🛒 Mis Ventas" Style="{StaticResource NavigationButtonStyle}" Click="AbrirMisVentas_Click"/>
+                    <Button x:Name="btnReportes" Content="📊 Reportes" Style="{StaticResource NavigationButtonStyle}" Click="AbrirReportes_Click"/>
+
+                    <TextBlock x:Name="SeparatorSys" Text="SISTEMA" Style="{StaticResource NavigationSeparatorStyle}"/>
+                    <Button x:Name="btnUsuarios" Content="👤 Usuarios" Style="{StaticResource NavigationButtonStyle}" Click="AbrirUsuarios_Click"/>
+                    <Button x:Name="btnBackup" Content="💾 Backups" Style="{StaticResource NavigationButtonStyle}" Click="AbrirBackup_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="0,10,0,10">
+                <Separator Background="#4A6E30" Margin="10,10,10,0"/>
+
+                <StackPanel VerticalAlignment="Center" Margin="0,15,0,15">
+                    <TextBlock x:Name="txtUsuario" Text="Juan Pérez" 
+                               Foreground="{StaticResource ColorBlancoRotoFondo}" 
+                               FontWeight="Bold" FontSize="14"
+                               HorizontalAlignment="Center"
+                               FontFamily="{StaticResource FontMontserratBold}"/>
+                    <TextBlock x:Name="txtRol" Text="Farmacéutico" 
+                               Foreground="LightGray" FontSize="12"
+                               HorizontalAlignment="Center"
+                               FontFamily="{StaticResource FontMontserratRegular}"/>
+                </StackPanel>
+
+                <Separator Background="#4A6E30" Margin="10,0,10,0"/>
+                <Button Content="🚪 Cerrar Sesión" 
+                        Style="{StaticResource LogoutButtonStyle}" 
+                        Click="CerrarSesion_Click"/>
             </StackPanel>
 
-            <!-- Cerrar sesión y versión -->
-            <StackPanel VerticalAlignment="Bottom" Margin="10">
-                <Button Content="Cerrar Sesión" Background="Transparent" Foreground="White" FontWeight="Bold" Click="CerrarSesion_Click"/>
-                <TextBlock Text="V1.0" Foreground="Gray" FontSize="11" HorizontalAlignment="Left" Margin="0,5,0,10"/>
-            </StackPanel>
-        </StackPanel>
-
-        <!-- Panel central -->
-        <Grid Grid.Column="1" Background="#F5F5F5">
-            <ContentControl x:Name="ContenidoPrincipal"/>
         </Grid>
+
+        <ContentControl x:Name="ContenidoPrincipal" Grid.Column="1"/>
     </Grid>
 </Window>

@@ -29,6 +29,11 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnClientes.Visibility = Visibility.Visible;
                     btnObrasSociales.Visibility = Visibility.Collapsed;
                     btnBackup.Visibility = Visibility.Collapsed;
+
+                    SeparatorGestion.Visibility = Visibility.Collapsed;
+                    SeparatorTransacciones.Visibility = Visibility.Visible;
+                    SeparatorSys.Visibility = Visibility.Visible;
+
                     break;
                 case "Administrador":
                     btnUsuarios.Visibility = Visibility.Visible;
@@ -39,7 +44,12 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnClientes.Visibility = Visibility.Visible;
                     btnObrasSociales.Visibility = Visibility.Visible;
                     btnBackup.Visibility = Visibility.Visible;
+
+                    SeparatorGestion.Visibility = Visibility.Visible;
+                    SeparatorTransacciones.Visibility = Visibility.Collapsed;
+                    SeparatorSys.Visibility = Visibility.Visible;
                     break;
+
                 case "Farmaceutico":
                     btnUsuarios.Visibility = Visibility.Collapsed;
                     btnReportes.Visibility = Visibility.Collapsed;
@@ -49,6 +59,11 @@ namespace Sistema_de_Gestión_Farmacéutica
                     btnClientes.Visibility = Visibility.Collapsed;
                     btnObrasSociales.Visibility = Visibility.Collapsed;
                     btnBackup.Visibility = Visibility.Collapsed;
+
+                    SeparatorGestion.Visibility = Visibility.Visible;
+                    SeparatorTransacciones.Visibility = Visibility.Visible;
+                    SeparatorSys.Visibility = Visibility.Collapsed;
+
                     break;
             }
 
@@ -134,5 +149,7 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             };
         }
+
     }
+
 }
