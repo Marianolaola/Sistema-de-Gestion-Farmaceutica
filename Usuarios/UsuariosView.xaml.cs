@@ -38,7 +38,7 @@ namespace Sistema_de_Gestión_Farmacéutica
 
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
         {
-            AgregarUsuarioWindow agregarUsuario = new AgregarUsuarioWindow();
+            AgregarUsuarioWindow agregarUsuario = new AgregarUsuarioWindow(SesionActual.Usuario.rol);
             bool? resultado = agregarUsuario.ShowDialog();
 
             if (resultado == true)
@@ -61,17 +61,31 @@ namespace Sistema_de_Gestión_Farmacéutica
             int idUsuario = Convert.ToInt32(filaSeleccionada["id_usuario"]);
             string rolUsuario = filaSeleccionada["rol"].ToString();
 
-            if(SesionActual.Usuario.id_usuario == idUsuario)
+            Usuario usuarioActual = SesionActual.Usuario;
+
+            // REGLA 1: No se puede el usuario auto-eliminar
+            if (usuarioActual.id_usuario == idUsuario)
             {
-                MessageBox.Show("La sesión de este usuario está activa, no es posible eliminarlo","Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning );
-            } else {
+                MessageBox.Show("La sesión de este usuario está activa, no es posible eliminarlo", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-                if (SesionActual.Usuario.rol == "Administrador" && rolUsuario == "Gerente")
+            // REGLA 2: Un Gerente solo puede eliminar farmacéuticos
+
+            if(usuarioActual.rol == "Gerente")
+            {
+                if(rolUsuario == "Gerente" || rolUsuario == "Administrador")
                 {
-                    MessageBox.Show("Este usuario no cuenta con los permisos para eliminar esta cuenta", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning);
-                } else {
+                    MessageBox.Show("No tiene permisos para eliminar usuarios de este nivel.", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
 
-                    // Se crea una variable de tipo Usuario para pasar el id al método de BajaUsuario
+            // REGLA 3: El administrador puede borrar cualquier rol (ya implícito)
+
+            //Si cumple con las validaciones, se procede a eliminar
+
+            // Se crea una variable de tipo Usuario para pasar el id al método de BajaUsuario
                     var usuarioAEliminar = new Usuario
                     {
                         id_usuario = idUsuario
@@ -86,10 +100,9 @@ namespace Sistema_de_Gestión_Farmacéutica
                         cargarUsuario();
                         MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                }
-            } 
+                
+        } 
                
-        }
 
         private void btnEditar_Click(object sender, RoutedEventArgs e)
         {
@@ -103,26 +116,41 @@ namespace Sistema_de_Gestión_Farmacéutica
             int idUsuario = Convert.ToInt32(filaSeleccionada["id_usuario"]);
             string rolUsuarioSeleccionado = filaSeleccionada["rol"].ToString();
 
-            // Bloquear si un Administrador quiere editar un Gerente
-            if (SesionActual.Usuario.rol == "Administrador" && rolUsuarioSeleccionado == "Gerente")
+
+            Usuario usuarioActual = SesionActual.Usuario;
+
+            //Regla 1- Un Gerente solo puede editar farmaceuticos
+            if(usuarioActual.rol == "Gerente")
             {
-                MessageBox.Show("No tiene permisos para modificar usuarios con rol Gerente.", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if(rolUsuarioSeleccionado == "Gerente" || rolUsuarioSeleccionado == "Administrador")
+                {
+                    MessageBox.Show("No tienes permisos para modificar usuarios de este nivel", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
             }
 
-            EditarUsuarioWindow editarUsuario = new EditarUsuarioWindow();
+            //Regla N°2: Un usuario no puede modificarse a si mismo desde su pantalla
+            //Evita cambio de rol accidentalmente
+
+            if(usuarioActual.id_usuario == idUsuario)
+            {
+                MessageBox.Show("No puede editar su propia cuenta desde esta vista.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
+            //Regla N°3: El administrador puede modificar todos los roles (ya implícita)
+            
+            //Si cumple con las validaciones, se abre la ventana
+            EditarUsuarioWindow editarUsuario = new EditarUsuarioWindow(usuarioActual.rol);
             editarUsuario.txtNombre.Text = filaSeleccionada["nombre"].ToString();
             editarUsuario.txtApellido.Text = filaSeleccionada["apellido"].ToString();
-            editarUsuario.txtContraseña.Password = filaSeleccionada["contraseña"].ToString();
             editarUsuario.txtEmail.Text = filaSeleccionada["email"].ToString();
-
-            string rolActual = filaSeleccionada["rol"].ToString();
+            editarUsuario.cmbRol.Text = filaSeleccionada["rol"].ToString();
 
             bool? resultado = editarUsuario.ShowDialog();
 
             if (resultado == true)
             {
-                string rolAct = filaSeleccionada["rol"].ToString();
 
                 Usuario usuarioEditado = new Usuario
                 {
@@ -131,7 +159,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                     contraseña = editarUsuario.usuarioEditado.contraseña,
                     apellido = editarUsuario.usuarioEditado.apellido,
                     email = editarUsuario.usuarioEditado.email,
-                    rol = rolAct
+                    rol = editarUsuario.usuarioEditado.rol
                 };
 
                 servUsuario.EditarUsuario(usuarioEditado);
@@ -141,6 +169,5 @@ namespace Sistema_de_Gestión_Farmacéutica
         }
 
     }
-
     
 }

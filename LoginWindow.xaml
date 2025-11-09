@@ -47,6 +47,7 @@
                     FontWeight="SemiBold" 
                     Click="Entrar_Click" 
                     BorderThickness="0" 
+                    IsDefault="True"
                     Cursor="Hand"/>
             
             <!-- Pie de página -->

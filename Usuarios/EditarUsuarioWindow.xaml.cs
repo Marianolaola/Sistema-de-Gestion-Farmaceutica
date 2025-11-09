@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,29 +22,55 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
     public partial class EditarUsuarioWindow : Window
     {
         public Usuario usuarioEditado { get; private set; }
-        public EditarUsuarioWindow()
+        public EditarUsuarioWindow(string rolUsuarioActual)
         {
             InitializeComponent();
+            RolesPermitidos(rolUsuarioActual);
+        }
+
+        private void RolesPermitidos(string rol)
+        {
+            cmbRol.Items.Clear();
+
+            if(rol == "Administrador")
+            {
+                cmbRol.Items.Add(new ComboBoxItem { Content = "Administrador" });
+                cmbRol.Items.Add(new ComboBoxItem { Content = "Gerente" });
+                cmbRol.Items.Add(new ComboBoxItem { Content = "Farmaceutico" });
+            }
+            else if (rol == "Gerente")
+            {
+                cmbRol.Items.Add(new ComboBoxItem { Content = "Farmaceutico" });
+            }
         }
 
         private void Aceptar_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                string.IsNullOrWhiteSpace(txtContraseña.Password) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text) ||
                 string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MessageBox.Show("Todos los campos son obligatorios.");
+                MessageBox.Show("Todos los campos son obligatorios.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            //Leemos el rol seleccionado del ComboBox
+            string rolSeleccionado = (cmbRol.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? cmbRol.Text;
 
             usuarioEditado = new Usuario
             {
                 nombre = txtNombre.Text,
                 apellido = txtApellido.Text,
                 contraseña = txtContraseña.Password,
-                email = txtEmail.Text
+                email = txtEmail.Text,
+                rol = rolSeleccionado
             };
+
+            if(!Regex.IsMatch(txtEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                MessageBox.Show("El email debe ser un correo válido (ej: usuario@dominio.com)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             
 
             this.DialogResult = true;

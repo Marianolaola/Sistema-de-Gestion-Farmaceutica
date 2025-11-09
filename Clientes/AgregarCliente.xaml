@@ -45,26 +45,26 @@
 
             <!--Nombre-->
             <TextBlock Text="Nombre:" Foreground="White" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
             
             <!--Apellido-->
             <TextBlock Text="Apellido:" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtApellido" Grid.Row="1" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox x:Name="txtApellido" Grid.Row="1" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
 
             <TextBlock Text="DNI:" Foreground="White" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtDNI" Grid.Row="2" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox x:Name="txtDNI" Grid.Row="2" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
 
             <TextBlock Text="Email:" Foreground="White" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
 
             <TextBlock Text="Telefono:" Foreground="White" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtTelefono" Grid.Row="4" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox x:Name="txtTelefono" Grid.Row="4" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
 
             <TextBlock Text="F. Nacimiento:" Foreground="White" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
             <DatePicker x:Name="txtFecha" Grid.Row="5" Grid.Column="1" Height="30" Margin="0,5" Padding="5"  />
 
             <TextBlock Text="Dirección:" Foreground="White" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtDireccion" Grid.Row="6" Grid.Column="1" Height="25" Margin="0,5" Padding="5"  />
+            <TextBox x:Name="txtDireccion" Grid.Row="6" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
 
         </Grid>
 

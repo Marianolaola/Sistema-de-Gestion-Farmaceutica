@@ -99,17 +99,34 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand(
-                    "UPDATE Usuario SET nombre=@nombre, apellido=@apellido, contraseña=@contraseña, rol=@rol WHERE id_usuario=@id", con);
 
-                string hashDeContraseña = BCrypt.Net.BCrypt.HashPassword(usuario.contraseña);
+                StringBuilder query = new StringBuilder("UPDATE Usuario SET nombre=@nombre, apellido=@apellido, rol=@rol, email=@email");
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+
+                //Lógica de contraseña
+                //Si el objeto 'usuario.contraseña' NO está vacío...
+                if (!string.IsNullOrWhiteSpace(usuario.contraseña))
+                {
+                    //significa que el admin escribió una nueva.
+                    //la hasheamos y la añadimos a la consulta SQL.
+                    string hashDeContraseña = BCrypt.Net.BCrypt.HashPassword(usuario.contraseña);
+                    query.Append(", contraseña=@contraseña");
+                    cmd.Parameters.AddWithValue("@contraseña", hashDeContraseña);
+                }
+                //si la contraseña SÍ estaba vacía, no hacemos nada,
+
+                //Terminamos la consulta
+                query.Append(" WHERE id_usuario=@id");
+                cmd.CommandText = query.ToString();
 
                 cmd.Parameters.AddWithValue("@nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@contraseña", hashDeContraseña);
-                cmd.Parameters.AddWithValue("@email", usuario.email);
                 cmd.Parameters.AddWithValue("@rol", usuario.rol);
+                cmd.Parameters.AddWithValue("@email", usuario.email);
                 cmd.Parameters.AddWithValue("@id", usuario.id_usuario);
+
                 cmd.ExecuteNonQuery();
             }
         }
