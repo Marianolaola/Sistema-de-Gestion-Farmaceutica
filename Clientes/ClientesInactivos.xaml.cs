@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Sistema_de_Gestión_Farmacéutica.Clientes
 {
@@ -19,23 +20,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             dgClientesInactivos.ItemsSource = clienteRepo.ObtenerClientesInactivos().DefaultView;
         }
 
-        private void btnBuscar_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(txtDni.Text))
-            {
-                dgClientesInactivos.ItemsSource = clienteRepo.BuscarInactivosPorDNI(txtDni.Text).DefaultView;
-            }
-            else
-            {
-                CargarInactivos(); // Si la barra está vacía, muestra todos
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, RoutedEventArgs e)
-        {
-            txtDni.Clear();
-            CargarInactivos();
-        }
+        
 
         private void btnReactivar_Click(object sender, RoutedEventArgs e)
         {
@@ -64,6 +49,32 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void txtBusquedaDNI_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            string busquedaEmail = txtBusquedaDNI.Text;
+
+            if (string.IsNullOrWhiteSpace(busquedaEmail))
+            {
+                //Si la barra está vacía, muestra a todos los inactivos
+                CargarInactivos();
+            }
+            else
+            {
+                dgClientesInactivos.ItemsSource = clienteRepo.BuscarInactivosPorDNI(busquedaEmail).DefaultView;
+            }
+        }
+
+        private void dgClientesInactivos_KeyDown(object sender, KeyEventArgs e)
+        {
+            //Se comprueba si la tecla presionada fue "Enter"
+            if (e.Key == Key.Enter)
+            {
+                //Si fue Enter, llama al mismo método que el botón "Reactivar"
+                btnReactivar_Click(sender, e);
+            }
+            e.Handled = true;
         }
     }
 }

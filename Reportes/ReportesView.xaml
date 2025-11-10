@@ -35,19 +35,19 @@
                 
                 <!-- Fecha desde -->
                 <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0" VerticalAlignment="Center">
-                    <TextBlock Text="Desde:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="Desde:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="{StaticResource ColorBlancoRotoFondo }"/>
                     <DatePicker x:Name="dpDesde" Width="130"/>
                 </StackPanel>
                 
                 <!-- Fecha hasta -->
                 <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="Hasta:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="Hasta:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="{StaticResource ColorBlancoRotoFondo}" />
                     <DatePicker x:Name="dpHasta" Width="130"/>
                 </StackPanel>
                 
                 <!-- Vendedor -->
                 <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="2" VerticalAlignment="Center">
-                    <TextBlock Text="Vendedor:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="Vendedor:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="{StaticResource ColorBlancoRotoFondo }"/>
                     <ComboBox x:Name="cmbVendedor" Width="150"
                               DisplayMemberPath="nombreCompleto"
                               SelectedValuePath="id_usuario"/>
@@ -55,7 +55,7 @@
                 
                 <!-- Producto -->
                 <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="3" VerticalAlignment="Center">
-                    <TextBlock Text="Producto:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="Producto:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{StaticResource ColorBlancoRotoFondo}"/>
                     <ComboBox x:Name="cmbProducto" Width="150"
                               DisplayMemberPath="nombre_comercial"
                               SelectedValuePath="id_medicamento"/>
@@ -128,8 +128,8 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,0,0,0">
             <Button x:Name="btnImprimirReporte" Grid.Row="2" Content="Imprimir Reporte" HorizontalAlignment="Left"
-                Click="btnImprimirReporte_Click" Width="150" Height="40" Margin="0,0,10,0"
-                Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
+                    Click="btnImprimirReporte_Click" Width="150" Height="40" Margin="0,0,10,0"
+                    Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
 
             <Button x:Name="btnEstadisticas"  Content="Mostrar Estadísticas" HorizontalAlignment="Left"
                     Click="btnEstadisticas_Click" Width="150" Height="40" Margin="5"

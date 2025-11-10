@@ -61,6 +61,14 @@
                            Foreground="{StaticResource ColorVerdeOscuroAcento}"/>
                 <ComboBox x:Name="cmbObraSocial" Width="130" Margin="5"
                           SelectionChanged="cmbObraSocial_SelectionChanged"/>
+
+
+                <TextBlock Text="Buscar por DNI:" VerticalAlignment="Center" 
+                           Margin="10,0,5,0" FontWeight="SemiBold" FontSize="12"
+                           Foreground="{StaticResource ColorVerdeOscuroAcento}"/>
+
+                <TextBox x:Name="txtBusquedaDNI" Width="150" Margin="5"
+                        TextChanged="txtBusquedaDNI_TextChanged"/>
             </WrapPanel>
         </Border>
 

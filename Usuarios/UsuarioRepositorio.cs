@@ -172,7 +172,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
                 string query = @"
                     SELECT id_usuario, nombre, apellido, email, rol 
                     FROM Usuario 
-                    WHERE activo = 0 AND email LIKE @email + '%'";
+                    WHERE activo = 0 AND email LIKE '%' + @email + '%'";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@email", email);
@@ -192,7 +192,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
                 string query = @"
                     SELECT id_usuario, nombre, apellido, email, rol 
                     FROM Usuario 
-                    WHERE activo = 1 AND email LIKE @email + '%'";
+                    WHERE activo = 1 AND email LIKE '%' + @email + '%'";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@email", email);

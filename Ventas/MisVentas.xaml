@@ -5,32 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Ventas"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
-
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBlock x:Name="Titulo" Text="Mis Ventas" FontSize="24" Margin="10"/>
-        </StackPanel>
+        <TextBlock x:Name="Titulo" Text="Mis Ventas" 
+                   Grid.Row="0"
+                   FontSize="24"
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
+                   FontFamily="{StaticResource FontMontserratRegular}"
+                   Margin="0,0,0,15"/>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="Imprimir Venta" Click="btn_ImprimirClick" Width="150" Margin="5" />
-        </StackPanel>
+        <Border Grid.Row="1" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" Padding="10" Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnAgregar" Content="Imprimir Venta" 
+                        Click="btn_ImprimirClick" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" />
+            </StackPanel>
+        </Border>
 
-        <DataGrid x:Name="dgVentas" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID Venta" Binding="{Binding id_venta}" Width="*"/>
-                <DataGridTextColumn Header="Fecha" Binding="{Binding fecha_venta}" Width="*"/>
-                <DataGridTextColumn Header="ID Cliente" Binding="{Binding id_cliente}" Width="*"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre_completo}" Width="*"/>
-                <DataGridTextColumn Header="Total" Binding="{Binding total}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
+        <Border Grid.Row="2" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" Padding="10" Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+            <DataGrid x:Name="dgVentas" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                      Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID Venta" Binding="{Binding id_venta}" Width="*"/>
+                    <DataGridTextColumn Header="Fecha" Binding="{Binding fecha_venta, StringFormat='dd/MM/yyyy'}" Width="*"/>
+                    <DataGridTextColumn Header="Cliente" Binding="{Binding nombre_completo}" Width="2*"/>
+                    <DataGridTextColumn Header="Total" Binding="{Binding total, StringFormat=C2}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>

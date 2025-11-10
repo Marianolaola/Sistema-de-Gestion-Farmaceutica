@@ -28,17 +28,12 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Buscar por DNI:" VerticalAlignment="Center" 
                            FontWeight="SemiBold" 
-                           Foreground="{StaticResource ColorVerdeOscuroAcento}"/>
+                           Foreground="{StaticResource ColorVerdeOscuroAcento}"
+                           FontFamily="{StaticResource FontMontserratRegular}"/>
 
-                <TextBox x:Name="txtDni" Width="150" Margin="10,0" Height="30" Padding="5"/>
-
-                <Button x:Name="btnBuscar" Content="Buscar" 
-                        Style="{StaticResource SmallPrimaryActionButtonStyle}" 
-                        Click="btnBuscar_Click"/>
-
-                <Button x:Name="btnLimpiar" Content="Limpiar" 
-                        Style="{StaticResource SmallDestructiveActionButtonStyle}" 
-                        Click="btnLimpiar_Click"/>
+                <TextBox x:Name="txtBusquedaDNI" Width="200" Margin="10,0" Height="30" Padding="5"
+                        TextChanged="txtBusquedaDNI_TextChanged"/>
+                
             </StackPanel>
         </Border>
 
@@ -47,6 +42,7 @@
                 CornerRadius="5" Padding="10">
             <DataGrid x:Name="dgClientesInactivos" AutoGenerateColumns="False" 
                       IsReadOnly="True" SelectionMode="Single"
+                      KeyDown="dgClientesInactivos_KeyDown">
                       Background="Transparent" BorderThickness="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding id_cliente}" Width="Auto"/>
@@ -61,7 +57,7 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button x:Name="btnReactivar" Content="Reactivar Cliente" 
                     Style="{StaticResource PrimaryActionButtonStyle}" 
-                    Width="150" Click="btnReactivar_Click"/>
+                    Width="150" Click="btnReactivar_Click" IsDefault="True"/>
 
             <Button x:Name="btnCerrar" Content="Cerrar" 
                     Style="{StaticResource DestructiveActionButtonStyle}" 

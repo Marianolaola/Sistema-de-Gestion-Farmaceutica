@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Sistema_de_Gestión_Farmacéutica.Usuarios
 {
@@ -63,6 +64,17 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void dgClientesInactivos_KeyDown(object sender, KeyEventArgs e)
+        {
+            //Se comprueba si la tecla presionada fue "Enter"
+            if (e.Key == Key.Enter)
+            {
+                //Si fue Enter, llama al mismo método que el botón "Reactivar"
+                btnReactivar_Click(sender, e);
+            }
+            e.Handled = true;
         }
     }
 }

@@ -49,6 +49,7 @@
 
             <DataGrid x:Name="dgUsuariosInactivos" AutoGenerateColumns="False" 
                       IsReadOnly="True" SelectionMode="Single"
+                      KeyDown="dgClientesInactivos_KeyDown">
                       Background="Transparent" BorderThickness="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding id_usuario}" Width="Auto"/>
@@ -63,7 +64,7 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button x:Name="btnReactivar" Content="Reactivar Usuario" 
                     Style="{StaticResource PrimaryActionButtonStyle}" 
-                    Width="150" Click="btnReactivar_Click"/>
+                    Width="150" Click="btnReactivar_Click" IsDefault="True"/>
 
             <Button x:Name="btnCerrar" Content="Cerrar" 
                     Style="{StaticResource DestructiveActionButtonStyle}" 

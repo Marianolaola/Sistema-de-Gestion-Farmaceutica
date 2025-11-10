@@ -39,7 +39,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         {
             if (dgVentas.SelectedItem == null)
             {
-                MessageBox.Show("Seleccione una venta para imprimir.");
+                MessageBox.Show("Seleccione una venta para imprimir.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

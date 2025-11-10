@@ -251,6 +251,55 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             return dt;
         }
 
+        public DataTable BuscarActivosPorDNI(string dni)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"
+                                SELECT 
+                                    c.id_cliente, 
+                                    c.nombre, 
+                                    c.apellido, 
+                                    c.dni, 
+                                    c.fecha_nacimiento, 
+                                    c.telefono, 
+                                    c.direccion, 
+                                    c.email,
+                                    DATEDIFF(year, c.fecha_nacimiento, GETDATE()) AS edad,
+                                    ISNULL(STRING_AGG(os.nombre, ', '), 'Sin Obra Social') AS nombre_obra_social
+                                FROM 
+                                    Cliente c
+                                LEFT JOIN 
+                                    Cliente_Obra_Social cos ON c.id_cliente = cos.id_cliente
+                                LEFT JOIN 
+                                    Obra_Social os ON cos.id_obra_social = os.id_obra_social
+                                WHERE 
+                                    c.activo = 1 
+                                    -- se convierte el DNI (que es INT) a texto (NVARCHAR) para poder usar LIKE
+                                    AND CAST(c.dni AS NVARCHAR(50)) LIKE '%' + @dni + '%'
+                                GROUP BY                                    
+                                    c.id_cliente, 
+                                    c.nombre, 
+                                    c.apellido, 
+                                    c.dni, 
+                                    c.fecha_nacimiento, 
+                                    c.telefono, 
+                                    c.direccion, 
+                                    c.email
+                                ORDER BY 
+                                    c.id_cliente";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dni", dni);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+
+            return dt;
+        }
+
         //BUSCAR clientes inactivos por DNI
         public DataTable BuscarInactivosPorDNI(string dni)
         {
@@ -259,9 +308,9 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             {
                 con.Open();
                 string query = @"
-                    SELECT id_cliente, nombre, apellido, dni, email, telefono 
+                    SELECT id_cliente, nombre, apellido, dni, email, telefono
                     FROM Cliente 
-                    WHERE activo = 0 AND dni LIKE @dni + '%'"; // se usa LIKE para búsquedas parciales
+                    WHERE activo = 0 AND dni LIKE + '%' + @dni + '%'"; // se usa LIKE para búsquedas parciales
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@dni", dni);

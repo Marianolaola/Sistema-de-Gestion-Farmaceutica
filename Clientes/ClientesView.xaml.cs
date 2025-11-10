@@ -172,7 +172,6 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             }
 
         }
-
         private void btnVerInactivos_Click(object sender, RoutedEventArgs e)
         {
             ClientesInactivosWindow ventanaHistorial = new ClientesInactivosWindow();
@@ -184,6 +183,21 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
                 AplicarFiltros();
             }
         }
+
+        private void txtBusquedaDNI_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string busquedaDNI = txtBusquedaDNI.Text;
+
+            if (string.IsNullOrWhiteSpace(busquedaDNI))
+            {
+                AplicarFiltros();
+            }
+            else
+            {
+                dgClientes.ItemsSource = clienteRepo.BuscarActivosPorDNI(busquedaDNI).DefaultView;
+            }
+        }
+
     }
 }
 
