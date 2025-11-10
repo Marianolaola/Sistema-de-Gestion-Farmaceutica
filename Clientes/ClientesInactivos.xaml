@@ -1,0 +1,71 @@
+﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.Clientes.ClientesInactivosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Historial de Clientes Inactivos" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Clientes Inactivos" 
+                   Grid.Row="0"
+                   FontSize="24"
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
+                   FontFamily="{StaticResource FontMontserratRegular}"
+                   Margin="0,0,0,15"/>
+
+        <Border Grid.Row="1" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" Padding="10" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Buscar por DNI:" VerticalAlignment="Center" 
+                           FontWeight="SemiBold" 
+                           Foreground="{StaticResource ColorVerdeOscuroAcento}"/>
+
+                <TextBox x:Name="txtDni" Width="150" Margin="10,0" Height="30" Padding="5"/>
+
+                <Button x:Name="btnBuscar" Content="Buscar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" 
+                        Click="btnBuscar_Click"/>
+
+                <Button x:Name="btnLimpiar" Content="Limpiar" 
+                        Style="{StaticResource SmallDestructiveActionButtonStyle}" 
+                        Click="btnLimpiar_Click"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" Padding="10">
+            <DataGrid x:Name="dgClientesInactivos" AutoGenerateColumns="False" 
+                      IsReadOnly="True" SelectionMode="Single"
+                      Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id_cliente}" Width="Auto"/>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
+                    <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
+                    <DataGridTextColumn Header="DNI" Binding="{Binding dni}" Width="*"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="btnReactivar" Content="Reactivar Cliente" 
+                    Style="{StaticResource PrimaryActionButtonStyle}" 
+                    Width="150" Click="btnReactivar_Click"/>
+
+            <Button x:Name="btnCerrar" Content="Cerrar" 
+                    Style="{StaticResource DestructiveActionButtonStyle}" 
+                    Width="110" Click="btnCerrar_Click" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

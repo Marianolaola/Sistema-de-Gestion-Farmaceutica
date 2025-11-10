@@ -229,5 +229,59 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
             }
         }
+
+
+
+        //obtener TODOS los clientes inactivos (activo = 0)
+        public DataTable ObtenerClientesInactivos()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"
+                    SELECT id_cliente, nombre, apellido, dni, email, telefono 
+                    FROM Cliente 
+                    WHERE activo = 0 
+                    ORDER BY apellido, nombre";
+
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.Fill(dt);
+            }
+            return dt;
+        }
+
+        //BUSCAR clientes inactivos por DNI
+        public DataTable BuscarInactivosPorDNI(string dni)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"
+                    SELECT id_cliente, nombre, apellido, dni, email, telefono 
+                    FROM Cliente 
+                    WHERE activo = 0 AND dni LIKE @dni + '%'"; // se usa LIKE para búsquedas parciales
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@dni", dni);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            return dt;
+        }
+
+        //Activar un cliente (activo = 1)
+        public void ReactivarCliente(int idCliente)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = "UPDATE Cliente SET activo = 1 WHERE id_cliente = @id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@id", idCliente);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

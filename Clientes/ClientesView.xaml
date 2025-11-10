@@ -51,8 +51,10 @@
                         Width="130"/>
                 <Button x:Name="btnEliminar" Content="🗑 Eliminar" 
                         Style="{StaticResource SmallDestructiveActionButtonStyle}" Click="btnEliminar_Click"/>
-
-                <Border Width="2" Background="#E0E0E0" Margin="15,5"/>
+                <Button x:Name="btnVerInactivos" Content="📄 Historial" 
+                    Style="{StaticResource SmallDestructiveActionButtonStyle}" Click="btnVerInactivos_Click"
+                    Background="#007bff"/>
+                <Border Width="2" Background="#E0E0E0" Margin="5,5"/>
 
                 <TextBlock Text="Filtrar por:" VerticalAlignment="Center" 
                            Margin="10,0,5,0" FontWeight="SemiBold" FontSize="12"

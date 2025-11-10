@@ -172,6 +172,18 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
             }
 
         }
+
+        private void btnVerInactivos_Click(object sender, RoutedEventArgs e)
+        {
+            ClientesInactivosWindow ventanaHistorial = new ClientesInactivosWindow();
+            ventanaHistorial.ShowDialog(); // Abre la ventana
+
+            // Si un cliente fue reactivado en esa ventana, actualizamos la vista principal
+            if (ventanaHistorial.ClienteReactivado)
+            {
+                AplicarFiltros();
+            }
+        }
     }
 }
 

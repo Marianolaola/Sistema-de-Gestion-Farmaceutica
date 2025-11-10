@@ -18,12 +18,11 @@
 
         <TextBlock Text="Editar Cliente" 
                    FontSize="28"
-                   FontWeight="Bold"
-                   Foreground="{StaticResource ColorVerdeOscuroAcento}"
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,20"
                    Grid.Row="0"
-                   FontFamily="{StaticResource FontMontserratBold}"/>
+                   FontFamily="{StaticResource FontMontserratRegular}"/>
 
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
