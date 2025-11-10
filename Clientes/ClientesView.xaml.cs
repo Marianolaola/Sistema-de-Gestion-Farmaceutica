@@ -47,8 +47,25 @@ namespace Sistema_de_Gestión_Farmacéutica.Clientes
 
             int idObraSocialSeleccionada = Convert.ToInt32(cmbObraSocial.SelectedValue);
 
-            dgClientes.ItemsSource = clienteRepo.ObtenerClientesFiltrados(idObraSocialSeleccionada).DefaultView;
+           DataTable dt = clienteRepo.ObtenerClientesFiltrados(idObraSocialSeleccionada);
+
+            dgClientes.ItemsSource = dt.DefaultView;
+
+            ActualizarConteoClientes(dt.Rows.Count);
         }
+
+        private void ActualizarConteoClientes(int conteo)
+        {
+            if (conteo == 1)
+            {
+                txtConteoClientes.Text = "1 Cliente";
+            }
+            else
+            {
+                txtConteoClientes.Text = $"{conteo} Clientes";
+            }
+        }
+
 
         private void cmbObraSocial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

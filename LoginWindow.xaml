@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Login" Height="550" Width="800"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Background="{StaticResource ColorVerdeFondo}" 
-        TextOptions.TextFormattingMode="Display"
-        TextOptions.TextRenderingMode="ClearType">
+        Background="{StaticResource ColorVerdeFondo}" >
 
     <Border Background="{StaticResource ColorBlancoRotoFondo}" CornerRadius="10"
             HorizontalAlignment="Center"
@@ -57,7 +55,7 @@
             <TextBlock Grid.Row="2"
                        Text="© Todos los derechos reservados" 
                        FontSize="12" 
-                       Foreground="Gray" 
+                       Foreground="{StaticResource ColorGrisBoton}" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom"
                        Margin="0,15,0,0"/>

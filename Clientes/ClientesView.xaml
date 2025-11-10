@@ -5,41 +5,83 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Clientes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
-
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBlock Text="Clientes (Vista Prototipo)" FontSize="20" Margin="10"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,15" Grid.Row="0" VerticalAlignment="Center">
+            <TextBlock Text="Gestión de Clientes" 
+                       FontSize="24"  
+                       Foreground="{StaticResource ColorBlancoRotoFondo}"
+                       FontFamily="{StaticResource FontMontserratRegular}"/>
+
+            <Border Background="{StaticResource ColorVerdeOscuroAcento}"
+                    CornerRadius="5" 
+                    Margin="15,0,0,0"
+                    Padding="8,4">
+                <TextBlock x:Name="txtConteoClientes" 
+                           Text="0 Clientes" 
+                           Foreground="{StaticResource ColorBlancoRotoFondo}" 
+                           FontWeight="Bold"
+                           FontFamily="{StaticResource FontMontserratRegular}"/>
+            </Border>
         </StackPanel>
 
-        <DataGrid x:Name="dgClientes" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding id_cliente}" Width="Auto"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
-                <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
-                <DataGridTextColumn Header="DNI" Binding="{Binding dni}" Width="Auto"/>
-                <DataGridTextColumn Header="Edad" Binding="{Binding edad}" Width="Auto"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*"/>
-                <DataGridTextColumn Header="Obra Social" Binding="{Binding nombre_obra_social}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Border Grid.Row="1" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="➕ Agregar Cliente" Width="120" Margin="5" Click="btnAgregar_Click"/>
-            <Button x:Name="btnEliminar" Content="🗑 Eliminar Cliente" Width="120" Margin="5" Click="btnEliminar_Click"/>
-            <Button x:Name="btnEditar" Content="⚙️ Editar Cliente" Width="120" Margin="5" Click="btnEditar_Click"/>
+            <WrapPanel>
+                <Button x:Name="btnAgregar" Content="➕ Agregar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Click="btnAgregar_Click"/>
+                <Button x:Name="btnEditar" Content="⚙️ Editar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Click="btnEditar_Click"/>
+                <Button x:Name="btnGestionarOS" Content="🤝 Gestionar O.S." 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Click="btnGestionarOS_Click" 
+                        Width="130"/>
+                <Button x:Name="btnEliminar" Content="🗑 Eliminar" 
+                        Style="{StaticResource SmallDestructiveActionButtonStyle}" Click="btnEliminar_Click"/>
 
-            <Button x:Name="btnGestionarOS" Content="🤝 Gestionar O.S." Width="120" Margin="5,5,15,5" Click="btnGestionarOS_Click"/>
+                <Border Width="2" Background="#E0E0E0" Margin="15,5"/>
 
-            <TextBlock Text="Filtrar por" VerticalAlignment="Center" Margin="10,0,5,0" FontWeight="SemiBold"/>
-            <ComboBox x:Name="cmbObraSocial" Width="150" Margin="5" SelectionChanged="cmbObraSocial_SelectionChanged"/>
-        </StackPanel>
+                <TextBlock Text="Filtrar por:" VerticalAlignment="Center" 
+                           Margin="10,0,5,0" FontWeight="SemiBold" FontSize="12"
+                           Foreground="{StaticResource ColorVerdeOscuroAcento}"/>
+                <ComboBox x:Name="cmbObraSocial" Width="120" Margin="5"
+                          SelectionChanged="cmbObraSocial_SelectionChanged"/>
+            </WrapPanel>
+        </Border>
 
+        <Border Grid.Row="2" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" 
+                Padding="10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+
+            <DataGrid x:Name="dgClientes" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                      Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id_cliente}" Width="Auto"/>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
+                    <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
+                    <DataGridTextColumn Header="DNI" Binding="{Binding dni}" Width="Auto"/>
+                    <DataGridTextColumn Header="Edad" Binding="{Binding edad}" Width="Auto"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*"/>
+                    <DataGridTextColumn Header="Obra Social" Binding="{Binding nombre_obra_social}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>

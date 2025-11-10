@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Clientes"
         mc:Ignorable="d"
-        Title="Input" Height="180" Width="350"
+        Title="N° de Afiliado" Height="220" Width="380"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Background="#283342">
-
+        Background="{StaticResource ColorVerdeFondo}">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -17,16 +16,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <TextBlock x:Name="lblPrompt" Text="Prompt:" 
+                   Foreground="{StaticResource ColorBlancoRotoFondo}" 
+                   TextWrapping="Wrap" Margin="0,10,0,0"
+                   FontFamily="{StaticResource FontMontserratRegular}"/>
 
-
-        <TextBlock x:Name="lblPrompt" Text="Prompt:" Foreground="White" TextWrapping="Wrap" Margin="0,10,0,0"/>
-        <TextBox x:Name="txtInput" Grid.Row="1" VerticalAlignment="Center" Height="25" Padding="5"/>
-
+        <TextBox x:Name="txtInput" Grid.Row="1" VerticalAlignment="Center" Padding="5"/>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button x:Name="btnAceptar" Content="Aceptar" Width="80" Height="30" Click="Aceptar_Click" Background="Beige"/>
-            <Button x:Name="btnCancelar" Content="Cancelar" Width="80" Height="30" Margin="10,0,0,0" Click="Cancelar_Click" Background="Gray" IsCancel="True"/>
+            <Button x:Name="btnAceptar" Content="Aceptar" 
+                    Width="80" Height="30" Click="Aceptar_Click" 
+                    Style="{StaticResource PrimaryActionButtonStyle}"/>
+            <Button x:Name="btnCancelar" Content="Cancelar" 
+                    Width="80" Height="30" Margin="10,00,0,0" Click="Cancelar_Click" 
+                    Style="{StaticResource DestructiveActionButtonStyle}" IsCancel="True"/>
         </StackPanel>
-
     </Grid>
 </Window>

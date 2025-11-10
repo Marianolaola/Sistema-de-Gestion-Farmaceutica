@@ -5,34 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Clientes"
         mc:Ignorable="d"
-        Title="Agregar Cliente" Height="470" Width="420"
+        Title="Agregar Cliente" Height="520" Width="450"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Background="#283342">
-    
+        Background="{StaticResource ColorVerdeFondo}">
+
     <Grid Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>    
-            
-            <!--T+itulo-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <TextBlock Text="Agregar Cliente" 
-                   FontSize="30"
+                   FontSize="28"
                    FontWeight="Bold"
-                   Foreground="White"
+                   Foreground="{StaticResource ColorVerdeOscuroAcento}"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,20"
-                   Grid.Row="0"/>
-
+                   Grid.Row="0"
+                   FontFamily="{StaticResource FontMontserratBold}"/>
 
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/> <!--Labels-->
-                <ColumnDefinition Width="*"/> <!--Inmput-->
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <!--Filas Dinámicas-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -43,37 +40,36 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!--Nombre-->
-            <TextBlock Text="Nombre:" Foreground="White" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
-            
-            <!--Apellido-->
-            <TextBlock Text="Apellido:" Foreground="White" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtApellido" Grid.Row="1" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
+            <TextBlock Text="Nombre:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <TextBlock Text="DNI:" Foreground="White" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtDNI" Grid.Row="2" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
+            <TextBlock Text="Apellido:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtApellido" Grid.Row="1" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <TextBlock Text="Email:" Foreground="White" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
+            <TextBlock Text="DNI:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtDNI" Grid.Row="2" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <TextBlock Text="Telefono:" Foreground="White" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtTelefono" Grid.Row="4" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
+            <TextBlock Text="Email:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <TextBlock Text="F. Nacimiento:" Foreground="White" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Margin="0,5"/>
-            <DatePicker x:Name="txtFecha" Grid.Row="5" Grid.Column="1" Height="30" Margin="0,5" Padding="5"  />
+            <TextBlock Text="Telefono:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtTelefono" Grid.Row="4" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <TextBlock Text="Dirección:" Foreground="White" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Margin="0,5"/>
-            <TextBox x:Name="txtDireccion" Grid.Row="6" Grid.Column="1" Height="28" Margin="0,5" Padding="5"  />
+            <TextBlock Text="F. Nacimiento:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <DatePicker x:Name="txtFecha" Grid.Row="5" Grid.Column="1" Height="35" Margin="0,5" Padding="5"/>
 
+            <TextBlock Text="Dirección:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtDireccion" Grid.Row="6" Grid.Column="1" Margin="0,5" Padding="5"/>
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
-            <Button Content="Aceptar" Width="100" Height="35" Margin="0,0,10,0"
-                    Background="Beige" FontWeight="SemiBold" Click="Aceptar_Click" Cursor="Hand"/>
-            <Button Content="Cancelar" Width="100" Height="35" Margin="0,0,10,0"
-                    Background="Gray" FontWeight="SemiBold" Click="Cancelar_Click" Cursor="Hand"/>
+            <Button Content="Aceptar" Width="110" Height="35" Margin="0,0,10,0"
+                    Click="Aceptar_Click"
+                    Style="{StaticResource PrimaryActionButtonStyle}"/>
+            <Button Content="Cancelar" Width="110" Height="35" Margin="0,0,10,0"
+                    Click="Cancelar_Click"
+                    Style="{StaticResource DestructiveActionButtonStyle}"/>
         </StackPanel>
-        
+
     </Grid>
 </Window>

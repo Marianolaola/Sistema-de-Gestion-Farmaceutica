@@ -1,9 +1,12 @@
 ﻿<Window x:Class="Sistema_de_Gestión_Farmacéutica.Clientes.GestionarObrasSociales"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
         Title="Gestionar Obras Sociales" Height="450" Width="700"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        Background="#283342">
+        Background="{StaticResource ColorVerdeFondo}">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,15 +17,14 @@
         <StackPanel Grid.Row="0" Margin="0,0,0,20">
             <TextBlock Text="Gestionar Obra Social" 
                        FontSize="28" 
-                       FontWeight="Bold" 
-                       Foreground="White" 
-                       HorizontalAlignment="Center"/>
+                       Foreground="{StaticResource ColorBlancoRotoFondo}" HorizontalAlignment="Center"
+                       FontFamily="{StaticResource FontMontserratBold}"/>
             <TextBlock x:Name="lblNombreCliente" 
                        Text="Cliente: Cargando..." 
                        FontSize="16" 
-                       Foreground="LightGray" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,5,0,0"/>
+                       Foreground="{StaticResource ColorVerdeOscuroAcento}" HorizontalAlignment="Center" 
+                       Margin="0,5,0,0"
+                       FontFamily="{StaticResource FontMontserratRegular}"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
@@ -33,17 +35,23 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Disponibles" FontWeight="SemiBold" Foreground="White" Margin="5,0,5,5"/>
+                <TextBlock Text="Disponibles" FontWeight="SemiBold" 
+                           Foreground="{StaticResource ColorBlancoRotoFondo}" Margin="5,0,5,5"
+                           FontFamily="{StaticResource FontMontserratRegular}"/>
                 <ListView x:Name="lvDisponibles" BorderThickness="1" BorderBrush="Gray"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
-                <Button x:Name="btnAgregar" Content=">" FontWeight="Bold" Width="40" Height="30" Margin="0,5" Click="btnAgregar_Click" Cursor="Hand"/>
-                <Button x:Name="btnQuitar" Content="&lt;" FontWeight="Bold" Width="40" Height="30" Margin="0,5" Click="btnQuitar_Click" Cursor="Hand"/>
+                <Button x:Name="btnAgregar" Content=">" FontWeight="Bold" Margin="0,5" Click="btnAgregar_Click" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Width="40"/>
+                <Button x:Name="btnQuitar" Content="&lt;" FontWeight="Bold" Margin="0,5" Click="btnQuitar_Click" 
+                        Style="{StaticResource SmallDestructiveActionButtonStyle}" Width="40"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2">
-                <TextBlock Text="Asociadas al Cliente" FontWeight="SemiBold" Foreground="White" Margin="5,0,5,5"/>
+                <TextBlock Text="Asociadas al Cliente" FontWeight="SemiBold" 
+                           Foreground="{StaticResource ColorBlancoRotoFondo}" Margin="5,0,5,5"
+                           FontFamily="{StaticResource FontMontserratRegular}"/>
                 <ListView x:Name="lvAsociadas" BorderThickness="1" BorderBrush="Gray">
                     <ListView.View>
                         <GridView>
@@ -59,18 +67,14 @@
             <Button x:Name="btnGuardar" 
                     Content="Guardar Cambios" 
                     Width="130" Height="35" 
-                    Background="Beige" 
-                    FontWeight="SemiBold" 
                     Click="btnGuardar_Click" 
-                    Cursor="Hand"/>
+                    Style="{StaticResource PrimaryActionButtonStyle}"/>
             <Button x:Name="btnCancelar" 
                     Content="Cancelar" 
                     Width="110" Height="35" 
                     Margin="10,0,0,0" 
-                    Background="Gray" 
-                    FontWeight="SemiBold" 
                     Click="btnCancelar_Click" 
-                    Cursor="Hand"/>
+                    Style="{StaticResource DestructiveActionButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>

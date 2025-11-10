@@ -4,10 +4,10 @@
     <SolidColorBrush x:Key="ColorVerdeFondo" Color="#6A8E4E"/>
     <SolidColorBrush x:Key="ColorVerdeOscuroAcento" Color="#2A4930"/>
     <SolidColorBrush x:Key="ColorBlancoRotoFondo" Color="#FAF9F6"/>
-    <SolidColorBrush x:Key="ColorGrisBoton" Color="#A9A9A9"/>
+    <SolidColorBrush x:Key="ColorGrisBoton" Color="#6c757d"/>
 
-    <FontFamily x:Key="FontMontserratRegular">./Fonts/Montserrat-Regular.otf#Montserrat</FontFamily>
-    <FontFamily x:Key="FontMontserratBold">./Fonts/Montserrat-Bold.otf#Montserrat</FontFamily>
+    <FontFamily x:Key="FontMontserratRegular">./Assets/Fonts/Montserrat-Regular.otf#Montserrat</FontFamily>
+    <FontFamily x:Key="FontMontserratBold">./Assets/Fonts/Montserrat-Bold.otf#Montserrat</FontFamily>
 
     <Style TargetType="TextBox">
         <Setter Property="Height" Value="35"/>
@@ -24,6 +24,16 @@
         <Setter Property="Height" Value="35"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Margin" Value="0,0,0,20"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorVerdeOscuroAcento}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorVerdeOscuroAcento}"/>
+    </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="BorderBrush" Value="{StaticResource ColorVerdeOscuroAcento}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -120,5 +130,31 @@
         <Setter Property="Margin" Value="25,15,0,5"/>
     </Style>
     
-    
+
+    <Style x:Key="SmallPrimaryActionButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+        <Setter Property="Width" Value="110"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Background" Value="{StaticResource ColorVerdeOscuroAcento}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorBlancoRotoFondo}"/>
+    </Style>
+
+    <Style x:Key="SmallDestructiveActionButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+        <Setter Property="Width" Value="110"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Background" Value="{StaticResource ColorGrisBoton}"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+
+
+    <Style TargetType="Window">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+    </Style>
+
+    <Style TargetType="UserControl">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+    </Style>
+
 </ResourceDictionary>
