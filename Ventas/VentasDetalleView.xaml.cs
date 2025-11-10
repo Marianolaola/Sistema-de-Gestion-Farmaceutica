@@ -248,6 +248,38 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
             }
 
         }
+
+        private void btnLimpiar_Click(object sender, RoutedEventArgs e)
+        {
+            if (detalles == null || detalles.Count == 0)
+                return;
+
+            if (MessageBox.Show("¿Desea quitar todos los medicamentos del detalle?",
+                                "Confirmar acción",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+
+                // devolver stock de cada medicamento
+                foreach (var item in detalles)
+                {
+                    if (stockTemporal.ContainsKey(item.IdMedicamento))
+                    {
+                        stockTemporal[item.IdMedicamento] += item.Cantidad;
+                    }
+                }
+
+                // limpiar el detalle
+                detalles.Clear();
+
+                // refrescar grilla (si es List)
+                dgDetalle.ItemsSource = null;
+                dgDetalle.ItemsSource = detalles;
+
+                // recalcular total
+                txtTotal.Text = "0.00";
+            }
+        }
     }
 
     public class DetalleItem

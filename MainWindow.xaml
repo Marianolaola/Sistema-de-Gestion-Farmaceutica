@@ -34,8 +34,6 @@
                 <StackPanel>
                     <Separator Background="#4A6E30" Margin="10,0,10,10"/>
 
-                    <Button x:Name="btnDashboard" Content="🏠 Dashboard" Style="{StaticResource NavigationButtonStyle}" Click="AbrirDashboard_Click"/>
-
                     <TextBlock x:Name="SeparatorGestion" Text="GESTIÓN" Style="{StaticResource NavigationSeparatorStyle}"/>
                     <Button x:Name="btnMedicamentos" Content="💊 Medicamentos" Style="{StaticResource NavigationButtonStyle}" Click="AbrirMedicamentos_Click"/>
                     <Button x:Name="btnClientes" Content="👥 Clientes" Style="{StaticResource NavigationButtonStyle}" Click="AbrirClientes_Click"/>

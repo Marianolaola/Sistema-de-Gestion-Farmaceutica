@@ -68,13 +68,8 @@ namespace Sistema_de_Gestión_Farmacéutica
                     break;
             }
 
-            // Abrir dashboard por defecto
-            ContenidoPrincipal.Content = new TextBlock
-            {
-                Text = "Dashboard (Vista Prototipo)",
-                FontSize = 24,
-                Margin = new Thickness(20)
-            };
+            // Abrir medicamentos por defecto
+            ContenidoPrincipal.Content = new MedicamentosView();
         }
 
             private void AbrirMedicamentos_Click(object sender, RoutedEventArgs e)

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="850">
+             d:DesignHeight="500" d:DesignWidth="850" Background="{StaticResource ColorVerdeFondo}">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -12,63 +12,61 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
+        <GroupBox Margin="10,0,10,10" VerticalAlignment="Top">
+            <GroupBox.Header>
+                <TextBlock Text="Cliente" FontSize="16" Foreground="{StaticResource ColorBlancoRotoFondo}"/>
+            </GroupBox.Header>
 
-            <!-- Cliente -->
-            <GroupBox Header="Cliente" Grid.Column="0" Margin="0,0,15,0" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical" Margin="10,5,10,10">
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width= "70" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Cliente:" 
-                           VerticalAlignment="Center" 
-                           Grid.Column="0" 
-                           Margin="0,0,5,0"/>
-                        <ComboBox x:Name="cmbClientes"
-                          Width="200"
-                          HorizontalAlignment="Left"
-                          DisplayMemberPath="nombre"
-                          SelectedValuePath="id_cliente"
-                          SelectionChanged="cmbClientes_SelectionChanged"
-                          Grid.Column="1"/>
-                    </Grid>
+            <Grid Margin="10,5,10,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label Cliente -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- ComboBox Cliente -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label Nombre -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- TextBox Nombre -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label DNI -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- TextBox DNI -->
+                </Grid.ColumnDefinitions>
 
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                <!-- Cliente -->
+                <TextBlock Text="Cliente:" 
+                   VerticalAlignment="Center" 
+                   Grid.Column="0" 
+                   Margin="0,0,5,0"/>
 
-                        <TextBlock Text="Nombre: " VerticalAlignment="Center" Grid.Column="0" Margin="0,0,5,0" />
-                        <TextBox x:Name="txtNombreCliente" HorizontalAlignment="Left" Width="200" Grid.Column="1" />
-                    </Grid>
+                <ComboBox x:Name="cmbClientes"
+                  Width="200"
+                  DisplayMemberPath="nombre"
+                  SelectedValuePath="id_cliente"
+                  SelectionChanged="cmbClientes_SelectionChanged"
+                  Grid.Column="1"/>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                <!-- Nombre -->
+                <TextBlock Text="Nombre:" 
+                   VerticalAlignment="Center" 
+                   Margin="15,0,5,0" 
+                   Grid.Column="2"/>
 
-                        <TextBlock Text="DNI: " VerticalAlignment="Center" Grid.Column="0" Margin="0,0,5,0" />
-                        <TextBox x:Name="txtDniCliente" HorizontalAlignment="Left" Width="200" Grid.Column="1" />
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
+                <TextBox x:Name="txtNombreCliente"
+                 Width="200"
+                 Grid.Column="2" Grid.ColumnSpan="2" Margin="62,8,5,8"/>
 
-            <!-- Factura -->
-            <GroupBox Header="Factura" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical" Margin="10,5,10,5" HorizontalAlignment="Left">
-                    <ComboBox x:Name="cmbFacturas" Width="200" DisplayMemberPath="Numero" HorizontalAlignment="Left" />
-                </StackPanel>
-            </GroupBox>
+                <!-- DNI -->
+                <TextBlock Text="DNI:" 
+                   VerticalAlignment="Center" 
+                   Margin="15,0,5,0" 
+                   Grid.Column="4"/>
 
-        </Grid>
+                <TextBox x:Name="txtDniCliente"
+                 Width="200"
+                 Grid.Column="4" Grid.ColumnSpan="2" Margin="43,8,0,8"/>
+            </Grid>
+        </GroupBox>
 
         <!-- Medicamentos -->
         <Grid Margin="0,0,0,10" Grid.Row="1">
@@ -81,7 +79,11 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Header="Producto" Grid.Column="0" Grid.Row="0" Margin="0,0,15,0">
+            <GroupBox Grid.Column="0" Grid.Row="0" Margin="10,0,10,0">
+                <GroupBox.Header>
+                    <TextBlock Text="Producto" FontSize="16" Foreground="{StaticResource ColorBlancoRotoFondo}"/>
+                </GroupBox.Header>
+
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -123,36 +125,41 @@
                         FontWeight="Semibold"
                         Click="btnAgregar_Click"/>
 
-                <Button x:Name="btnQuitar"
-                        Content="❌ Quitar"
+                <Button x:Name="btnLimpiar"
+                        Content="❌ Limpiar"
                         Width="120"
                         Height="35"
-                        FontWeight="Semibold"/>
+                        FontWeight="Semibold"
+                        Click="btnLimpiar_Click"/>
             </StackPanel>
 
-            <DataGrid x:Name="dgDetalle" 
-                      Grid.Row="1"
-                      Grid.ColumnSpan="2"
-                      AutoGenerateColumns="False" 
-                      Margin="0,10,0,10" 
+            <Border Grid.Row="1" Grid.ColumnSpan="2" Margin="0,10,0,10" Background="{StaticResource ColorBlancoRotoFondo}" CornerRadius="5" Padding="10">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+                </Border.Effect>
+
+                <DataGrid x:Name="dgDetalle" 
+                      AutoGenerateColumns="False"  
                       IsReadOnly="True" 
-                      CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Medicamento" Binding="{Binding Nombre}" Width="*"/>
-                    <DataGridTextColumn Header="Presentación" Binding="{Binding Presentacion}" Width="*"/>
-                    <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
-                    <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Precio}" Width="Auto"/>
-                    <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="Auto"/>
-                    <DataGridTemplateColumn Header="Quitar" Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="❌ Quitar" Click="btnQuitar_Click" Background="LightCoral" 
+                      CanUserAddRows="False"
+                      Background="Transparent" BorderThickness="0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Medicamento" Binding="{Binding Nombre}" Width="*"/>
+                        <DataGridTextColumn Header="Presentación" Binding="{Binding Presentacion}" Width="*"/>
+                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
+                        <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Precio}" Width="Auto"/>
+                        <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="Auto"/>
+                        <DataGridTemplateColumn Header="Quitar" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="❌ Quitar" Click="btnQuitar_Click" Background="LightCoral" 
                                         Foreground="White" Padding="4,2" BorderThickness="0" Cursor="Hand" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
         </Grid>
 
         <!-- Total y botones -->
@@ -163,10 +170,12 @@
                FontSize="16" 
                FontWeight="Bold" 
                Margin="5,0,20,0"/>
+            
             <Button x:Name="btnConfirmar" 
-            Content="Confirmar Venta" 
-            Width="150"
-            Click="btnConfirmar_Click"/>
+                    Content="Confirmar Venta" 
+                    Width="150"
+                    Click="btnConfirmar_Click"
+                    Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
         </StackPanel>
     </Grid>
 </UserControl>
