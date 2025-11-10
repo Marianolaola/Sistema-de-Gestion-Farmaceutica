@@ -148,5 +148,86 @@ namespace Sistema_de_Gestión_Farmacéutica.Reportes
                 MessageBox.Show("No hay datos para imprimir el reporte");
             }
         }
+
+        private void btnEstadisticas_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime? desde = dpDesde.SelectedDate;
+            DateTime? hasta = dpHasta.SelectedDate;
+
+            string condicionFecha = "";
+            bool filtrarPorFecha = desde.HasValue && hasta.HasValue;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                //  Vendedor con más ventas 
+                string queryVendedor = @"
+            SELECT TOP 1 u.nombre + ' ' + u.apellido AS nombre_vendedor, COUNT(v.id_venta) AS cantidad_ventas
+            FROM Venta v
+            INNER JOIN Usuario u ON v.id_usuario = u.id_usuario
+            /**CONDICION_FECHA**/
+            GROUP BY u.nombre, u.apellido
+            ORDER BY cantidad_ventas DESC";
+
+                // Producto más vendido
+                string queryProducto = @"
+            SELECT TOP 1 m.nombre_comercial AS nombre_producto, SUM(dv.cantidad) AS total_vendido
+            FROM Detalle_Venta dv
+            INNER JOIN Medicamento m ON dv.id_medicamento = m.id_medicamento
+            INNER JOIN Venta v ON dv.id_venta = v.id_venta
+            /**CONDICION_FECHA**/
+            GROUP BY m.nombre_comercial
+            ORDER BY total_vendido DESC";
+
+                if (filtrarPorFecha)
+                {
+                    condicionFecha = "WHERE v.fecha_venta BETWEEN @desde AND @hasta";
+                    queryVendedor = queryVendedor.Replace("/**CONDICION_FECHA**/", condicionFecha);
+                    queryProducto = queryProducto.Replace("/**CONDICION_FECHA**/", condicionFecha);
+                }
+                else
+                {
+                    queryVendedor = queryVendedor.Replace("/**CONDICION_FECHA**/", "");
+                    queryProducto = queryProducto.Replace("/**CONDICION_FECHA**/", "");
+                }
+
+                SqlCommand cmdVendedor = new SqlCommand(queryVendedor, con);
+                SqlCommand cmdProducto = new SqlCommand(queryProducto, con);
+
+                if (filtrarPorFecha)
+                {
+                    cmdVendedor.Parameters.AddWithValue("@desde", desde.Value);
+                    cmdVendedor.Parameters.AddWithValue("@hasta", hasta.Value);
+                    cmdProducto.Parameters.AddWithValue("@desde", desde.Value);
+                    cmdProducto.Parameters.AddWithValue("@hasta", hasta.Value);
+                }
+
+                string mejorVendedor = "Sin datos";
+                string productoMasVendido = "Sin datos";
+
+                using (SqlDataReader dr = cmdVendedor.ExecuteReader())
+                {
+                    if (dr.Read())
+                        mejorVendedor = $"{dr["nombre_vendedor"]} ({dr["cantidad_ventas"]} ventas)";
+                }
+
+                using (SqlDataReader dr = cmdProducto.ExecuteReader())
+                {
+                    if (dr.Read())
+                        productoMasVendido = $"{dr["nombre_producto"]} ({dr["total_vendido"]} unidades)";
+                }
+
+                // Mostrar resultados
+                MessageBox.Show(
+                    $"Estadísticas{(filtrarPorFecha ? $" entre {desde:dd/MM/yyyy} y {hasta:dd/MM/yyyy}" : "")}\n\n" +
+                    $"Vendedor con más ventas: {mejorVendedor}\n" +
+                    $"Producto más vendido: {productoMasVendido}",
+                    "Estadísticas de Ventas",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+            }
+        }
     }
 }

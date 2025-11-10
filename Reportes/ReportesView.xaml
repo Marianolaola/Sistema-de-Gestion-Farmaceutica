@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Reportes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="20">
+             d:DesignHeight="450" d:DesignWidth="800" 
+             Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20" Cursor="">
         <!-- Definición de filas -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,7 +17,11 @@
         
         
         <!-- Fila de filtros -->
-        <GroupBox Header="Filtros de búsqueda" Grid.Row="0" Margin="0,0,0,10">
+        <GroupBox Grid.Row="0" Margin="0,0,0,10">
+            <GroupBox.Header>
+                <TextBlock Text="Filtros de búsqueda" FontSize="16" Foreground="{StaticResource ColorBlancoRotoFondo}"/>
+            </GroupBox.Header>
+            
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                 <Grid Margin="10">
                 <Grid.ColumnDefinitions>
@@ -63,36 +68,43 @@
                         Margin="10,0,0,0"
                         Width="150" Height="40"
                         FontWeight="SemiBold"
-                        Click="btnFiltrar_Click"/>
+                        Click="btnFiltrar_Click"
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Background="#007bff"/>
                 </Grid>
             </ScrollViewer>
         </GroupBox>
         
         
         <!-- Fila del grid -->
-        <DataGrid x:Name="dgVentas" Grid.Row="1" Margin="10,0,0,10"
+        <Border Grid.Row="1" Background="{StaticResource ColorBlancoRotoFondo}" CornerRadius="5" Padding="10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+
+            <DataGrid x:Name="dgVentas"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   CanUserAddRows="False"
                   SelectionMode="Single"
                   RowDetailsVisibilityMode="VisibleWhenSelected" 
                   LoadingRowDetails="dgVentas_LoadingRowDetails" 
-                  MouseDoubleClick="dgVentas_MouseDoubleClick">
-            
-            <!-- Ventas -->
-            <DataGrid.Columns>
+                  MouseDoubleClick="dgVentas_MouseDoubleClick"
+                  Background="Transparent" BorderThickness="0">
+
+                <!-- Ventas -->
+                <DataGrid.Columns>
                     <DataGridTextColumn Header="ID Venta" Binding="{Binding id_venta}" Width="*"/>
                     <DataGridTextColumn Header="Fecha" Binding="{Binding fecha_venta}" Width="*"/>
                     <DataGridTextColumn Header="Cliente" Binding="{Binding nombre_cliente}" Width="*"/>
                     <DataGridTextColumn Header="Vendedor" Binding="{Binding nombre_vendedor}" Width="*"/>
                     <DataGridTextColumn Header="Total" Binding="{Binding total}" Width="*"/>
-            </DataGrid.Columns>
-            
-            <!-- Detalles de la venta -->
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="1" BorderBrush="#DDD" Margin="5" Padding="5">
-                        <DataGrid x:Name="dgDetalles"
+                </DataGrid.Columns>
+
+                <!-- Detalles de la venta -->
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="#DDD" Margin="5" Padding="5">
+                            <DataGrid x:Name="dgDetalles"
                                   AutoGenerateColumns="False"
                                   HeadersVisibility="Column"
                                   CanUserAddRows="False"
@@ -100,23 +112,29 @@
                                   HorizontalContentAlignment="Stretch"
                                   IsReadOnly="True"
                                   ItemsSource="{Binding DetalleInterno}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Medicamento" Binding="{Binding nombre_medicamento}" Width="Auto"/>
-                                <DataGridTextColumn Header="Cantidad" Binding="{Binding cantidad}" Width="Auto"/>
-                                <DataGridTextColumn Header="Precio Unitario" Binding="{Binding precio_unitario}" Width="Auto"/>
-                                <DataGridTextColumn Header="Subtotal" Binding="{Binding subtotal}" Width="Auto"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Border>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
-            
-       </DataGrid>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Medicamento" Binding="{Binding nombre_medicamento}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Cantidad" Binding="{Binding cantidad}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Precio Unitario" Binding="{Binding precio_unitario}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Subtotal" Binding="{Binding subtotal}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
 
-        <Button x:Name="btnImprimirReporte" Grid.Row="2" Content="Imprimir Reporte" HorizontalAlignment="Left"
-                Click="btnImprimirReporte_Click" Width="150" Height="40" Margin="5"/>
+            </DataGrid>
+        </Border>
 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,0,0,0">
+            <Button x:Name="btnImprimirReporte" Grid.Row="2" Content="Imprimir Reporte" HorizontalAlignment="Left"
+                Click="btnImprimirReporte_Click" Width="150" Height="40" Margin="0,0,10,0"
+                Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
 
-        <!-- Fila para gráficos -->
+            <Button x:Name="btnEstadisticas"  Content="Mostrar Estadísticas" HorizontalAlignment="Left"
+                    Click="btnEstadisticas_Click" Width="150" Height="40" Margin="5"
+                    Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>
