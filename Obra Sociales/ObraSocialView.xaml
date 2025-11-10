@@ -1,28 +1,65 @@
 ﻿<UserControl x:Class="Sistema_de_Gestión_Farmacéutica.Obra_Sociales.ObraSocialView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Obra_Sociales"
-        mc:Ignorable="d"
-        d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin ="20">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Obra_Sociales"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!--Botones-->
-            <RowDefinition Height="*"/>  <!--DataGrid-->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-            <Button x:Name="btnAgregarOS" Content="Agregar Obra Social" Width="Auto" Margin="0,0,10,0" Click="btnAgregarOS_Click"/>
-            <Button x:Name="btnEditarOS" Content="Editar Obra Social" Width="Auto" Margin="0,0,10,0" Click="btnEditarOS_Click"/>
-            <Button x:Name="btnEliminarOS" Content="Eliminar Obra Social" Width="Auto" Margin="0,0,10,0" Click="btnEliminarOS_Click"/>
-        </StackPanel>
+        <TextBlock Text="Gestión de Obras Sociales" 
+                   Grid.Row="0"
+                   FontSize="24"                    
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
+                   FontFamily="{StaticResource FontMontserratRegular}"
+                   Margin="0,0,0,15"/>
 
-        <DataGrid x:Name="dgObrasSociales" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding id_obra_social}" Width="100"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Border Grid.Row="1" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+
+            <WrapPanel>
+                <Button x:Name="btnAgregarOS" Content="➕ Agregar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" 
+                        Click="btnAgregarOS_Click"/>
+
+                <Button x:Name="btnEditarOS" Content="⚙️ Editar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" 
+                        Click="btnEditarOS_Click"/>
+
+                <Button x:Name="btnEliminarOS" Content="🗑 Eliminar" 
+                        Style="{StaticResource SmallDestructiveActionButtonStyle}" 
+                        Click="btnEliminarOS_Click"/>
+            </WrapPanel>
+        </Border>
+
+        <Border Grid.Row="2" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" 
+                Padding="10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+
+            <DataGrid x:Name="dgObrasSociales" AutoGenerateColumns="False" IsReadOnly="True"
+                      Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id_obra_social}" Width="100"/>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>

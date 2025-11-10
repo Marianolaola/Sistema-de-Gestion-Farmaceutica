@@ -23,7 +23,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Usuario", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Usuario WHERE activo = 1", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
             }
@@ -37,7 +37,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                string query = "SELECT * FROM Usuario WHERE email = @email";
+                string query = "SELECT * FROM Usuario WHERE email = @email AND activo = 1";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@email", email);
 
@@ -88,7 +88,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM Usuario WHERE id_usuario=@id", con);
+                SqlCommand cmd = new SqlCommand("UPDATE Usuario SET activo = 0 WHERE id_usuario = @id", con);
                 cmd.Parameters.AddWithValue("@id", usuario.id_usuario);
                 cmd.ExecuteNonQuery();
             }
@@ -127,6 +127,78 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
                 cmd.Parameters.AddWithValue("@email", usuario.email);
                 cmd.Parameters.AddWithValue("@id", usuario.id_usuario);
 
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //Obtenemos todos los usuarios negativos
+        public DataTable ObtenerUsuariosInactivos()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"
+                    SELECT id_usuario, nombre, apellido, email, rol 
+                    FROM Usuario 
+                    WHERE activo = 0 
+                    ORDER BY apellido, nombre";
+
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.Fill(dt);
+            }
+            return dt;
+        }
+
+        //Buscar Usuario Inactivo por Email
+        public DataTable BuscarInactivosPorEmail(string email)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"
+                    SELECT id_usuario, nombre, apellido, email, rol 
+                    FROM Usuario 
+                    WHERE activo = 0 AND email LIKE @email + '%'";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@email", email);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            return dt;
+        }
+
+        //Buscar Usuario Activo por Email
+        public DataTable BuscarUsuariosActivosPorEmail(string email)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = @"
+                    SELECT id_usuario, nombre, apellido, email, rol 
+                    FROM Usuario 
+                    WHERE activo = 1 AND email LIKE @email + '%'";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@email", email);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            return dt;
+        }
+
+        //"Activar" un usuario (activo = 1)
+        public void ReactivarUsuario(int idUsuario)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = "UPDATE Usuario SET activo = 1 WHERE id_usuario = @id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@id", idUsuario);
                 cmd.ExecuteNonQuery();
             }
         }

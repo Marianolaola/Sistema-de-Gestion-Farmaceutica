@@ -3,39 +3,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
-
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBlock x:Name="Titulo" Text="Medicamentos Activos" FontSize="20" Margin="10"/>
-        </StackPanel>
+        <TextBlock x:Name="Titulo" Text="Medicamentos Activos" 
+                   Grid.Row="0"
+                   FontSize="24"
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
+                   FontFamily="{StaticResource FontMontserratRegular}"
+                   Margin="0,0,0,15"/>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="➕ Agregar Medicamento" Width="150" Margin="5" Click="btnAgregar_Click" />
-            <Button x:Name="btnActivarOEliminar" Content="🗑 Eliminar Medicamento" Width="150" Margin="5" Click="btnActivarOEliminar_Click"/>
-            <Button x:Name="btnEditar" Content="⚙️ Editar Medicamento" Width="150" Margin="5" Click="btnEditar_Click"/>
-            <Button x:Name="btnCambiarGrid" Content="Mostrar Eliminados" Width="150" Margin="5" Click="btnCambiarGrid_Click" />
-        </StackPanel>
+        <Border Grid.Row="1" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" Padding="10" Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
 
-        <DataGrid x:Name="dgMedicamentos" Grid.Row="2" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding id_medicamento}" Width="Auto" />
-                <DataGridTextColumn Header="Nombre Comercial" Binding="{Binding nombre_comercial}" Width="*" />
-                <DataGridTextColumn Header="Precio Unitario" Binding="{Binding precio_unitario}" Width="Auto" />
-                <DataGridTextColumn Header="Presentación" Binding="{Binding presentacion}" Width="*" />
-                <DataGridTextColumn Header="Laboratorio" Binding="{Binding laboratorio}" Width="*" />
-                <DataGridTextColumn Header="Stock" Binding="{Binding stock}" Width="Auto" />
-                <DataGridTextColumn Header="Stock Minimo" Binding="{Binding stock_minimo}" Width="Auto" />
-            </DataGrid.Columns>
-        </DataGrid>
+            <WrapPanel>
+                <Button x:Name="btnAgregar" Content="➕ Agregar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Click="btnAgregar_Click"/>
 
+                <Button x:Name="btnEditar" Content="⚙️ Editar" 
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}" Click="btnEditar_Click"/>
+
+                <Button x:Name="btnActivarOEliminar" Content="🗑 Eliminar" 
+                        Style="{StaticResource SmallDestructiveActionButtonStyle}" Click="btnActivarOEliminar_Click"/>
+
+                <Button x:Name="btnCambiarGrid" Content="Mostrar Eliminados" 
+                        Style="{StaticResource SmallFilterActionButtonStyle}" Click="btnCambiarGrid_Click" />
+            </WrapPanel>
+        </Border>
+
+        <Border Grid.Row="2" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" Padding="10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+
+            <DataGrid x:Name="dgMedicamentos" 
+                      AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                      Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id_medicamento}" Width="Auto" />
+                    <DataGridTextColumn Header="Nombre Comercial" Binding="{Binding nombre_comercial}" Width="*" />
+                    <DataGridTextColumn Header="Precio Unitario" Binding="{Binding precio_unitario}" Width="Auto" />
+                    <DataGridTextColumn Header="Presentación" Binding="{Binding presentacion}" Width="*" />
+                    <DataGridTextColumn Header="Laboratorio" Binding="{Binding laboratorio}" Width="*" />
+                    <DataGridTextColumn Header="Stock" Binding="{Binding stock}" Width="Auto" />
+                    <DataGridTextColumn Header="Stock Minimo" Binding="{Binding stock_minimo}" Width="Auto" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>

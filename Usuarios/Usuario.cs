@@ -12,9 +12,11 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
         public string contraseña { get; set; }
         public string rol { get; set; }
 
+        public bool activo { get; set; }
+
         public Usuario() { }
 
-        public Usuario(int id_usuario, string nombre, string apellido, string email, string contraseña, string rol)
+        public Usuario(int id_usuario, string nombre, string apellido, string email, string contraseña, string rol, bool activo)
         {
             this.id_usuario = id_usuario;
             this.nombre = nombre;
@@ -22,6 +24,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
             this.email = email;
             this.contraseña = contraseña;
             this.rol = rol;
+            this.activo = activo;
         }
     }
 }

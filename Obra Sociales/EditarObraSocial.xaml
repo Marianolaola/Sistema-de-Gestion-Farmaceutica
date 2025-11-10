@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Obra_Sociales"
         mc:Ignorable="d"
         Title="Editar Obra Social" Height="250" Width="400"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Background="#283342">
+        Background="{StaticResource ColorVerdeFondo}">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,31 +16,31 @@
 
         <TextBlock Text="Editar Obra Social"
                    FontSize="28"
-                   FontWeight="Bold"
-                   Foreground="White"
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
                    HorizontalAlignment="Center"
-                   Margin="0,0,0,20"
-                   Grid.Row="0"/>
+                   Margin="0,0,0,25"
+                   Grid.Row="0"
+                   FontFamily="{StaticResource FontMontserratRegular}"/>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
-            <TextBlock Text="Nombre:" Foreground="White" Margin="0,0,0,5"/>
-            <TextBox x:Name="txtNombre" Height="30" Padding="5"/>
+            <TextBlock Text="Nombre:" 
+                       Foreground="{StaticResource ColorBlancoRotoFondo}" 
+                       Margin="0,0,0,5"
+                       FontFamily="{StaticResource FontMontserratRegular}"
+                       FontWeight="SemiBold"/>
+            <TextBox x:Name="txtNombre" Padding="5"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Margin="0,20,0,0">
             <Button Content="Guardar"
                     Width="110" Height="35"
                     Margin="0,0,10,0"
-                    Background="Beige"
-                    FontWeight="SemiBold"
                     Click="Guardar_Click"
-                    Cursor="Hand"/>
+                    Style="{StaticResource PrimaryActionButtonStyle}"/>
             <Button Content="Cancelar"
                     Width="110" Height="35"
-                    Background="Gray"
-                    FontWeight="SemiBold"
                     Click="Cancelar_Click"
-                    Cursor="Hand"/>
+                    Style="{StaticResource DestructiveActionButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>

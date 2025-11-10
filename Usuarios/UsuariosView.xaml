@@ -5,85 +5,78 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-
-    <UserControl.Resources>
-        <Style x:Key="CrudButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="5"
-                                SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="PrimaryActionButtonStyle" TargetType="Button" BasedOn="{StaticResource CrudButtonStyle}">
-            <Setter Property="Background" Value="Beige"/>
-            <Setter Property="Foreground" Value="#283342"/>
-        </Style>
-
-        <Style x:Key="DestructiveActionButtonStyle" TargetType="Button" BasedOn="{StaticResource CrudButtonStyle}">
-            <Setter Property="Background" Value="Gray"/>
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-
-    </UserControl.Resources>
-
-    <Grid Margin="10">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{StaticResource ColorVerdeFondo}">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="0">
-            <Button x:Name="btnAgregar" 
-                    Content="➕ Agregar" 
-                    Click="btnAgregar_Click"
-                    Style="{StaticResource PrimaryActionButtonStyle}"/>
+        <TextBlock Text="Gestión de Usuarios" 
+                   Grid.Row="0"
+                   FontSize="24" 
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
+                   FontFamily="{StaticResource FontMontserratRegular}"
+                   Margin="0,0,0,15"/>
 
-            <Button x:Name="btnEditar" 
-                    Content="⚙️ Editar" 
-                    Click="btnEditar_Click"
-                    Style="{StaticResource PrimaryActionButtonStyle}"/>
+        <Border Grid.Row="1" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
 
-            <Button x:Name="btnEliminar" 
-                    Content="🗑 Eliminar" 
-                    Click="btnEliminar_Click"
-                    Style="{StaticResource DestructiveActionButtonStyle}"/>
-        </StackPanel>
+            <WrapPanel>
+                <Button x:Name="btnAgregar" 
+                        Content="➕ Agregar" 
+                        Click="btnAgregar_Click"
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
 
-        <DataGrid x:Name="dgUsuarios" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding id_usuario}" Width="Auto"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
-                <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*"/>
-                <DataGridTextColumn Header="Rol" Binding="{Binding rol}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <Button x:Name="btnEditar" 
+                        Content="⚙️ Editar" 
+                        Click="btnEditar_Click"
+                        Style="{StaticResource SmallPrimaryActionButtonStyle}"/>
+
+                <Button x:Name="btnEliminar" 
+                        Content="🗑 Eliminar" 
+                        Click="btnEliminar_Click"
+                        Style="{StaticResource SmallDestructiveActionButtonStyle}"/>
+                <Button x:Name="btnVerInactivos" Content="📄 Historial" 
+                        Style="{StaticResource SmallFilterActionButtonStyle}" Click="btnVerInactivos_Click"/>
+
+                <TextBlock Text="Buscar por Email:" VerticalAlignment="Center" 
+                           Margin="10,0,5,0" FontWeight="SemiBold" FontSize="12"
+                           Foreground="{StaticResource ColorVerdeOscuroAcento}"/>
+
+                <TextBox x:Name="txtBusquedaEmail" Width="150" Margin="5"
+                         TextChanged="txtBusquedaEmail_TextChanged"/>
+                
+            </WrapPanel>
+        </Border>
+
+        <Border Grid.Row="2" 
+                Background="{StaticResource ColorBlancoRotoFondo}" 
+                CornerRadius="5" 
+                Padding="10">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="Black" Opacity="0.1" BlurRadius="5"/>
+            </Border.Effect>
+
+            <DataGrid x:Name="dgUsuarios" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                      Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id_usuario}" Width="Auto"/>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="*"/>
+                    <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="*"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="2*"/>
+                    <DataGridTextColumn Header="Rol" Binding="{Binding rol}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
 
     </Grid>
 </UserControl>

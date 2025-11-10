@@ -63,14 +63,14 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             Usuario usuarioActual = SesionActual.Usuario;
 
-            // REGLA 1: No se puede el usuario auto-eliminar
+            // REGLA N°1: No se puede el usuario auto-eliminar
             if (usuarioActual.id_usuario == idUsuario)
             {
                 MessageBox.Show("La sesión de este usuario está activa, no es posible eliminarlo", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // REGLA 2: Un Gerente solo puede eliminar farmacéuticos
+            // REGLA N°2: Un Gerente solo puede eliminar farmacéuticos
 
             if(usuarioActual.rol == "Gerente")
             {
@@ -81,7 +81,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                 }
             }
 
-            // REGLA 3: El administrador puede borrar cualquier rol (ya implícito)
+            // REGLA N°3: El administrador puede borrar cualquier rol (ya implícito)
 
             //Si cumple con las validaciones, se procede a eliminar
 
@@ -91,7 +91,7 @@ namespace Sistema_de_Gestión_Farmacéutica
                         id_usuario = idUsuario
                     };
 
-                    // Confirmación antes de eliminar
+                    // Se confirma antes de eliminar
                     var resultado = MessageBox.Show($"¿Está seguro que desea eliminar al usuario {filaSeleccionada["nombre"]} {filaSeleccionada["apellido"]}?",
                                                     "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (resultado == MessageBoxResult.Yes)
@@ -119,7 +119,7 @@ namespace Sistema_de_Gestión_Farmacéutica
 
             Usuario usuarioActual = SesionActual.Usuario;
 
-            //Regla 1- Un Gerente solo puede editar farmaceuticos
+            //Regla N°1: Un Gerente solo puede editar farmaceuticos
             if(usuarioActual.rol == "Gerente")
             {
                 if(rolUsuarioSeleccionado == "Gerente" || rolUsuarioSeleccionado == "Administrador")
@@ -165,6 +165,34 @@ namespace Sistema_de_Gestión_Farmacéutica
                 servUsuario.EditarUsuario(usuarioEditado);
                 cargarUsuario();
                 MessageBox.Show("Usuario actualizado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void btnVerInactivos_Click(object sender, RoutedEventArgs e)
+        {
+            Usuarios.UsuariosInactivosWindow ventanaHistorial = new Usuarios.UsuariosInactivosWindow();
+            ventanaHistorial.ShowDialog(); // abre la ventana
+
+            // si un usuario fue reactivado, actualizamos la vista principal
+            if (ventanaHistorial.UsuarioReactivado)
+            {
+                cargarUsuario();
+            }
+        }
+
+        private void txtBusquedaEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string textoBusqueda = txtBusquedaEmail.Text;
+
+            if (string.IsNullOrWhiteSpace(textoBusqueda))
+            {
+                // Si la barra está vacía, muestra todos los usuarios
+                cargarUsuario();
+            }
+            else
+            {
+                // Si hay texto, filtra la lista en vivo
+                dgUsuarios.ItemsSource = servUsuario.BuscarUsuariosActivosPorEmail(textoBusqueda).DefaultView;
             }
         }
 

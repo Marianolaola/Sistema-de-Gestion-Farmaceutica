@@ -5,6 +5,7 @@
     [email]      NVARCHAR (50) NOT NULL,
     [contraseña] NVARCHAR(255) NOT NULL,
     [rol]        VARCHAR (50)  NOT NULL,
+    [activo]     BIT     DEFAULT((1)) NOT NULL,
     CONSTRAINT [pk_id_usuario] PRIMARY KEY CLUSTERED ([id_usuario] ASC),
     CONSTRAINT [UQ_email_usuario] UNIQUE NONCLUSTERED ([email] ASC)
 );

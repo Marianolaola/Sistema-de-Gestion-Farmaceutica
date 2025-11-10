@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica"
         mc:Ignorable="d"
-        Title="Editar Medicamento" Height="500" Width="700" ResizeMode="NoResize" 
-        WindowStartupLocation="CenterScreen" Background="#283342">
+        Title="Editar Medicamento" Height="490" Width="550"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+        Background="{StaticResource ColorVerdeFondo}">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,20 +14,16 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--Título-->
         <TextBlock Text="Editar Medicamento" 
-                   FontSize="30"
-                   FontWeight="Bold"
-                   Foreground="White"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,20"
-                   Grid.Row="0"
-        />
+                   FontSize="28"
+                   Foreground="{StaticResource ColorBlancoRotoFondo}"
+                   HorizontalAlignment="Center" Margin="0,0,0,20"
+                   Grid.Row="0" FontFamily="{StaticResource FontMontserratRegular}"/>
 
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25*"/>
-                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -38,41 +34,30 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <TextBlock Text="Nombre Comercial:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtNombre" Grid.Row="0" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10"  Grid.Row="0" Grid.ColumnSpan="2">
-                <TextBlock Text="Nombre Comercial" Foreground="White"/>
-                <TextBox x:Name="txtNombre" Height="20"/>
-            </StackPanel>
+            <TextBlock Text="Presentación:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtPresentacion" Grid.Row="1" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBlock Text="Presentación" Foreground="White"/>
-                <TextBox x:Name="txtPresentacion" Height="20"/>
-            </StackPanel>
+            <TextBlock Text="Laboratorio:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtLaboratorio" Grid.Row="2" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="2" Grid.ColumnSpan="2">
-                <TextBlock Text="Laboratorio" Foreground="White"/>
-                <TextBox x:Name="txtLaboratorio" Height="20"/>
-            </StackPanel>
+            <TextBlock Text="Precio Unitario:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtPrecioUnitario" Grid.Row="3" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="3" Grid.ColumnSpan="2">
-                <TextBlock Text="Precio Unitario" Foreground="White"/>
-                <TextBox x:Name="txtPrecioUnitario" Height="20"/>
-            </StackPanel>
+            <TextBlock Text="Stock:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtStock" Grid.Row="4" Grid.Column="1" Margin="0,5" Padding="5"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="4" Grid.ColumnSpan="2">
-                <TextBlock Text="Stock" Foreground="White"/>
-                <TextBox x:Name="txtStock" Height="20"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical" Margin="0,0,0,10" Grid.Row="5" Grid.ColumnSpan="2">
-                <TextBlock Text="Stock Minimo" Foreground="White"/>
-                <TextBox x:Name="txtStockMinimo" Height="20"/>
-            </StackPanel>
+            <TextBlock Text="Stock Mínimo:" Foreground="{StaticResource ColorBlancoRotoFondo}" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Margin="0,5" FontWeight="SemiBold" FontFamily="{StaticResource FontMontserratRegular}"/>
+            <TextBox x:Name="txtStockMinimo" Grid.Row="5" Grid.Column="1" Margin="0,5" Padding="5"/>
         </Grid>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,0,0" Grid.Column="1">
-            <Button Content="Aceptar" Width="100" Height="45" Margin="5" Background="Beige" Click="Aceptar_Click"/>
-            <Button Content="Cancelar" Width="100"  Height="45" Margin="5" Background="Beige" Click="Cancelar_Click"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Content="Guardar" Width="110" Height="35" Margin="0,0,10,0" 
+                    Style="{StaticResource PrimaryActionButtonStyle}" Click="Aceptar_Click"/>
+            <Button Content="Cancelar" Width="110"  Height="35" 
+                    Style="{StaticResource DestructiveActionButtonStyle}" Click="Cancelar_Click"/>
         </StackPanel>
     </Grid>
 </Window>

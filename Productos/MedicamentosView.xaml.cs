@@ -62,7 +62,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Productos
                 opcion = 1;
                 Titulo.Text = "Medicamentos Inactivos";
                 btnCambiarGrid.Content = "Mostrar Activos";
-                btnActivarOEliminar.Content = "🗑 Activar Medicamento";
+                btnActivarOEliminar.Content = "✞ Activar";
                 dgMedicamentos.RowBackground = Brushes.LightGray;
                 CargarMedicamentos();
             } else
@@ -70,7 +70,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Productos
                 opcion = 0;
                 Titulo.Text = "Medicamentos Activos";
                 btnCambiarGrid.Content = "Mostrar Eliminados";
-                btnActivarOEliminar.Content = "🗑 Eliminar Medicamento";
+                btnActivarOEliminar.Content = "🗑 Eliminar";
                 dgMedicamentos.RowBackground = Brushes.White;
                 CargarMedicamentos();
             }
