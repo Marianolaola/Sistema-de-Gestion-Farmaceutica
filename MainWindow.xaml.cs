@@ -3,6 +3,7 @@ using Sistema_de_Gestión_Farmacéutica.Ventas;
 using Sistema_de_Gestión_Farmacéutica.Obra_Sociales;
 using Sistema_de_Gestión_Farmacéutica.Productos;
 using Sistema_de_Gestión_Farmacéutica.Respaldos;
+using Sistema_de_Gestión_Farmacéutica.Reportes;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -113,7 +114,7 @@ namespace Sistema_de_Gestión_Farmacéutica
 
         private void AbrirReportes_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Reportes Abierto (Prototipo)");
+            ContenidoPrincipal.Content = new ReportesView();
         }
 
         private void AbrirClientes_Click(object sender, RoutedEventArgs e)

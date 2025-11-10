@@ -60,6 +60,18 @@ namespace Sistema_de_Gestión_Farmacéutica.Usuarios
             return usuario;
         }
 
+        public DataTable ObtenerVendedores()
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter("SELECT id_usuario, CONCAT(nombre, ' ', apellido) AS nombreCompleto FROM Usuario WHERE rol = 'Farmaceutico'", con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
         // Dar de alta un usuario
         public void AltaUsuario(Usuario usuario)
         {

@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="Sistema_de_Gestión_Farmacéutica.Reportes.ReportesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sistema_de_Gestión_Farmacéutica.Reportes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <!-- Definición de filas -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        
+        <!-- Fila de filtros -->
+        <GroupBox Header="Filtros de búsqueda" Grid.Row="0" Margin="0,0,0,10">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                <!-- Fecha desde -->
+                <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Desde:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <DatePicker x:Name="dpDesde" Width="130"/>
+                </StackPanel>
+                
+                <!-- Fecha hasta -->
+                <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Hasta:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <DatePicker x:Name="dpHasta" Width="130"/>
+                </StackPanel>
+                
+                <!-- Vendedor -->
+                <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock Text="Vendedor:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cmbVendedor" Width="150"
+                              DisplayMemberPath="nombreCompleto"
+                              SelectedValuePath="id_usuario"/>
+                </StackPanel>
+                
+                <!-- Producto -->
+                <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="3" VerticalAlignment="Center">
+                    <TextBlock Text="Producto:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox x:Name="cmbProducto" Width="150"
+                              DisplayMemberPath="nombre_comercial"
+                              SelectedValuePath="id_medicamento"/>
+                </StackPanel>
+                
+                <!-- Boton para filtrar -->
+                    <Button Grid.Column="4"
+                        Content="Filtrar Ventas"
+                        HorizontalAlignment="Center"
+                        Margin="10,0,0,0"
+                        Width="150" Height="40"
+                        FontWeight="SemiBold"
+                        Click="btnFiltrar_Click"/>
+                </Grid>
+            </ScrollViewer>
+        </GroupBox>
+        
+        
+        <!-- Fila del grid -->
+        <DataGrid x:Name="dgVentas" Grid.Row="1" Margin="10,0,0,10"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                  LoadingRowDetails="dgVentas_LoadingRowDetails" 
+                  MouseDoubleClick="dgVentas_MouseDoubleClick">
+            
+            <!-- Ventas -->
+            <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID Venta" Binding="{Binding id_venta}" Width="*"/>
+                    <DataGridTextColumn Header="Fecha" Binding="{Binding fecha_venta}" Width="*"/>
+                    <DataGridTextColumn Header="Cliente" Binding="{Binding nombre_cliente}" Width="*"/>
+                    <DataGridTextColumn Header="Vendedor" Binding="{Binding nombre_vendedor}" Width="*"/>
+                    <DataGridTextColumn Header="Total" Binding="{Binding total}" Width="*"/>
+            </DataGrid.Columns>
+            
+            <!-- Detalles de la venta -->
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="#DDD" Margin="5" Padding="5">
+                        <DataGrid x:Name="dgDetalles"
+                                  AutoGenerateColumns="False"
+                                  HeadersVisibility="Column"
+                                  CanUserAddRows="False"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch"
+                                  IsReadOnly="True"
+                                  ItemsSource="{Binding DetalleInterno}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Medicamento" Binding="{Binding nombre_medicamento}" Width="Auto"/>
+                                <DataGridTextColumn Header="Cantidad" Binding="{Binding cantidad}" Width="Auto"/>
+                                <DataGridTextColumn Header="Precio Unitario" Binding="{Binding precio_unitario}" Width="Auto"/>
+                                <DataGridTextColumn Header="Subtotal" Binding="{Binding subtotal}" Width="Auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+            
+       </DataGrid>
+
+        <Button x:Name="btnImprimirReporte" Grid.Row="2" Content="Imprimir Reporte" HorizontalAlignment="Left"
+                Click="btnImprimirReporte_Click" Width="150" Height="40" Margin="5"/>
+
+
+        <!-- Fila para gráficos -->
+    </Grid>
+</UserControl>

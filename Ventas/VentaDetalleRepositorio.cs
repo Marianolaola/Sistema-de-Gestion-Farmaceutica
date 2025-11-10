@@ -58,6 +58,25 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         }
 
 
+        public List<DetalleItem> ObtenerDetallesPorVenta(int p_idVenta)
+        {
+            List<DetalleItem> lista = new List<DetalleItem>();
+            DataTable dt = ObtenerDetallePorIdVenta(p_idVenta);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                lista.Add(new DetalleItem
+                {
+                    Nombre = dr["medicamento"].ToString(),
+                    Cantidad = Convert.ToInt32(dr["cantidad"]),
+                    Precio = Convert.ToDecimal(dr["Precio_Unitario"]),
+                    Subtotal = Convert.ToDecimal(dr["subtotal"])
+                });
+            }
+            return lista;
+        }
+
+
         public bool RegistrarVenta(int idCliente, int idUsuario, List<DetalleItem> detalles, out string mensaje)
         {
             mensaje = "";
