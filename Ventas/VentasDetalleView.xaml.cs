@@ -113,7 +113,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         {
             if (cmbMedicamentos.SelectedValue == null || string.IsNullOrWhiteSpace(txtCantidad.Text))
             {
-                MessageBox.Show("Seleccione un medicamento y cantidad válida.");
+                MessageBox.Show("Seleccione un medicamento y cantidad válida.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -209,7 +209,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
         {
             if (cmbClientes.SelectedValue == null || detalles.Count == 0)
             {
-                MessageBox.Show("Seleccione un cliente y agregue al menos un medicamento.");
+                MessageBox.Show("Seleccione un cliente y agregue al menos un medicamento.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -231,7 +231,7 @@ namespace Sistema_de_Gestión_Farmacéutica.Ventas
                 }
 
                 // pregunta si desea generar una factura
-                var resultado = MessageBox.Show("Desea generar una factura de la venta?", "Generar Factura", MessageBoxButton.YesNo);
+                var resultado = MessageBox.Show("Desea generar una factura de la venta?", "Generar Factura", MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if (resultado == MessageBoxResult.Yes)
                 {
                     string nombreCliente = ((DataRowView)cmbClientes.SelectedItem)["nombre"].ToString();

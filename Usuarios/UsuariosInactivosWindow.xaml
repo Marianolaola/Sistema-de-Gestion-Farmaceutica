@@ -49,7 +49,7 @@
 
             <DataGrid x:Name="dgUsuariosInactivos" AutoGenerateColumns="False" 
                       IsReadOnly="True" SelectionMode="Single"
-                      KeyDown="dgClientesInactivos_KeyDown">
+                      KeyDown="dgClientesInactivos_KeyDown"
                       Background="Transparent" BorderThickness="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding id_usuario}" Width="Auto"/>
